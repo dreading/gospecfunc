@@ -86,33 +86,7 @@ func Erfcx(x float64) float64 {
 		return math.Inf(1)
 	} else if x < -6.1 {
 		return 2 * math.Exp(x*x)
-    //} else if x < -2.2 {
-/*
-		var RESULT float64 = 0
-		var Y = math.Abs(x)
-		var YSQ =1 / (Y * Y)
-		var XNUM = 1.63153871373020978e-2*YSQ
-		var XDEN = YSQ
-		XNUM = (XNUM + 3.05326634961232344e-1) * YSQ
-		XNUM = (XNUM + 3.60344899949804439e-1) * YSQ
-		XNUM = (XNUM + 1.25781726111229246e-1) * YSQ
-		XNUM = (XNUM + 1.60837851487422766e-2) * YSQ
- 
-		XDEN = (XDEN + 2.56852019228982242) * YSQ
-		XDEN = (XDEN + 1.87295284992346047) * YSQ
-		XDEN = (XDEN + 5.27905102951428412e-1) * YSQ
-		XDEN = (XDEN + 6.05183413124413191e-2) * YSQ
-	    
-	RESULT = YSQ *(XNUM + 6.58749161529837803e-4) / (XDEN + 2.33520497626869185e-3)
-	RESULT = (5.6418958354775628695e-1 -  RESULT) / Y
-	YSQ = math.Floor(x*16)/16
-	var DEL = (x-YSQ)*(x+YSQ)
-	Y = math.Exp(YSQ*YSQ) *math.Exp(DEL)
-	RESULT = (Y+Y) - RESULT
-	return RESULT
-	*/
-	
-	} else {
+    } else {
 		return 2*math.Exp(x*x) - Erfcx_y100(400/(4-x))
 	}
 
