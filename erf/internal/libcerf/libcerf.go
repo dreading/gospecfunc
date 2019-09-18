@@ -86,7 +86,7 @@ func Erfcx(x float64) float64 {
 		return math.Inf(1)
 	} else if x < -6.1 {
 		return 2 * math.Exp(x*x)
-    } else {
+	} else {
 		return 2*math.Exp(x*x) - Erfcx_y100(400/(4-x))
 	}
 
