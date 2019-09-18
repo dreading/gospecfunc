@@ -1,3 +1,7 @@
+// Copyright 2019 Infin IT Pty Ltd. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 // The original C code, the long comment, and the constants below are from
 // https://jugit.fz-juelich.de/mlz/libcerf/blob/master/lib/erfcx.c
 // and came with this notice. The go code is a port of the original C.
@@ -86,7 +90,7 @@ func Erfcx(x float64) float64 {
 		return math.Inf(1)
 	} else if x < -6.1 {
 		return 2 * math.Exp(x*x)
-    } else {
+	} else {
 		return 2*math.Exp(x*x) - Erfcx_y100(400/(4-x))
 	}
 
