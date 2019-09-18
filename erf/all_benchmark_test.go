@@ -1,3 +1,7 @@
+// Copyright 2019 Infin IT Pty Ltd. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package erf_test
 
 import (
@@ -75,6 +79,22 @@ func BenchmarkFaddeyeva(b *testing.B) {
 	var r complex128
 	for n := 0; n < b.N; n++ {
 		r = Faddeyeva(0.9 + 0.4i)
+	}
+	GlobalC = r
+}
+
+func BenchmarkFresnelC(b *testing.B) {
+	var r complex128
+	for n := 0; n < b.N; n++ {
+		r = FresnelC(0.9 + 0.4i)
+	}
+	GlobalC = r
+}
+
+func BenchmarkFresnelS(b *testing.B) {
+	var r complex128
+	for n := 0; n < b.N; n++ {
+		r = FresnelS(0.9 + 0.4i)
 	}
 	GlobalC = r
 }

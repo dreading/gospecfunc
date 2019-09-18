@@ -1,6 +1,7 @@
-// The code below are based on Algorithm 916: Computing the Faddeyeva and Voigt Functions
-// by Zaghloul, Mofreh R. and Ali, Ahmed N. in ACM Trans. Math. Softw. December 2011 Vol 38 No 2 Jan 2012
-// http://doi.acm.org/10.1145/2049673.2049679. The go code is a port of the original matlab code.
+// Copyright 2019 Infin IT Pty Ltd. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package erf
 
 import (
@@ -9,16 +10,20 @@ import (
 	"math/cmplx"
 )
 
+// Faddeyeva computes the plasma dispersion Faddeyeva function, w(z) = exp(-z^2) * erfc(-i*z)
+// where z=x+iy and erfc(z) is the complex complementary error function of z
 func Faddeyeva(z complex128) complex128 {
-	// Faddeyeva or the plasma dispersion function, w(z) = exp(-z^2) * erfc(-i*z)
-	// where z=x+iy and erfc(z) is the complex complementary error function of z;
 
-	//For purely imaginary input values, use the built-in function erfcx.
+	// The code below are based on Algorithm 916: Computing the Faddeyeva and Voigt Functions
+	// by Zaghloul, Mofreh R. and Ali, Ahmed N. in ACM Trans. Math. Softw. December 2011 Vol 38 No 2 Jan 2012
+	// http://doi.acm.org/10.1145/2049673.2049679. The go code is a port of the original matlab code.
+	
+	//For purely imaginary input values 
 	if IsReal(1i * z) {
 		return complex(libcerf.Erfcx(imag(z)), 0)
 	}
 
-	var Rmin float64 = math.Nextafter(0, 1)
+	var Rmin float64 = 1/math.MaxFloat64 //Nextafter(0, 1)
 	var sqrt_log_Rmin float64 = math.Sqrt(-math.Log(Rmin))
 
 	//Faddeyeva cannot calculate w for y negative & exp(y^2-x^2)>=the largest
@@ -26,9 +31,9 @@ func Faddeyeva(z complex128) complex128 {
 	if imag(z) < 0 && (imag(z)*imag(z)-real(z)*real(z)) >= sqrt_log_Rmin*sqrt_log_Rmin {
 		return cmplx.Inf()
 	}
-
+	
 	var eps float64 = 1e-16
-	var tiny float64 = 0.06447 * eps
+	var tiny float64 = 0.6447 * eps
 	var a float64 = math.Sqrt(-1 * math.Pi * math.Pi / math.Log(tiny/2))
 
 	var half_a float64 = 0.5 * a
@@ -57,11 +62,11 @@ func Faddeyeva(z complex128) complex128 {
 	var sin_2yx float64 = math.Sin(two_yx)
 
 	var w complex128
-
 	if x == 0 {
 		//% For x=0, use the asymptotic expressions for x--->0 from Eq. (6) in the manuscript
 		w = complex(erfcx_y, 0) * (complex(1, xsign*(x/y)))
 	} else {
+		
 		var V_old float64 = exp_x_sqr * (erfcx_y*cos_2yx + (two_a_pi/y)*(math.Sin(two_yx/2)*math.Sin(two_yx/2)))
 		var L_old float64 = -erfcx_y + a_pi/y
 		var Sigma3 float64 = Rmin
@@ -72,7 +77,7 @@ func Faddeyeva(z complex128) complex128 {
 		var n float64 = 0
 		var n3 float64 = math.Ceil(x / a)
 		var n3_3 = n3 - 1
-
+		
 		if (sqrt_log_Rmin - x) > 0 {
 			var Sigma1 float64 = Rmin
 			var Sigma2 float64 = Rmin
@@ -125,7 +130,7 @@ func Faddeyeva(z complex128) complex128 {
 				n3 = n3 + 1
 				n3_3 = n3_3 - 1
 			}
-
+			
 			if y <= 5e0 && two_yx > Rmin {
 				var w_real = V_old + y*two_a_pi*(-cos_2yx*exp_x_sqr*Sigma1+0.5*(Sigma2+Sigma3))
 				var w_imag = xsign * (sin_2yx*exp_x_sqr*(L_old+two_a_pi*y*Sigma1) + two_a_pi*half_a*Sigma4_5)
@@ -143,11 +148,10 @@ func Faddeyeva(z complex128) complex128 {
 		} else if x >= sqrt_log_Rmin && x < 1e15 {
 			var exp2 = math.Exp((four_a_sqr*n3 - 2*two_a_x) - two_a_sqr)
 			var del3_3_tmp = math.Exp(a_sqr + (two_a_x - two_a_sqr*n3))
-
+			var del3 float64
+			var del5 float64
 			for delta3 >= tiny || delta5 >= tiny && n <= 50 {
 				n = n + 1
-				var del3 float64
-				var del5 float64
 				if n3_3 >= 1 {
 					var exp3_den = math.Exp(-(a*n3-x)*(a*n3-x)) / (a_sqr*n3*n3 + y_sqr)
 					del3_3_tmp = del3_3_tmp * exp2
@@ -170,7 +174,7 @@ func Faddeyeva(z complex128) complex128 {
 			var w_imag = xsign * (sin_2yx*exp_x_sqr*L_old + two_a_pi*half_a*Sigma5)
 			w = complex(w_real, w_imag)
 
-		} else {
+		} else {	
 			var w_real = one_sqrt_pi * (y / (x_sqr + y_sqr))
 			var w_imag = one_sqrt_pi * (xsign * x / (x_sqr + y_sqr))
 			w = complex(w_real, w_imag)
