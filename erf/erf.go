@@ -52,7 +52,7 @@ func Voigt(x float64, t float64) (float64, float64) {
 	}
 	var one2SqrtT = 1/(2 * math.Sqrt(t))
 	var z = complex(one2SqrtT ,  -x * one2SqrtT)
-	var c = complex(math.Sqrt(math.Pi/4*t),0)*Faddeyeva(1i*z)
+	var c = complex(math.Sqrt(math.Pi/(4*t)),0)*Faddeyeva(1i*z)
 	return  real(c), imag(c)
 }
  
