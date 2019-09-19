@@ -114,7 +114,7 @@ func TestFrenselC(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		y := FresnelC(tc.x)
+		y, _ := Fresnel(tc.x)
 		if veryclose(real(y), real(tc.y)) == false {
 			t.Fatalf("real(FresnelC(%v)): expected %v, got %v", tc.x, real(tc.y), real(y))
 		}
@@ -133,7 +133,7 @@ func TestFrenselS(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		y := FresnelS(tc.x)
+		_, y := Fresnel(tc.x)
 		if veryclose(real(y), real(tc.y)) == false {
 			t.Fatalf("real(FresnelS(%v)): expected %v, got %v", tc.x, real(tc.y), real(y))
 		}
@@ -142,6 +142,27 @@ func TestFrenselS(t *testing.T) {
 		}
 	}
 }
+
+
+func TestVoigt(t *testing.T) {
+	testCases := [] struct {
+		x , t, vr, vi float64
+	}{
+		// extended precision values computed using Mathematica
+		{0.5 , 0.5, 0.30908537311634493, 0.08227114641287638},
+	}
+	
+	for _, tc := range testCases {
+		vr, vi := Voigt(tc.x, tc.t)
+		if veryclose(vr, tc.vr) == false {
+			t.Fatalf("Voigt Real(%v, %v)): expected %v, got %v", tc.x,tc.t, tc.vr, vr)
+		}
+		if veryclose(vi, tc.vi) == false {
+			t.Fatalf("Voigt Imag(%v, %v)): expected %v, got %v", tc.x,tc.t, tc.vi, vi)
+		}
+	}
+}
+ 
 
 func TestErfcxLargeNegative(t *testing.T) {
 

@@ -18,7 +18,7 @@ var (
 	GlobalF float64
 )
 
-func BenchmarkErfcx(b *testing.B) {
+func BenchmarkErfcxReal(b *testing.B) {
 	var r complex128
 	for n := 0; n < b.N; n++ {
 		r = Erfcx(complex(0.9,0))
@@ -26,7 +26,7 @@ func BenchmarkErfcx(b *testing.B) {
 	GlobalC = r
 }
 
-func BenchmarkErfcxLargeNegative(b *testing.B) {
+func BenchmarkErfcxRealLargeNegative(b *testing.B) {
 	var r complex128
 	for n := 0; n < b.N; n++ {
 		r = Erfcx(complex(-4,0))
@@ -34,7 +34,7 @@ func BenchmarkErfcxLargeNegative(b *testing.B) {
 	GlobalC = r
 }
 
-func BenchmarkErfcxLargePositive(b *testing.B) {
+func BenchmarkErfcxRealLargePositive(b *testing.B) {
 	var r complex128
 	for n := 0; n < b.N; n++ {
 		r = Erfcx(complex(99,0))
@@ -42,6 +42,29 @@ func BenchmarkErfcxLargePositive(b *testing.B) {
 	GlobalC = r
 }
 
+func BenchmarkErfcxComplex(b *testing.B) {
+	var r complex128
+	for n := 0; n < b.N; n++ {
+		r = Erfcx(complex(0.9,0.5))
+	}
+	GlobalC = r
+}
+
+func BenchmarkErfcxComplexLargeNegative(b *testing.B) {
+	var r complex128
+	for n := 0; n < b.N; n++ {
+		r = Erfcx(complex(-4,-4))
+	}
+	GlobalC = r
+}
+
+func BenchmarkErfcxComplexLargePositive(b *testing.B) {
+	var r complex128
+	for n := 0; n < b.N; n++ {
+		r = Erfcx(complex(99,123))
+	}
+	GlobalC = r
+}
 
 func BenchmarkErf(b *testing.B) {
 	var r complex128
@@ -83,18 +106,19 @@ func BenchmarkFaddeyeva(b *testing.B) {
 	GlobalC = r
 }
 
-func BenchmarkFresnelC(b *testing.B) {
-	var r complex128
+func BenchmarkFresnel(b *testing.B) {
+	var c complex128  
 	for n := 0; n < b.N; n++ {
-		r = FresnelC(0.9 + 0.4i)
+		c,_ = Fresnel(0.9 + 0.4i)
 	}
-	GlobalC = r
-}
+	GlobalC = c
+} 
 
-func BenchmarkFresnelS(b *testing.B) {
-	var r complex128
+
+func BenchmarkVoigt(b *testing.B) {
+	var r float64  
 	for n := 0; n < b.N; n++ {
-		r = FresnelS(0.9 + 0.4i)
+		r,_ = Voigt(0.9, 0.4)
 	}
-	GlobalC = r
-}
+	GlobalF = r
+} 

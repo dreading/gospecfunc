@@ -66,7 +66,7 @@ func Faddeyeva(z complex128) complex128 {
 		//% For x=0, use the asymptotic expressions for x--->0 from Eq. (6) in the manuscript
 		w = complex(erfcx_y, 0) * (complex(1, xsign*(x/y)))
 	} else {
-		
+
 		var V_old float64 = exp_x_sqr * (erfcx_y*cos_2yx + (two_a_pi/y)*(math.Sin(two_yx/2)*math.Sin(two_yx/2)))
 		var L_old float64 = -erfcx_y + a_pi/y
 		var Sigma3 float64 = Rmin
