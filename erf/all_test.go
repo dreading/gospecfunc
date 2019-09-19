@@ -149,7 +149,7 @@ func TestVoigt(t *testing.T) {
 		x , t, vr, vi float64
 	}{
 		{ 0.5, 0.5, 0.30908537311634493, 0.08227114641287638},
-		{ 0, 0, 1, 0}
+		{ 0, 0, 1, 0},
 	}
 	
 	for _, tc := range testCases {

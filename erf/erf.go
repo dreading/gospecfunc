@@ -43,7 +43,13 @@ func Fresnel(z complex128) (complex128, complex128) {
 }
 
 // Voigt computes approximate values for the real and imaginary Voigt functions: https://dlmf.nist.gov/7.19 
+// Here we use Faddeyeva to provide analytical continuation for all t in R
 func Voigt(x float64, t float64) (float64, float64) {
+	//Limiting values as t -> 0 
+	if (t <= math.Nextafter(0, 1)){
+		var onexx = 1+x*x
+		return 1/onexx, x/onexx
+	}
 	var one2SqrtT = 1/(2 * math.Sqrt(t))
 	var z = complex(one2SqrtT ,  -x * one2SqrtT)
 	var c = complex(math.Sqrt(math.Pi/4*t),0)*Faddeyeva(1i*z)
