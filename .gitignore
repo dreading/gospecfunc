@@ -9,6 +9,7 @@
 !**/*.sum
 !**/*.go
 !**/
+!**/*.yml
 
 # Test binary, build with `go test -c`
 *.test
