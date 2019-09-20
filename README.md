@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dreading/gospecfunc.svg?branch=master)](https://travis-ci.org/dreading/gospecfunc)
+
 # Installation
 The core packages of the gospecfunc suite are written in pure Go. Installation is done using go get.
 ```
