@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v1
 
     - name: Build
-      run: go build -v ./erf
+      run: cd erf; go build -v .
       
     - name: Test
       run: go test -v ./erf
