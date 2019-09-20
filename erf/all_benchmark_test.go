@@ -124,19 +124,3 @@ func BenchmarkVoigt(b *testing.B) {
 	GlobalF = r
 } 
 
-func BenchmarkFresnelC(b *testing.B) {
-	var r complex128
-	for n := 0; n < b.N; n++ {
-		r = FresnelC(0.9 + 0.4i)
-	}
-	GlobalC = r
-}
-
-func BenchmarkFresnelS(b *testing.B) {
-	var r complex128
-	for n := 0; n < b.N; n++ {
-		r = FresnelS(0.9 + 0.4i)
-	}
-	GlobalC = r
-}
-
