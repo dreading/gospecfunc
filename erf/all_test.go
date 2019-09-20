@@ -106,8 +106,8 @@ func TestFaddeyeva(t *testing.T) {
 }
 
 func TestFrenselC(t *testing.T) {
-	testCases := [] struct {
-		x ,y complex128
+	testCases := []struct {
+		x, y complex128
 	}{
 		// extended precision values computed using Mathematica
 		{0.5 + 0.5i, 0.53173595500717020917826034727737322043857351236142204171 + 0.53173595500717020917826034727737322043857351236142204171i},
@@ -123,10 +123,10 @@ func TestFrenselC(t *testing.T) {
 		}
 	}
 }
- 
+
 func TestFrenselS(t *testing.T) {
-	testCases := [] struct {
-		x ,y complex128
+	testCases := []struct {
+		x, y complex128
 	}{
 		// extended precision values computed using Mathematica
 		{0.5 + 0.5i, -0.1367816577291388468638554200956170098637129887108742800 + 0.1367816577291388468638554200956170098637129887108742800i},
@@ -143,27 +143,25 @@ func TestFrenselS(t *testing.T) {
 	}
 }
 
-
 func TestVoigt(t *testing.T) {
-	testCases := [] struct {
-		x , t, vr, vi float64
+	testCases := []struct {
+		x, t, vr, vi float64
 	}{
-		{ 0.5, 0.5, 0.6181707462326899, 0.16454229282575275},
-		{ 1, 1e-34, 0.5, 0.5},
-		{ 0, 0, 1, 0},
+		{0.5, 0.5, 0.6181707462326899, 0.16454229282575275},
+		{1, 1e-34, 0.5, 0.5},
+		{0, 0, 1, 0},
 	}
-	
+
 	for _, tc := range testCases {
 		vr, vi := Voigt(tc.x, tc.t)
 		if veryclose(vr, tc.vr) == false {
-			t.Fatalf("Voigt Real(%v, %v)): expected %v, got %v", tc.x,tc.t, tc.vr, vr)
+			t.Fatalf("Voigt Real(%v, %v)): expected %v, got %v", tc.x, tc.t, tc.vr, vr)
 		}
 		if veryclose(vi, tc.vi) == false {
-			t.Fatalf("Voigt Imag(%v, %v)): expected %v, got %v", tc.x,tc.t, tc.vi, vi)
+			t.Fatalf("Voigt Imag(%v, %v)): expected %v, got %v", tc.x, tc.t, tc.vi, vi)
 		}
 	}
 }
- 
 
 func TestErfcxLargeNegative(t *testing.T) {
 
@@ -180,7 +178,7 @@ func TestErfcxLargeNegative(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		if y := Erfcx(complex(tc.x,0)); soclose(real(y), tc.y, 1e-13) == false {
+		if y := Erfcx(complex(tc.x, 0)); soclose(real(y), tc.y, 1e-13) == false {
 			t.Fatalf("Erfcx(%v): expected %v, got %v", tc.x, tc.y, y)
 		}
 	}
@@ -205,7 +203,7 @@ func TestErfcx(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		if y := Erfcx(complex(tc.x,0)); veryclose(real(y), tc.y) == false {
+		if y := Erfcx(complex(tc.x, 0)); veryclose(real(y), tc.y) == false {
 			t.Fatalf("Erfcx(%v): expected %v, got %v", tc.x, tc.y, y)
 		}
 	}

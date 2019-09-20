@@ -8,7 +8,7 @@ import (
 	. "github.com/dreading/gospecfunc/erf"
 	"testing"
 )
-  
+
 // Global exported variables are used to store the
 // return values of functions measured in the benchmarks.
 // Storing the results in these variables prevents the compiler
@@ -21,7 +21,7 @@ var (
 func BenchmarkErfcxReal(b *testing.B) {
 	var r complex128
 	for n := 0; n < b.N; n++ {
-		r = Erfcx(complex(0.9,0))
+		r = Erfcx(complex(0.9, 0))
 	}
 	GlobalC = r
 }
@@ -29,7 +29,7 @@ func BenchmarkErfcxReal(b *testing.B) {
 func BenchmarkErfcxRealLargeNegative(b *testing.B) {
 	var r complex128
 	for n := 0; n < b.N; n++ {
-		r = Erfcx(complex(-4,0))
+		r = Erfcx(complex(-4, 0))
 	}
 	GlobalC = r
 }
@@ -37,16 +37,15 @@ func BenchmarkErfcxRealLargeNegative(b *testing.B) {
 func BenchmarkErfcxRealLargePositive(b *testing.B) {
 	var r complex128
 	for n := 0; n < b.N; n++ {
-		r = Erfcx(complex(99,0))
+		r = Erfcx(complex(99, 0))
 	}
 	GlobalC = r
 }
 
-
 func BenchmarkErfcxComplex(b *testing.B) {
 	var r complex128
 	for n := 0; n < b.N; n++ {
-		r = Erfcx(complex(0.9,0.5))
+		r = Erfcx(complex(0.9, 0.5))
 	}
 	GlobalC = r
 }
@@ -54,7 +53,7 @@ func BenchmarkErfcxComplex(b *testing.B) {
 func BenchmarkErfcxComplexLargeNegative(b *testing.B) {
 	var r complex128
 	for n := 0; n < b.N; n++ {
-		r = Erfcx(complex(-4,-4))
+		r = Erfcx(complex(-4, -4))
 	}
 	GlobalC = r
 }
@@ -62,7 +61,7 @@ func BenchmarkErfcxComplexLargeNegative(b *testing.B) {
 func BenchmarkErfcxComplexLargePositive(b *testing.B) {
 	var r complex128
 	for n := 0; n < b.N; n++ {
-		r = Erfcx(complex(99,123))
+		r = Erfcx(complex(99, 123))
 	}
 	GlobalC = r
 }
@@ -108,19 +107,17 @@ func BenchmarkFaddeyeva(b *testing.B) {
 }
 
 func BenchmarkFresnel(b *testing.B) {
-	var c complex128  
+	var c complex128
 	for n := 0; n < b.N; n++ {
-		c,_ = Fresnel(0.9 + 0.4i)
+		c, _ = Fresnel(0.9 + 0.4i)
 	}
 	GlobalC = c
-} 
-
+}
 
 func BenchmarkVoigt(b *testing.B) {
-	var r float64  
+	var r float64
 	for n := 0; n < b.N; n++ {
-		r,_ = Voigt(0.9, 0.4)
+		r, _ = Voigt(0.9, 0.4)
 	}
 	GlobalF = r
-} 
-
+}

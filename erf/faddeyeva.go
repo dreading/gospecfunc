@@ -17,13 +17,13 @@ func Faddeyeva(z complex128) complex128 {
 	// The code below are based on Algorithm 916: Computing the Faddeyeva and Voigt Functions
 	// by Zaghloul, Mofreh R. and Ali, Ahmed N. in ACM Trans. Math. Softw. December 2011 Vol 38 No 2 Jan 2012
 	// http://doi.acm.org/10.1145/2049673.2049679. The go code is a port of the original matlab code.
-	
-	//For purely imaginary input values 
+
+	//For purely imaginary input values
 	if IsReal(1i * z) {
 		return complex(libcerf.Erfcx(imag(z)), 0)
 	}
 
-	var Rmin float64 = 1/math.MaxFloat64 //Nextafter(0, 1)
+	var Rmin float64 = 1 / math.MaxFloat64 //Nextafter(0, 1)
 	var sqrt_log_Rmin float64 = math.Sqrt(-math.Log(Rmin))
 
 	//Faddeyeva cannot calculate w for y negative & exp(y^2-x^2)>=the largest
@@ -31,7 +31,7 @@ func Faddeyeva(z complex128) complex128 {
 	if imag(z) < 0 && (imag(z)*imag(z)-real(z)*real(z)) >= sqrt_log_Rmin*sqrt_log_Rmin {
 		return cmplx.Inf()
 	}
-	
+
 	var eps float64 = 1e-16
 	var tiny float64 = 0.6447 * eps
 	var a float64 = math.Sqrt(-1 * math.Pi * math.Pi / math.Log(tiny/2))
@@ -77,7 +77,7 @@ func Faddeyeva(z complex128) complex128 {
 		var n float64 = 0
 		var n3 float64 = math.Ceil(x / a)
 		var n3_3 = n3 - 1
-		
+
 		if (sqrt_log_Rmin - x) > 0 {
 			var Sigma1 float64 = Rmin
 			var Sigma2 float64 = Rmin
@@ -130,7 +130,7 @@ func Faddeyeva(z complex128) complex128 {
 				n3 = n3 + 1
 				n3_3 = n3_3 - 1
 			}
-			
+
 			if y <= 5e0 && two_yx > Rmin {
 				var w_real = V_old + y*two_a_pi*(-cos_2yx*exp_x_sqr*Sigma1+0.5*(Sigma2+Sigma3))
 				var w_imag = xsign * (sin_2yx*exp_x_sqr*(L_old+two_a_pi*y*Sigma1) + two_a_pi*half_a*Sigma4_5)
@@ -174,7 +174,7 @@ func Faddeyeva(z complex128) complex128 {
 			var w_imag = xsign * (sin_2yx*exp_x_sqr*L_old + two_a_pi*half_a*Sigma5)
 			w = complex(w_real, w_imag)
 
-		} else {	
+		} else {
 			var w_real = one_sqrt_pi * (y / (x_sqr + y_sqr))
 			var w_imag = one_sqrt_pi * (xsign * x / (x_sqr + y_sqr))
 			w = complex(w_real, w_imag)
