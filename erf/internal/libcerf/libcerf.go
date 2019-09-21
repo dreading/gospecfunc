@@ -69,9 +69,9 @@ import "math"
 // Performance-wise, it seems to be substantially faster than either
 // the SLATEC DERFC function [or an erfcx function derived therefrom]
 // or Cody's CALERF function (from netlib.org/specfun), while
-// retaining near machine precision in accuracy.	
+// retaining near machine precision in accuracy.
 func Erfcx(x float64) float64 {
-	
+
 	const (
 		ispi = 0.56418958354775628694807945156 // 0x3FE62E42FEFA39EF
 	)

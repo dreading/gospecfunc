@@ -71,10 +71,10 @@ func Faddeyeva(z complex128) complex128 {
 		var lOld float64 = -erfcxY + aPi/y
 		var Sigma3 float64 = Rmin
 		var Sigma5 float64 = Rmin
-		var Sigma45 float64 
+		var Sigma45 float64
 		var delta3 float64 = 1
 		var delta5 float64 = 1
-		var n float64 
+		var n float64
 		var n3 float64 = math.Ceil(x / a)
 		var n33 = n3 - 1
 
@@ -124,25 +124,25 @@ func Faddeyeva(z complex128) complex128 {
 				if x >= 5e-4 {
 					Sigma45 = -Sigma4 + Sigma5
 				} else {
-					var twoAXn_2 float64 = twoAX * n * twoAX * n
-					Sigma45 = Sigma45 + 2*n*n*twoAX*expXSqr*expDel1*(1+1.666666666666667e-001*(twoAXn_2)+8.333333333333333e-003*(twoAXn_2)*(twoAXn_2))
+					var twoAXn2 float64 = twoAX * n * twoAX * n
+					Sigma45 = Sigma45 + 2*n*n*twoAX*expXSqr*expDel1*(1+1.666666666666667e-001*(twoAXn2)+8.333333333333333e-003*(twoAXn2)*(twoAXn2))
 				}
 				n3 = n3 + 1
 				n33 = n33 - 1
 			}
 
 			if y <= 5e0 && twoYx > Rmin {
-				var w_real = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+0.5*(Sigma2+Sigma3))
-				var w_imag = xsign * (sin2yx*expXSqr*(lOld+twoAPi*y*Sigma1) + twoAPi*halfA*Sigma45)
-				w = complex(w_real, w_imag)
+				var wReal = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+0.5*(Sigma2+Sigma3))
+				var wImag = xsign * (sin2yx*expXSqr*(lOld+twoAPi*y*Sigma1) + twoAPi*halfA*Sigma45)
+				w = complex(wReal, wImag)
 			} else if y <= 5e0 && twoYx <= Rmin {
-				var w_real = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+.5*(Sigma2+Sigma3))
-				var w_imag = xsign * (2*y*expXSqr*(x*lOld+x*twoAPi*y*Sigma1) + twoAPi*halfA*Sigma45)
-				w = complex(w_real, w_imag)
+				var wReal = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+.5*(Sigma2+Sigma3))
+				var wImag = xsign * (2*y*expXSqr*(x*lOld+x*twoAPi*y*Sigma1) + twoAPi*halfA*Sigma45)
+				w = complex(wReal, wImag)
 			} else {
-				var w_real = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+0.5*(Sigma2+Sigma3))
-				var w_imag = xsign * (sin2yx*expXSqr*math.Min(0, math.Abs(lOld+(twoAPi*y*Sigma1))) + twoAPi*halfA*Sigma45)
-				w = complex(w_real, w_imag)
+				var wReal = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+0.5*(Sigma2+Sigma3))
+				var wImag = xsign * (sin2yx*expXSqr*math.Min(0, math.Abs(lOld+(twoAPi*y*Sigma1))) + twoAPi*halfA*Sigma45)
+				w = complex(wReal, wImag)
 			}
 
 		} else if x >= sqrtLogRmin && x < 1e15 {
@@ -170,22 +170,22 @@ func Faddeyeva(z complex128) complex128 {
 				n33 = n33 - 1
 			}
 
-			var w_real = vOld + y*aPi*Sigma3
-			var w_imag = xsign * (sin2yx*expXSqr*lOld + twoAPi*halfA*Sigma5)
-			w = complex(w_real, w_imag)
+			var wReal = vOld + y*aPi*Sigma3
+			var wImag = xsign * (sin2yx*expXSqr*lOld + twoAPi*halfA*Sigma5)
+			w = complex(wReal, wImag)
 
 		} else {
-			var w_real = oneSqrtPi * (y / (xSqr + ySqr))
-			var w_imag = oneSqrtPi * (xsign * x / (xSqr + ySqr))
-			w = complex(w_real, w_imag)
+			var wReal = oneSqrtPi * (y / (xSqr + ySqr))
+			var wImag = oneSqrtPi * (xsign * x / (xSqr + ySqr))
+			w = complex(wReal, wImag)
 		}
 	}
 
 	if ysign < 0 {
 		var two_expXSqr_ysqr = 2 * math.Exp(-xSqr+ySqr)
-		var w_real = two_expXSqr_ysqr*cos2yx - real(w)
-		var w_imag = xsign*two_expXSqr_ysqr*sin2yx + imag(w)
-		w = complex(w_real, w_imag)
+		var wReal = two_expXSqr_ysqr*cos2yx - real(w)
+		var wImag = xsign*two_expXSqr_ysqr*sin2yx + imag(w)
+		w = complex(wReal, wImag)
 	}
 
 	return w
