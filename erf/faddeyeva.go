@@ -182,19 +182,21 @@ func Faddeyeva(z complex128) complex128 {
 	}
 
 	if ysign < 0 {
-		var two_expXSqr_ysqr = 2 * math.Exp(-xSqr+ySqr)
-		var wReal = two_expXSqr_ysqr*cos2yx - real(w)
-		var wImag = xsign*two_expXSqr_ysqr*sin2yx + imag(w)
+		var twoExpXSqrYsqr = 2 * math.Exp(-xSqr+ySqr)
+		var wReal = twoExpXSqrYsqr*cos2yx - real(w)
+		var wImag = xsign*twoExpXSqrYsqr*sin2yx + imag(w)
 		w = complex(wReal, wImag)
 	}
 
 	return w
 }
 
+// IsReal returns true if the complex number is real
 func IsReal(cmplx complex128) bool {
 	return imag(cmplx) == 0
 }
 
+// Sign returns the sign of float
 func Sign(x float64) float64 {
 	switch {
 	case math.IsNaN(x):

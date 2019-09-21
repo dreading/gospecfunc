@@ -36,7 +36,8 @@
 //
 // Website:
 //   http://apps.jcns.fz-juelich.de/libcerf
-//
+
+
 package libcerf
 
 import "math"
