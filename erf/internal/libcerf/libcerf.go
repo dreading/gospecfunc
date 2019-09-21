@@ -1,7 +1,7 @@
 // Copyright 2019 Infin IT Pty Ltd. All rights reserved.
+//
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
-
 // The original C code, the long comment, and the constants below are from
 // https://jugit.fz-juelich.de/mlz/libcerf/blob/master/lib/erfcx.c
 // and came with this notice. The go code is a port of the original C.
@@ -41,35 +41,37 @@ package libcerf
 
 import "math"
 
+// Erfcx computes the scaled complementary error function erfcx(x) = exp(x*x) * erfc(x).
+//
+// The implementation based on Steven G. Johnson and Joachim Wuttke algorithm.
+//
+// This function combines a few different ideas.
+// First, for x > 50, it uses a continued-fraction expansion (same as
+// for the Faddeeva function, but with algebraic simplifications for z=i*x).
+//
+// Second, for 0 <= x <= 50, it uses Chebyshev polynomial approximations,
+// but with two twists:
+//
+// a) It maps x to y = 4 / (4+x) in [0,1].  This simple transformation,
+// inspired by a similar transformation in the octave-forge/specfun
+// erfcx by Soren Hauberg, results in much faster Chebyshev convergence
+// than other simple transformations I have examined.
+//
+// b) Instead of using a single Chebyshev polynomial for the entire
+// [0,1] y interval, we break the interval up into 100 equal
+// subintervals, with a switch/lookup table, and use much lower
+// degree Chebyshev polynomials in each subinterval. This greatly
+// improves performance in my tests.
+//
+// For x < 0, we use the relationship erfcx(-x) = 2 exp(x^2) - erfc(x),
+// with the usual checks for overflow etcetera.
+//
+// Performance-wise, it seems to be substantially faster than either
+// the SLATEC DERFC function [or an erfcx function derived therefrom]
+// or Cody's CALERF function (from netlib.org/specfun), while
+// retaining near machine precision in accuracy.	
 func Erfcx(x float64) float64 {
-	// Erfcx computes the scaled complementary error function erfcx(x) = exp(x*x) * erfc(x).
-	// The implementation based on Steven G. Johnson and Joachim Wuttke algorithm.
-	//
-	// This function combines a few different ideas.
-	// First, for x > 50, it uses a continued-fraction expansion (same as
-	// for the Faddeeva function, but with algebraic simplifications for z=i*x).
-	//
-	// Second, for 0 <= x <= 50, it uses Chebyshev polynomial approximations,
-	// but with two twists:
-	//
-	// a) It maps x to y = 4 / (4+x) in [0,1].  This simple transformation,
-	// inspired by a similar transformation in the octave-forge/specfun
-	// erfcx by Soren Hauberg, results in much faster Chebyshev convergence
-	// than other simple transformations I have examined.
-	//
-	// b) Instead of using a single Chebyshev polynomial for the entire
-	// [0,1] y interval, we break the interval up into 100 equal
-	// subintervals, with a switch/lookup table, and use much lower
-	// degree Chebyshev polynomials in each subinterval. This greatly
-	// improves performance in my tests.
-	//
-	// For x < 0, we use the relationship erfcx(-x) = 2 exp(x^2) - erfc(x),
-	// with the usual checks for overflow etcetera.
-	//
-	// Performance-wise, it seems to be substantially faster than either
-	// the SLATEC DERFC function [or an erfcx function derived therefrom]
-	// or Cody's CALERF function (from netlib.org/specfun), while
-	// retaining near machine precision in accuracy.
+	
 	const (
 		ispi = 0.56418958354775628694807945156 // 0x3FE62E42FEFA39EF
 	)
@@ -85,18 +87,19 @@ func Erfcx(x float64) float64 {
 			ispi / (x+0.5/(x+1/(x+1.5/(x+2/x))))  */
 			return ispi * ((x*x)*(x*x+4.5) + 2) / (x * ((x*x)*(x*x+5) + 3.75))
 		}
-		return Erfcx_y100(400 / (4 + x))
+		return ErfcxY100(400 / (4 + x))
 	} else if x < -26.7 {
 		return math.Inf(1)
 	} else if x < -6.1 {
 		return 2 * math.Exp(x*x)
 	} else {
-		return 2*math.Exp(x*x) - Erfcx_y100(400/(4-x))
+		return 2*math.Exp(x*x) - ErfcxY100(400/(4-x))
 	}
 
 }
 
-func Erfcx_y100(y100 float64) float64 {
+//ErfcxY100 uses y100=100*y, where y = 4/(4+x) for x >= 0 to compute erfc(x).
+func ErfcxY100(y100 float64) float64 {
 
 	// Given y100=100*y, where y = 4/(4+x) for x >= 0, compute erfc(x).
 	//
