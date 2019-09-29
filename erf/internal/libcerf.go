@@ -2,6 +2,7 @@
 //
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
+//
 // The original C code, the long comment, and the constants below are from
 // https://jugit.fz-juelich.de/mlz/libcerf/blob/master/lib/erfcx.c
 // and came with this notice. The go code is a port of the original C.

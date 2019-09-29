@@ -5,7 +5,7 @@
 package erf
 
 import (
-	"github.com/dreading/gospecfunc/erf/internal/libcerf"
+	"github.com/dreading/gospecfunc/erf/internal"
 	"math"
 	"math/cmplx"
 )
