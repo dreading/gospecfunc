@@ -48,3 +48,37 @@ func BenchmarkAiryAiLargeNegative(b *testing.B) {
 	}
 	GlobalC = ζ
 }
+
+
+func BenchmarkAiryBi(b *testing.B) {
+	var ζ complex128
+	for n := 0; n < b.N; n++ {
+		ζ = AiryBi(0.8 + 5i)
+	}
+	GlobalC = ζ
+}
+
+func BenchmarkAiryBiNearZero(b *testing.B) {
+	var ζ complex128
+	for n := 0; n < b.N; n++ {
+		ζ = AiryBi(0.001 + 0.00005i)
+	}
+	GlobalC = ζ
+}
+
+func BenchmarkAiryBiLarge(b *testing.B) {
+	var ζ complex128
+	for n := 0; n < b.N; n++ {
+		ζ = AiryBi(20.2 + 33.22i)
+	}
+	GlobalC = ζ
+}
+
+func BenchmarkAiryBiLargeNegative(b *testing.B) {
+	var ζ complex128
+	for n := 0; n < b.N; n++ {
+		ζ = AiryBi(-20.2 - 33.22i)
+	}
+	GlobalC = ζ
+}
+

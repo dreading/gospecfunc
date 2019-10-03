@@ -32,6 +32,25 @@ func TestAiryAi(t *testing.T) {
 	}
 }
 
+func TestAiryBi(t *testing.T) {
+	testCases := []struct {
+		x, y complex128
+	}{
+		// extended precision values computed using Mathematica
+		{5, 657.7920441711711824410805788744438785563124063292868570873},
+	}
+
+	for _, tc := range testCases {
+		ζ := AiryBi(tc.x)
+		if soclose(real(ζ), real(tc.y), 1e-13) == false {
+			t.Fatalf("real(AiryBi(%v)): expected %v, got %v", tc.x, real(tc.y), real(ζ))
+		}
+		if soclose(imag(ζ), imag(tc.y), 1e-13) == false {
+			t.Fatalf("imag(AiryBi(%v)): expected %v, got %v", tc.x, imag(tc.y), imag(ζ))
+		}
+	}
+}
+
 // The floating point comparison tests are copied from from math/all_test.go.
 func tolerance(a, b, e float64) bool {
 	// Multiplying by e here can underflow denormal values to zero.

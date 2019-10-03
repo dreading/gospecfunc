@@ -12,3 +12,8 @@ func AiryAi(z complex128) complex128 {
 	air, aii, _, _ := amos.ZAIRY(real(z), imag(z), 0, 1)
 	return complex(air, aii)
 }
+
+func AiryBi(z complex128) complex128 {
+	bir, bii, _ := amos.ZBIRY(real(z), imag(z), 0, 1)
+	return complex(bir, bii)
+}
