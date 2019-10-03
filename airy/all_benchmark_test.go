@@ -49,7 +49,6 @@ func BenchmarkAiryAiLargeNegative(b *testing.B) {
 	GlobalC = ζ
 }
 
-
 func BenchmarkAiryBi(b *testing.B) {
 	var ζ complex128
 	for n := 0; n < b.N; n++ {
@@ -81,4 +80,3 @@ func BenchmarkAiryBiLargeNegative(b *testing.B) {
 	}
 	GlobalC = ζ
 }
-
