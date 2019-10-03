@@ -22,7 +22,7 @@ func TestAiryAi(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		ζ := AiryAi(tc.x)
+		ζ := Ai(tc.x)
 		if soclose(real(ζ), real(tc.y), 1e-13) == false {
 			t.Fatalf("real(AiryAi(%v)): expected %v, got %v", tc.x, real(tc.y), real(ζ))
 		}
@@ -41,7 +41,7 @@ func TestAiryBi(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		ζ := AiryBi(tc.x)
+		ζ := Bi(tc.x)
 		if soclose(real(ζ), real(tc.y), 1e-13) == false {
 			t.Fatalf("real(AiryBi(%v)): expected %v, got %v", tc.x, real(tc.y), real(ζ))
 		}

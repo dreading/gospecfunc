@@ -10,13 +10,11 @@ go get -u github.com/dreading/gospecfunc
 
 # Testing 
 ```
- cd erf
- go test 
+ go test ./*/. 
 ```
 # Benchmarking
 ```
- cd erf
- go test -bench=.
+ go test -bench=. ./*/.
 ```
 # License
 Original code is licensed under the Gonum License found in the LICENSE file. Portions of the code are subject to the additional licenses found in THIRD_PARTY_LICENSES.  

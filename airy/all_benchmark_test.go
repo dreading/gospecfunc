@@ -20,7 +20,7 @@ var (
 func BenchmarkAiryAi(b *testing.B) {
 	var ζ complex128
 	for n := 0; n < b.N; n++ {
-		ζ = AiryAi(0.8 + 5i)
+		ζ = Ai(0.8 + 5i)
 	}
 	GlobalC = ζ
 }
@@ -28,7 +28,7 @@ func BenchmarkAiryAi(b *testing.B) {
 func BenchmarkAiryAiNearZero(b *testing.B) {
 	var ζ complex128
 	for n := 0; n < b.N; n++ {
-		ζ = AiryAi(0.001 + 0.00005i)
+		ζ = Ai(0.001 + 0.00005i)
 	}
 	GlobalC = ζ
 }
@@ -36,7 +36,7 @@ func BenchmarkAiryAiNearZero(b *testing.B) {
 func BenchmarkAiryAiLarge(b *testing.B) {
 	var ζ complex128
 	for n := 0; n < b.N; n++ {
-		ζ = AiryAi(20.2 + 33.22i)
+		ζ = Ai(20.2 + 33.22i)
 	}
 	GlobalC = ζ
 }
@@ -44,7 +44,7 @@ func BenchmarkAiryAiLarge(b *testing.B) {
 func BenchmarkAiryAiLargeNegative(b *testing.B) {
 	var ζ complex128
 	for n := 0; n < b.N; n++ {
-		ζ = AiryAi(-20.2 - 33.22i)
+		ζ = Ai(-20.2 - 33.22i)
 	}
 	GlobalC = ζ
 }
@@ -52,7 +52,7 @@ func BenchmarkAiryAiLargeNegative(b *testing.B) {
 func BenchmarkAiryBi(b *testing.B) {
 	var ζ complex128
 	for n := 0; n < b.N; n++ {
-		ζ = AiryBi(0.8 + 5i)
+		ζ = Bi(0.8 + 5i)
 	}
 	GlobalC = ζ
 }
@@ -60,7 +60,7 @@ func BenchmarkAiryBi(b *testing.B) {
 func BenchmarkAiryBiNearZero(b *testing.B) {
 	var ζ complex128
 	for n := 0; n < b.N; n++ {
-		ζ = AiryBi(0.001 + 0.00005i)
+		ζ = Bi(0.001 + 0.00005i)
 	}
 	GlobalC = ζ
 }
@@ -68,7 +68,7 @@ func BenchmarkAiryBiNearZero(b *testing.B) {
 func BenchmarkAiryBiLarge(b *testing.B) {
 	var ζ complex128
 	for n := 0; n < b.N; n++ {
-		ζ = AiryBi(20.2 + 33.22i)
+		ζ = Bi(20.2 + 33.22i)
 	}
 	GlobalC = ζ
 }
@@ -76,7 +76,7 @@ func BenchmarkAiryBiLarge(b *testing.B) {
 func BenchmarkAiryBiLargeNegative(b *testing.B) {
 	var ζ complex128
 	for n := 0; n < b.N; n++ {
-		ζ = AiryBi(-20.2 - 33.22i)
+		ζ = Bi(-20.2 - 33.22i)
 	}
 	GlobalC = ζ
 }
