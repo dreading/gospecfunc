@@ -85,7 +85,23 @@ func BenchmarkAiryBiLargeNegative(b *testing.B) {
 func BenchmarkAiryIntegral(b *testing.B) {
 	var ζ float64
 	for n := 0; n < b.N; n++ {
-		ζ = AiInt(-20.2)
+		ζ = AiInt(0.12)
+	}
+	GlobalF = ζ
+}
+
+func BenchmarkAiryGi(b *testing.B) {
+	var ζ float64
+	for n := 0; n < b.N; n++ {
+		ζ = Gi(3.2)
+	}
+	GlobalF = ζ
+}
+
+func BenchmarkAiryHi(b *testing.B) {
+	var ζ float64
+	for n := 0; n < b.N; n++ {
+		ζ = Hi(3.2)
 	}
 	GlobalF = ζ
 }

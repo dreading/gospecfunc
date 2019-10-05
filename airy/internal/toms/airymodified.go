@@ -21,7 +21,6 @@ import (
 //    ∫  0 to x Ai(t) dt
 // The code uses Chebyshev expansions with the coefficients
 // given to an accuracy of 20 decimal places.
-// If XVALUE < 0.0, the function returns NaN
 func AIRINT(XVALUE float64) float64 {
 
 	const (
@@ -243,6 +242,515 @@ func AIRINT(XVALUE float64) float64 {
 			HVAL = misc.Cheval(NTERM5, AAINT5, T)
 			TEMP = GVAL*math.Cos(ARG) + HVAL*math.Sin(ARG)/Z
 			RET = RT2B3P*TEMP/math.Sqrt(Z) - TWO/THREE
+		}
+	}
+	return RET
+}
+
+// AIRYGI calculates the modified Airy function Gi(x)
+//    ∫  0 to infinity sin(x*t+t^3/3) dt  / pi
+// The code uses Chebyshev expansions with the coefficients
+// given to an accuracy of 20 decimal places.
+func AIRYGI(XVALUE float64) float64 {
+
+	const (
+		ZERO   = 0.0e0
+		ONE    = 1.0e0
+		THREE  = 3.0e0
+		FOUR   = 4.0e0
+		FIVE   = 5.0e0
+		SEVEN  = 7.0e0
+		MINATE = -8.0e0
+		NINE   = 9.0e0
+		TWENT8 = 28.0e0
+		SEVEN2 = 72.0e0
+		ONEHUN = 100.0e0
+		ONE76  = 176.0e0
+		FIVE14 = 514.0e0
+		ONE024 = 1024.0e0
+		TWELHU = 1200.0e0
+		GIZERO = 0.20497554248200024505e0
+		ONEBPI = 0.31830988618379067154e0
+		PIBY4  = 0.78539816339744830962e0
+		RTPIIN = 0.56418958354775628695e0
+	)
+
+	var NTERM1, NTERM2, NTERM3, NTERM4, NTERM5, NTERM6 int
+
+	var ARG, BI, CHEB1, CHEB2, COSZ, RET, SINZ, T, TEMP, X, XCUBE, XHIGH1, XHIGH2, XHIGH3, XLOW1, XMINUS, Z, ZETA float64
+
+	var ARGIP1 = []float64{
+		0.26585770795022745082e0,
+		-0.10500333097501922907e0,
+		0.841347475328454492e-2,
+		0.2021067387813439541e-1,
+		-0.1559576113863552234e-1,
+		0.564342939043256481e-2,
+		-0.59776844826655809e-3,
+		-0.42833850264867728e-3,
+		0.22605662380909027e-3,
+		-0.3608332945592260e-4,
+		-0.785518988788901e-5,
+		0.473252480746370e-5,
+		-0.59743513977694e-6,
+		-0.15917609165602e-6,
+		0.6336129065570e-7,
+		-0.276090232648e-8,
+		-0.256064154085e-8,
+		0.47798676856e-9,
+		0.4488131863e-10,
+		-0.2346508882e-10,
+		0.76839085e-12,
+		0.73227985e-12,
+		-0.8513687e-13,
+		-0.1630201e-13,
+		0.356769e-14,
+		0.25001e-15,
+		-0.10859e-15,
+		-0.158e-17,
+		0.275e-17,
+		-0.5e-19,
+		-0.6e-19}
+
+	var ARGIP2 = []float64{
+		2.00473712275801486391e0,
+		0.294184139364406724e-2,
+		0.71369249006340167e-3,
+		0.17526563430502267e-3,
+		0.4359182094029882e-4,
+		0.1092626947604307e-4,
+		0.272382418399029e-5,
+		0.66230900947687e-6,
+		0.15425323370315e-6,
+		0.3418465242306e-7,
+		0.728157724894e-8,
+		0.151588525452e-8,
+		0.30940048039e-9,
+		0.6149672614e-10,
+		0.1202877045e-10,
+		0.233690586e-11,
+		0.43778068e-12,
+		0.7996447e-13,
+		0.1494075e-13,
+		0.246790e-14,
+		0.37672e-15,
+		0.7701e-16,
+		0.354e-17,
+		-0.49e-18,
+		0.62e-18,
+		-0.40e-18,
+		-0.1e-19,
+		0.2e-19,
+		-0.3e-19,
+		0.1e-19}
+
+	var ARGIN1 = []float64{
+		-0.20118965056732089130e0,
+		-0.7244175303324530499e-1,
+		0.4505018923894780120e-1,
+		-0.24221371122078791099e0,
+		0.2717884964361678294e-1,
+		-0.5729321004818179697e-1,
+		-0.18382107860337763587e0,
+		0.7751546082149475511e-1,
+		0.18386564733927560387e0,
+		0.2921504250185567173e-1,
+		-0.6142294846788018811e-1,
+		-0.2999312505794616238e-1,
+		0.585937118327706636e-2,
+		0.822221658497402529e-2,
+		0.132579817166846893e-2,
+		-0.96248310766565126e-3,
+		-0.45065515998211807e-3,
+		0.772423474325474e-5,
+		0.5481874134758052e-4,
+		0.1245898039742876e-4,
+		-0.246196891092083e-5,
+		-0.169154183545285e-5,
+		-0.16769153169442e-6,
+		0.9636509337672e-7,
+		0.3253314928030e-7,
+		0.5091804231e-10,
+		-0.209180453553e-8,
+		-0.41237387870e-9,
+		0.4163338253e-10,
+		0.3032532117e-10,
+		0.340580529e-11,
+		-0.88444592e-12,
+		-0.31639612e-12,
+		-0.1505076e-13,
+		0.1104148e-13,
+		0.246508e-14,
+		-0.3107e-16,
+		-0.9851e-16,
+		-0.1453e-16,
+		0.118e-17,
+		0.67e-18,
+		0.6e-19,
+		-0.1e-19}
+
+	var ARBIN1 = []float64{
+		1.99983763583586155980e0,
+		-0.8104660923669418e-4,
+		0.13475665984689e-6,
+		-0.70855847143e-9,
+		0.748184187e-11,
+		-0.12902774e-12,
+		0.322504e-14,
+		-0.10809e-15,
+		0.460e-17,
+		-0.24e-18,
+		0.1e-19}
+
+	var ARBIN2 = []float64{
+		0.13872356453879120276e0,
+		-0.8239286225558228e-4,
+		0.26720919509866e-6,
+		-0.207423685368e-8,
+		0.2873392593e-10,
+		-0.60873521e-12,
+		0.1792489e-13,
+		-0.68760e-15,
+		0.3280e-16,
+		-0.188e-17,
+		0.13e-18,
+		-0.1e-19}
+
+	var ARHIN1 = []float64{
+		1.99647720399779650525e0,
+		-0.187563779407173213e-2,
+		-0.12186470897787339e-3,
+		-0.814021609659287e-5,
+		-0.55050925953537e-6,
+		-0.3763008043303e-7,
+		-0.258858362365e-8,
+		-0.17931829265e-9,
+		-0.1245916873e-10,
+		-0.87171247e-12,
+		-0.6084943e-13,
+		-0.431178e-14,
+		-0.29787e-15,
+		-0.2210e-16,
+		-0.136e-17,
+		-0.14e-18}
+
+	X = XVALUE
+	Z = machine.D1MACH[3]
+	XLOW1 = Z
+	ARG = machine.D1MACH[4]
+	XHIGH1 = ONE / ARG
+	XHIGH1 = math.Pow(XHIGH1+XHIGH1, ONE/THREE)
+
+	if X < -XHIGH1*XHIGH1 {
+		return ZERO
+	}
+
+	T = ARG / ONEHUN
+	if X >= ZERO {
+		NTERM1 = 30
+		NTERM2 = 29
+		TEMP = FOUR * PIBY4
+		XHIGH2 = ONE / (TEMP * machine.D1MACH[1])
+	} else {
+		NTERM3 = 42
+		NTERM4 = 10
+		NTERM5 = 11
+		NTERM6 = 15
+		TEMP = ONE / Z
+		XHIGH3 = MINATE * math.Pow(TEMP+TEMP, ONE/THREE)
+	}
+	// Code for x >= 0.0
+	if X >= ZERO {
+		if X <= SEVEN {
+			if X < XLOW1 {
+				RET = GIZERO
+			} else {
+				T = (NINE*X - TWENT8) / (X + TWENT8)
+				RET = misc.Cheval(NTERM1, ARGIP1, T)
+			}
+		} else {
+			if X > XHIGH1 {
+				if X > XHIGH2 {
+					RET = ZERO
+				} else {
+					RET = ONEBPI / X
+				}
+			} else {
+				XCUBE = X * X * X
+				T = (TWELHU - XCUBE) / (FIVE14 + XCUBE)
+				RET = ONEBPI * misc.Cheval(NTERM2, ARGIP2, T) / X
+			}
+		}
+	} else {
+		// Code for x < 0.0
+		if X >= MINATE {
+			if X > -XLOW1 {
+				RET = GIZERO
+			} else {
+				T = -(X + FOUR) / FOUR
+				RET = misc.Cheval(NTERM3, ARGIN1, T)
+			}
+		} else {
+			XMINUS = -X
+			T = XMINUS * math.Sqrt(XMINUS)
+			ZETA = (T + T) / THREE
+			TEMP = RTPIIN / math.Sqrt(math.Sqrt(XMINUS))
+			COSZ = math.Cos(ZETA + PIBY4)
+			SINZ = math.Sin(ZETA+PIBY4) / ZETA
+			XCUBE = X * X * X
+			if X > XHIGH3 {
+				T = -(ONE024/(XCUBE) + ONE)
+				CHEB1 = misc.Cheval(NTERM4, ARBIN1, T)
+				CHEB2 = misc.Cheval(NTERM5, ARBIN2, T)
+				BI = (COSZ*CHEB1 + SINZ*CHEB2) * TEMP
+			} else {
+				BI = (COSZ + SINZ*FIVE/SEVEN2) * TEMP
+			}
+			T = (XCUBE + TWELHU) / (ONE76 - XCUBE)
+			RET = BI + misc.Cheval(NTERM6, ARHIN1, T)*ONEBPI/X
+		}
+	}
+	return RET
+}
+
+// AIRYHI calculates the modified Airy function Hi(x),
+//    ∫  0 to infinity exp(x*t-t^3/3) dt  / pi
+// The code uses Chebyshev expansions with the coefficients
+// given to an accuracy of 20 decimal places.
+// If x is too large, then the asymptotic expansion of Hi(x) will cause an overflow
+// and the function returns NaN
+func AIRYHI(XVALUE float64) float64 {
+
+	const (
+		ZERO   = 0.0e0
+		ONE    = 1.0e0
+		TWO    = 2.0e0
+		THREE  = 3.0e0
+		FOUR   = 4.0e0
+		SEVEN  = 7.0e0
+		MINATE = -8.0e0
+		TWELVE = 12.0e0
+		ONEHUN = 100.0e0
+		ONE76  = 176.0e0
+		THRE43 = 343.0e0
+		FIVE14 = 514.0e0
+		ONE024 = 1024.0e0
+		TWELHU = 1200.0e0
+		HIZERO = 0.40995108496400049010e0
+		LNRTPI = 0.57236494292470008707e0
+		ONEBPI = 0.31830988618379067154e0
+		PIBY4  = 0.78539816339744830962e0
+		RTPIIN = 0.56418958354775628695e0
+	)
+	var NTERM1, NTERM2, NTERM3, NTERM4, NTERM5 int
+	var BI, GI, RET, T, TEMP, X, XCUBE, XHIGH1, XLOW1, XMAX, XNEG1, XNEG2, Z, ZETA float64
+
+	var ARHIP = []float64{
+		1.24013562561762831114e0,
+		0.64856341973926535804e0,
+		0.55236252592114903246e0,
+		0.20975122073857566794e0,
+		0.12025669118052373568e0,
+		0.3768224931095393785e-1,
+		0.1651088671548071651e-1,
+		0.455922755211570993e-2,
+		0.161828480477635013e-2,
+		0.40841282508126663e-3,
+		0.12196479721394051e-3,
+		0.2865064098657610e-4,
+		0.742221556424344e-5,
+		0.163536231932831e-5,
+		0.37713908188749e-6,
+		0.7815800336008e-7,
+		0.1638447121370e-7,
+		0.319857665992e-8,
+		0.61933905307e-9,
+		0.11411161191e-9,
+		0.2064923454e-10,
+		0.360018664e-11,
+		0.61401849e-12,
+		0.10162125e-12,
+		0.1643701e-13,
+		0.259084e-14,
+		0.39931e-15,
+		0.6014e-16,
+		0.886e-17,
+		0.128e-17,
+		0.18e-18,
+		0.3e-19}
+
+	var ARBIP = []float64{
+		2.00582138209759064905e0,
+		0.294478449170441549e-2,
+		0.3489754514775355e-4,
+		0.83389733374343e-6,
+		0.3136215471813e-7,
+		0.167865306015e-8,
+		0.12217934059e-9,
+		0.1191584139e-10,
+		0.154142553e-11,
+		0.24844455e-12,
+		0.4213012e-13,
+		0.505293e-14,
+		-0.60032e-15,
+		-0.65474e-15,
+		-0.22364e-15,
+		-0.3015e-16,
+		0.959e-17,
+		0.616e-17,
+		0.97e-18,
+		-0.37e-18,
+		-0.21e-18,
+		-0.1e-19,
+		0.2e-19,
+		0.1e-19}
+
+	var ARGIP1 = []float64{
+		2.00473712275801486391e0,
+		0.294184139364406724e-2,
+		0.71369249006340167e-3,
+		0.17526563430502267e-3,
+		0.4359182094029882e-4,
+		0.1092626947604307e-4,
+		0.272382418399029e-5,
+		0.66230900947687e-6,
+		0.15425323370315e-6,
+		0.3418465242306e-7,
+		0.728157724894e-8,
+		0.151588525452e-8,
+		0.30940048039e-9,
+		0.6149672614e-10,
+		0.1202877045e-10,
+		0.233690586e-11,
+		0.43778068e-12,
+		0.7996447e-13,
+		0.1494075e-13,
+		0.246790e-14,
+		0.37672e-15,
+		0.7701e-16,
+		0.354e-17,
+		-0.49e-18,
+		0.62e-18,
+		-0.40e-18,
+		-0.1e-19,
+		0.2e-19,
+		-0.3e-19,
+		0.1e-19}
+
+	var ARHIN1 = []float64{
+		0.31481017206423404116e0,
+		-0.16414499216588964341e0,
+		0.6176651597730913071e-1,
+		-0.1971881185935933028e-1,
+		0.536902830023331343e-2,
+		-0.124977068439663038e-2,
+		0.24835515596994933e-3,
+		-0.4187024096746630e-4,
+		0.590945437979124e-5,
+		-0.68063541184345e-6,
+		0.6072897629164e-7,
+		-0.367130349242e-8,
+		0.7078017552e-10,
+		0.1187894334e-10,
+		-0.120898723e-11,
+		0.1189656e-13,
+		0.594128e-14,
+		-0.32257e-15,
+		-0.2290e-16,
+		0.253e-17,
+		0.9e-19,
+		-0.2e-19}
+
+	var ARHIN2 = []float64{
+		1.99647720399779650525e0,
+		-0.187563779407173213e-2,
+		-0.12186470897787339e-3,
+		-0.814021609659287e-5,
+		-0.55050925953537e-6,
+		-0.3763008043303e-7,
+		-0.258858362365e-8,
+		-0.17931829265e-9,
+		-0.1245916873e-10,
+		-0.87171247e-12,
+		-0.6084943e-13,
+		-0.431178e-14,
+		-0.29787e-15,
+		-0.2210e-16,
+		-0.136e-17,
+		-0.14e-18}
+
+	X = XVALUE
+
+	// Compute the machine-dependent constants.
+	XMAX = machine.D1MACH[2]
+	TEMP = THREE * math.Log(XMAX) / TWO
+	ZETA = (TEMP + math.Log(TEMP)/FOUR - math.Log(ONEBPI)/TWO)
+	XHIGH1 = math.Pow(ZETA, TWO/THREE)
+
+	// Error test
+	if X > XHIGH1 {
+		return math.NaN()
+	}
+
+	Z = machine.D1MACH[3]
+	XLOW1 = Z
+	T = Z / ONEHUN
+	if X >= ZERO {
+		NTERM1 = 31
+		NTERM2 = 23
+		NTERM3 = 29
+	} else {
+		NTERM4 = 21
+		NTERM5 = 15
+		TEMP = ONE / ONEBPI
+		XNEG1 = -ONE / (TEMP * machine.D1MACH[1])
+		XNEG2 = -math.Pow(TWO/Z, ONE/THREE)
+	}
+
+	// Code for x >= 0.0
+	if X >= ZERO {
+		if X <= SEVEN {
+			if X < XLOW1 {
+				RET = HIZERO
+			} else {
+				T = (X+X)/SEVEN - ONE
+				TEMP = (X + X + X) / TWO
+				RET = math.Exp(TEMP) * misc.Cheval(NTERM1, ARHIP, T)
+			}
+		} else {
+			XCUBE = X * X * X
+			TEMP = math.Sqrt(XCUBE)
+			ZETA = (TEMP + TEMP) / THREE
+			T = TWO*(math.Sqrt(THRE43/XCUBE)) - ONE
+			TEMP = misc.Cheval(NTERM2, ARBIP, T)
+			TEMP = ZETA + math.Log(TEMP) - math.Log(X)/FOUR - LNRTPI
+			BI = math.Exp(TEMP)
+			T = (TWELHU - XCUBE) / (XCUBE + FIVE14)
+			GI = misc.Cheval(NTERM3, ARGIP1, T) * ONEBPI / X
+			RET = BI - GI
+		}
+	} else {
+		// Code for x < 0.0
+		if X >= MINATE {
+			if X > -XLOW1 {
+				RET = HIZERO
+			} else {
+				T = (FOUR*X + TWELVE) / (X - TWELVE)
+				RET = misc.Cheval(NTERM4, ARHIN1, T)
+			}
+		} else {
+			if X < XNEG1 {
+				RET = ZERO
+			} else {
+				if X < XNEG2 {
+					TEMP = ONE
+				} else {
+					XCUBE = X * X * X
+					T = (XCUBE + TWELHU) / (ONE76 - XCUBE)
+					TEMP = misc.Cheval(NTERM5, ARHIN2, T)
+				}
+				RET = -TEMP * ONEBPI / X
+			}
 		}
 	}
 	return RET

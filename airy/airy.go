@@ -66,3 +66,15 @@ func BiDE(z complex128) complex128 {
 func AiInt(x float64) float64 {
 	return toms.AIRINT(x)
 }
+
+// Gi calculates the modified Airy function Gi
+//    ∫  0 to infinity sin(x*t+t^3/3) dt  / pi
+func Gi(x float64) float64 {
+	return toms.AIRYGI(x)
+}
+
+// Hi calculates the  modified Airy function Hi
+//    ∫  0 to infinity exp(x*t-t^3/3) dt  / pi
+func Hi(x float64) float64 {
+	return toms.AIRYHI(x)
+}
