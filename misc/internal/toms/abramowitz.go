@@ -132,19 +132,19 @@ func ABRAM0(XVALUE float64) float64 {
 		HVAL = CHEVAL(NTERMH, AB0H, T)
 		return FVAL/ONERPI + X*(math.Log(X)*HVAL-GVAL)
 
-	} else {
-		// Code for XVALUE > 2
-		V = THREE * math.Pow(X/TWO, TWO/THREE)
-		T = (SIX/V - HALF) - HALF
-		ASVAL = CHEVAL(NTERMA, AB0AS, T)
-		ASLN = math.Log(ASVAL/RT3BPI) - V
-		if ASLN < LNXMIN {
-			RET = ZERO
-		} else {
-			RET = math.Exp(ASLN)
-		}
-		return RET
 	}
+	// Code for XVALUE > 2
+	V = THREE * math.Pow(X/TWO, TWO/THREE)
+	T = (SIX/V - HALF) - HALF
+	ASVAL = CHEVAL(NTERMA, AB0AS, T)
+	ASLN = math.Log(ASVAL/RT3BPI) - V
+	if ASLN < LNXMIN {
+		RET = ZERO
+	} else {
+		RET = math.Exp(ASLN)
+	}
+	return RET
+
 }
 
 // ABRAM1 calculates the Abramowitz function of order 1,
@@ -269,19 +269,19 @@ func ABRAM1(XVALUE float64) float64 {
 		HVAL = CHEVAL(NTERMH, AB1H, T)
 		return FVAL - X*(GVAL/ONERPI+X*math.Log(X)*HVAL)
 
-	} else {
-		// Code for XVALUE > 2
-		V = THREE * math.Pow(X/TWO, TWO/THREE)
-		T = (SIX/V - HALF) - HALF
-		ASVAL = CHEVAL(NTERMA, AB1AS, T)
-		ASLN = math.Log(ASVAL*math.Sqrt(V/THREE)/RT3BPI) - V
-		if ASLN < LNXMIN {
-			RET = ZERO
-		} else {
-			RET = math.Exp(ASLN)
-		}
-		return RET
 	}
+	// Code for XVALUE > 2
+	V = THREE * math.Pow(X/TWO, TWO/THREE)
+	T = (SIX/V - HALF) - HALF
+	ASVAL = CHEVAL(NTERMA, AB1AS, T)
+	ASLN = math.Log(ASVAL*math.Sqrt(V/THREE)/RT3BPI) - V
+	if ASLN < LNXMIN {
+		RET = ZERO
+	} else {
+		RET = math.Exp(ASLN)
+	}
+	return RET
+
 }
 
 // ABRAM2 calculates the Abramowitz function of order 2,
@@ -402,17 +402,17 @@ func ABRAM2(XVALUE float64) float64 {
 		RET = FVAL/ONERPI + X*(X*X*math.Log(X)*HVAL-GVAL)
 		return RET
 
-	} else {
-		// Code for XVALUE > 2
-		V = THREE * math.Pow(X/TWO, TWO/THREE)
-		T = (SIX/V - HALF) - HALF
-		ASVAL = CHEVAL(NTERMA, AB2AS, T)
-		ASLN = math.Log(ASVAL/RT3BPI) + math.Log(V/THREE) - V
-		if ASLN < LNXMIN {
-			RET = ZERO
-		} else {
-			RET = math.Exp(ASLN)
-		}
-		return RET
 	}
+	// Code for XVALUE > 2
+	V = THREE * math.Pow(X/TWO, TWO/THREE)
+	T = (SIX/V - HALF) - HALF
+	ASVAL = CHEVAL(NTERMA, AB2AS, T)
+	ASLN = math.Log(ASVAL/RT3BPI) + math.Log(V/THREE) - V
+	if ASLN < LNXMIN {
+		RET = ZERO
+	} else {
+		RET = math.Exp(ASLN)
+	}
+	return RET
+
 }
