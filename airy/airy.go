@@ -22,13 +22,13 @@ func AiE(z complex128) complex128 {
 	return complex(air, aii)
 }
 
-// AiD computes the first derivate of the Airy Ai function dAi(z)/dz
+// AiD computes the first derivative of the Airy Ai function dAi(z)/dz
 func AiD(z complex128) complex128 {
 	air, aii, _, _ := amos.ZAIRY(real(z), imag(z), 1, 1)
 	return complex(air, aii)
 }
 
-// AiDE computes the exponentially scaled first derivate of the Airy Ai function
+// AiDE computes the exponentially scaled first derivative of the Airy Ai function
 // AiDE = e^((2/3)*z^(3/2)) * dAi(z)/dz
 func AiDE(z complex128) complex128 {
 	air, aii, _, _ := amos.ZAIRY(real(z), imag(z), 1, 2)
@@ -48,13 +48,13 @@ func BiE(z complex128) complex128 {
 	return complex(bir, bii)
 }
 
-// BiD computes the first derivate of the Airy Bi function dBi(z)/dz
+// BiD computes the first derivative of the Airy Bi function dBi(z)/dz
 func BiD(z complex128) complex128 {
 	bir, bii, _ := amos.ZBIRY(real(z), imag(z), 1, 1)
 	return complex(bir, bii)
 }
 
-// BiDE computes the expotentially scaled first derivate of the Airy Bi function
+// BiDE computes the expotentially scaled first derivative of the Airy Bi function
 // BiDE = e^(-|Real((2/3)*z^(3/2))|) * dBi(z)/dz
 func BiDE(z complex128) complex128 {
 	bir, bii, _ := amos.ZBIRY(real(z), imag(z), 1, 2)
