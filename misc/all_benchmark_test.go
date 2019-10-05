@@ -24,3 +24,19 @@ func BenchmarkAbramowitz0(b *testing.B) {
 	}
 	GlobalF = ζ
 }
+
+func BenchmarkAbramowitz1(b *testing.B) {
+	var ζ float64
+	for n := 0; n < b.N; n++ {
+		ζ = Abramowitz1(0.8)
+	}
+	GlobalF = ζ
+}
+
+func BenchmarkAbramowitz2(b *testing.B) {
+	var ζ float64
+	for n := 0; n < b.N; n++ {
+		ζ = Abramowitz2(0.8)
+	}
+	GlobalF = ζ
+}

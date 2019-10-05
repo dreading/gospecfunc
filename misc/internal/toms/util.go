@@ -11,7 +11,7 @@
 package toms
 
 import (
-	"math"
+   "math"
 )
 
 // CHEVAL evaluates a Chebyshev series, using the
@@ -35,14 +35,14 @@ func CHEVAL(N int, A []float64, T float64) float64 {
 		HALF = 0.5e0
 		TEST = 0.6e0
 		TWO  = 2.0e0
-	)
+   )
+   
 	var I int
 	var D1, D2, TT, U0, U1, U2, RET float64
 
 	U1 = ZERO
 
 	// If ABS ( T )  < 0.6 use the standard Clenshaw method
-
 	if math.Abs(T) < TEST {
 		U0 = ZERO
 		TT = T + T
@@ -54,11 +54,8 @@ func CHEVAL(N int, A []float64, T float64) float64 {
 		RET = (U0 - U2) / TWO
 	} else {
 		// If ABS ( T )  > =  0.6 use the Reinsch modification
-
 		D1 = ZERO
-
 		// T > =  0.6 code
-
 		if T > ZERO {
 			TT = (T - HALF) - HALF
 			TT = TT + TT
@@ -71,7 +68,6 @@ func CHEVAL(N int, A []float64, T float64) float64 {
 			RET = (D1 + D2) / TWO
 		} else {
 			// T < =  -0.6 code
-
 			TT = (T + HALF) + HALF
 			TT = TT + TT
 			for I = N; I >= 0; I-- {
@@ -83,7 +79,5 @@ func CHEVAL(N int, A []float64, T float64) float64 {
 			RET = (D1 - D2) / TWO
 		}
 	}
-
 	return RET
-
 }

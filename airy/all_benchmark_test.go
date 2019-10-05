@@ -14,6 +14,7 @@ import (
 // Storing the results in these variables prevents the compiler
 // from completely optimizing the benchmarked functions away.
 var (
+	GlobalF float64
 	GlobalC complex128
 )
 
@@ -79,4 +80,12 @@ func BenchmarkAiryBiLargeNegative(b *testing.B) {
 		ζ = Bi(-20.2 - 33.22i)
 	}
 	GlobalC = ζ
+}
+
+func BenchmarkAiryIntegral(b *testing.B) {
+	var ζ float64
+	for n := 0; n < b.N; n++ {
+		ζ = AiInt(-20.2)
+	}
+	GlobalF = ζ
 }
