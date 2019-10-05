@@ -11,7 +11,7 @@
 package amos
 
 import (
-	. "github.com/dreading/gospecfunc/machine"
+	"github.com/dreading/gospecfunc/machine"
 	"math"
 	"math/cmplx"
 )
@@ -255,7 +255,7 @@ L60:
 		goto L70
 	}
 	IUF = 0
-	ASCLE = 1000.0e0 * D1MACH[1] / TOL
+	ASCLE = 1000.0e0 * machine.D1MACH[1] / TOL
 	ZNR, ZNI, C1R, C1I, C2R, C2I, NW, ASCLE, ALIM, IUF = ZS1S2(ZNR, ZNI, C1R, C1I, C2R, C2I, NW, ASCLE, ALIM, IUF)
 	NZ = NZ + NW
 L70:
@@ -417,7 +417,7 @@ func ZAIRY(ZR float64, ZI float64, ID int, KODE int) (float64, float64, int, int
 		return AIR, AII, NZ, IERR
 	}
 	AZ = ZABS(ZR, ZI)
-	TOL = math.Max(D1MACH[4], 1.0e-18)
+	TOL = math.Max(machine.D1MACH[4], 1.0e-18)
 	FID = float64(float32(ID))
 	if AZ > 1.0e0 {
 		goto L70
@@ -530,12 +530,12 @@ L70:
 	// RL IS THE LOWER BOUNDARY OF THE ASYMPTOTIC EXPANSION FOR LARGE Z.
 	// DIG = NUMBER OF BASE 10 DIGITS IN TOL = 10**(-DIG).
 
-	K1 = I1MACH[15]
-	K2 = I1MACH[16]
-	R1M5 = D1MACH[5]
+	K1 = machine.I1MACH[15]
+	K2 = machine.I1MACH[16]
+	R1M5 = machine.D1MACH[5]
 	K = MIN(ABS(K1), ABS(K2))
 	ELIM = 2.303e0 * (float64(float32(K))*R1M5 - 3.0e0)
-	K1 = I1MACH[14] - 1
+	K1 = machine.I1MACH[14] - 1
 	AA = R1M5 * float64(float32(K1))
 	DIG = math.Min(AA, 18.0e0)
 	AA = AA * 2.303e0
@@ -545,7 +545,7 @@ L70:
 
 	// TEST FOR PROPER RANGE
 	AA = 0.5e0 / TOL
-	BB = float64(float32(I1MACH[9])) * 0.5e0
+	BB = float64(float32(machine.I1MACH[9])) * 0.5e0
 	AA = math.Min(AA, BB)
 	AA = math.Pow(AA, TTH)
 	if AZ > AA {
@@ -663,7 +663,7 @@ L160:
 	AII = S1I / SFAC
 	return AIR, AII, NZ, IERR
 L170:
-	AA = 1000 * D1MACH[1]
+	AA = 1000 * machine.D1MACH[1]
 	S1R = ZEROR
 	S1I = ZEROI
 	if ID == 1 {
@@ -734,7 +734,7 @@ func ZASYI(ZR float64, ZI float64, FNU float64, KODE int, N int, YR []float64, Y
 
 	NZ = 0
 	AZ = ZABS(ZR, ZI)
-	ARM = 1000 * D1MACH[1]
+	ARM = 1000 * machine.D1MACH[1]
 	RTR1 = math.Sqrt(ARM)
 	IL = MIN(2, N)
 	DFNU = FNU + float64(float32(N-IL))
@@ -944,9 +944,9 @@ func ZBKNU(ZR float64, ZI float64, FNU float64, KODE int, N int,
 	CSRR[1] = CRSCR
 	CSRR[2] = 1.0e0
 	CSRR[3] = CSCLR
-	BRY[1] = 1000.0 * D1MACH[1] / TOL
+	BRY[1] = 1000.0 * machine.D1MACH[1] / TOL
 	BRY[2] = 1.0e0 / BRY[1]
-	BRY[3] = D1MACH[2]
+	BRY[3] = machine.D1MACH[2]
 	NZ = 0
 	IFLAG = 0
 	KODED = KODE
@@ -1163,8 +1163,8 @@ L120:
 	// DETERMINE THE BACKWARD INDEX K. R2=F(E) IS A STRAIGHT LINE ON
 	// 12 <= E <= 60. E IS COMPUTED FROM 2**(-E)=B**(1-I1MACH(14))=
 	// TOL WHERE B IS THE BASE OF THE ARITHMETIC.
-	T1 = float64(I1MACH[14] - 1)
-	T1 = T1 * D1MACH[5] * 3.321928094e0
+	T1 = float64(machine.I1MACH[14] - 1)
+	T1 = T1 * machine.D1MACH[5] * 3.321928094e0
 	T1 = math.Max(T1, 12.0e0)
 	T1 = math.Min(T1, 60.0e0)
 	T2 = TTH*T1 - 6.0e0
@@ -1697,7 +1697,7 @@ func ZMLRI(ZR float64, ZI float64, FNU float64, KODE int, N int, YR []float64, Y
 		P1R, P2I, P2R, RAZ, RHO, RHO2, RZI, RZR, SCLE, STI, STR, SUMI, SUMR, TFNF, TST float64
 	var I, IAZ, IFNU, INU, ITIME, K, KK, KM, M int
 
-	SCLE = D1MACH[1] / TOL
+	SCLE = machine.D1MACH[1] / TOL
 	NZ = 0
 	AZ = ZABS(ZR, ZI)
 	IAZ = int(float32(AZ))
@@ -1922,7 +1922,7 @@ func ZSERI(ZR float64, ZI float64, FNU float64, KODE int, N int, YR []float64, Y
 	if AZ == 0.0e0 {
 		goto L160
 	}
-	ARM = 1000.0 * D1MACH[1]
+	ARM = 1000.0 * machine.D1MACH[1]
 	RTR1 = math.Sqrt(ARM)
 	CRSCR = 1.0e0
 	IFLAG = 0

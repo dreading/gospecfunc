@@ -12,7 +12,7 @@
 package toms
 
 import (
-	. "github.com/dreading/gospecfunc/machine"
+	"github.com/dreading/gospecfunc/machine"
 	"math"
 )
 
@@ -106,15 +106,15 @@ func ABRAM0(XVALUE float64) float64 {
 	}
 
 	// Compute the machine-dependent constants.
-	T = D1MACH[4] / ONEHUN
+	T = machine.D1MACH[4] / ONEHUN
 	if X <= TWO {
 		NTERMF = 8
 		NTERMG = 8
 		NTERMH = 8
-		XLOW1 = math.Sqrt(TWO * D1MACH[3])
+		XLOW1 = math.Sqrt(TWO * machine.D1MACH[3])
 	} else {
 		NTERMA = 27
-		LNXMIN = math.Log(D1MACH[1])
+		LNXMIN = math.Log(machine.D1MACH[1])
 	}
 
 	// Code for 0 <= XVALUE <= 2
@@ -124,13 +124,14 @@ func ABRAM0(XVALUE float64) float64 {
 		}
 		if X < XLOW1 {
 			return RTPIB2 + X*(math.Log(X)-GVAL0)
-		} else {
-			T = (X*X/TWO - HALF) - HALF
-			FVAL = CHEVAL(NTERMF, AB0F, T)
-			GVAL = CHEVAL(NTERMG, AB0G, T)
-			HVAL = CHEVAL(NTERMH, AB0H, T)
-			return FVAL/ONERPI + X*(math.Log(X)*HVAL-GVAL)
 		}
+
+		T = (X*X/TWO - HALF) - HALF
+		FVAL = CHEVAL(NTERMF, AB0F, T)
+		GVAL = CHEVAL(NTERMG, AB0G, T)
+		HVAL = CHEVAL(NTERMH, AB0H, T)
+		return FVAL/ONERPI + X*(math.Log(X)*HVAL-GVAL)
+
 	} else {
 		// Code for XVALUE > 2
 		V = THREE * math.Pow(X/TWO, TWO/THREE)
@@ -235,17 +236,17 @@ func ABRAM1(XVALUE float64) float64 {
 	}
 
 	// Compute the machine-dependent constants.
-	T = D1MACH[4] / ONEHUN
+	T = machine.D1MACH[4] / ONEHUN
 	if X <= TWO {
 		NTERMF = 9
 		NTERMG = 8
 		NTERMH = 8
-		T = D1MACH[3]
+		T = machine.D1MACH[3]
 		XLOW1 = math.Sqrt(TWO * T)
 		XLOW = T / TWO
 	} else {
 		NTERMA = 27
-		LNXMIN = math.Log(D1MACH[1])
+		LNXMIN = math.Log(machine.D1MACH[1])
 	}
 
 	// Code for 0 <= XVALUE <= 2
@@ -260,13 +261,14 @@ func ABRAM1(XVALUE float64) float64 {
 				RET = (ONE - X/ONERPI - X*X*math.Log(X)) * HALF
 			}
 			return RET
-		} else {
-			T = (X*X/TWO - HALF) - HALF
-			FVAL = CHEVAL(NTERMF, AB1F, T)
-			GVAL = CHEVAL(NTERMG, AB1G, T)
-			HVAL = CHEVAL(NTERMH, AB1H, T)
-			return FVAL - X*(GVAL/ONERPI+X*math.Log(X)*HVAL)
 		}
+
+		T = (X*X/TWO - HALF) - HALF
+		FVAL = CHEVAL(NTERMF, AB1F, T)
+		GVAL = CHEVAL(NTERMG, AB1G, T)
+		HVAL = CHEVAL(NTERMH, AB1H, T)
+		return FVAL - X*(GVAL/ONERPI+X*math.Log(X)*HVAL)
+
 	} else {
 		// Code for XVALUE > 2
 		V = THREE * math.Pow(X/TWO, TWO/THREE)
@@ -368,16 +370,16 @@ func ABRAM2(XVALUE float64) float64 {
 	}
 
 	// Compute the machine-dependent constants.
-	T = D1MACH[4] / ONEHUN
+	T = machine.D1MACH[4] / ONEHUN
 	if X <= TWO {
 		NTERMF = 9
 		NTERMG = 8
 		NTERMH = 7
-		XLOW = D1MACH[3]
+		XLOW = machine.D1MACH[3]
 		XLOW1 = math.Sqrt(TWO * XLOW)
 	} else {
 		NTERMA = 26
-		LNXMIN = math.Log(D1MACH[1])
+		LNXMIN = math.Log(machine.D1MACH[1])
 	}
 	// Code for 0 <= XVALUE <= 2
 	if X <= TWO {
@@ -391,14 +393,15 @@ func ABRAM2(XVALUE float64) float64 {
 				RET = RTPIB4 - HALF*X + X*X*X*math.Log(X)/SIX
 			}
 			return RET
-		} else {
-			T = (X*X/TWO - HALF) - HALF
-			FVAL = CHEVAL(NTERMF, AB2F, T)
-			GVAL = CHEVAL(NTERMG, AB2G, T)
-			HVAL = CHEVAL(NTERMH, AB2H, T)
-			RET = FVAL/ONERPI + X*(X*X*math.Log(X)*HVAL-GVAL)
-			return RET
 		}
+
+		T = (X*X/TWO - HALF) - HALF
+		FVAL = CHEVAL(NTERMF, AB2F, T)
+		GVAL = CHEVAL(NTERMG, AB2G, T)
+		HVAL = CHEVAL(NTERMH, AB2H, T)
+		RET = FVAL/ONERPI + X*(X*X*math.Log(X)*HVAL-GVAL)
+		return RET
+
 	} else {
 		// Code for XVALUE > 2
 		V = THREE * math.Pow(X/TWO, TWO/THREE)

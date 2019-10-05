@@ -8,6 +8,7 @@
 //   THIS WORK PUBLISHED IN TRANSACTIONS ON MATHEMATICAL SOFTWARE,
 //   VOL. 22, NO. 3, September, 1996, P.  288--301.
 //   Allan MacLeod, Dept. of Mathematics and Statistics, University of Paisley
+
 package toms
 
 import (

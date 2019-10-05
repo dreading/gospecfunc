@@ -11,7 +11,7 @@
 package amos
 
 import (
-	. "github.com/dreading/gospecfunc/machine"
+	"github.com/dreading/gospecfunc/machine"
 	"math"
 )
 
@@ -149,7 +149,7 @@ func ZBIRY(ZR float64, ZI float64, ID int, KODE int) (float64, float64, int) {
 		return BIR, BII, IERR
 	}
 	AZ = ZABS(ZR, ZI)
-	TOL = math.Max(D1MACH[4], 1.0e-18)
+	TOL = math.Max(machine.D1MACH[4], 1.0e-18)
 	FID = float64(float32(ID))
 	if AZ > 1.0e0 {
 		goto L70
@@ -263,12 +263,12 @@ L70:
 	// RL IS THE LOWER BOUNDARY OF THE ASYMPTOTIC EXPANSION FOR LARGE Z.
 	// DIG = NUMBER OF BASE 10 DIGITS IN TOL = 10**(-DIG).
 	// FNUL IS THE LOWER BOUNDARY OF THE ASYMPTOTIC SERIES FOR LARGE FNU.
-	K1 = I1MACH[15]
-	K2 = I1MACH[16]
-	R1M5 = D1MACH[5]
+	K1 = machine.I1MACH[15]
+	K2 = machine.I1MACH[16]
+	R1M5 = machine.D1MACH[5]
 	K = MIN(ABS(K1), ABS(K2))
 	ELIM = 2.303e0 * (float64(float32(K))*R1M5 - 3.0e0)
-	K1 = I1MACH[14] - 1
+	K1 = machine.I1MACH[14] - 1
 	AA = R1M5 * float64(float32(K1))
 	DIG = math.Min(AA, 18.0e0)
 	AA = AA * 2.303e0
@@ -278,7 +278,7 @@ L70:
 
 	// TEST FOR RANGE
 	AA = 0.5e0 / TOL
-	BB = float64(float32(I1MACH[9])) * 0.5e0
+	BB = float64(float32(machine.I1MACH[9])) * 0.5e0
 	AA = math.Min(AA, BB)
 	AA = math.Pow(AA, TTH)
 	if AZ > AA {
@@ -504,7 +504,7 @@ func ZUNIK(ZRR float64, ZRI float64, FNU float64, IKFLG int, IPMTR int, TOL floa
 	RFN = 1.0e0 / FNU
 
 	// OVERFLOW TEST (ZR/FNU TOO SMALL)
-	TEST = D1MACH[1] * 1.0e+3
+	TEST = machine.D1MACH[1] * 1.0e+3
 	AC = FNU * TEST
 	if math.Abs(ZRR) > AC || math.Abs(ZRI) > AC {
 		goto L15
@@ -649,7 +649,7 @@ L20:
 	STR = ZABS(CYR[1], CYI[1])
 
 	// SCALE BACKWARD RECURRENCE, BRY(3) IS DEFINED BUT NEVER USED
-	BRY[1] = 1000.0e0 * D1MACH[1] / TOL
+	BRY[1] = 1000.0e0 * machine.D1MACH[1] / TOL
 	BRY[2] = 1.0e0 / BRY[1]
 	BRY[3] = BRY[2]
 	IFLAG = 2
@@ -823,7 +823,7 @@ func ZUNI1(ZR float64, ZI float64, FNU float64, KODE int, N int, YR []float64, Y
 	CSRR[1] = CRSC
 	CSRR[2] = CONER
 	CSRR[3] = CSCL
-	BRY[1] = 1000.0e0 * D1MACH[1] / TOL
+	BRY[1] = 1000.0e0 * machine.D1MACH[1] / TOL
 	// CHECK FOR UNDERFLOW AND OVERFLOW ON FIRST MEMBER
 	FN = math.Max(FNU, 1.0e0)
 	INIT = 0
@@ -927,7 +927,7 @@ L30:
 	RZR = (STR + STR) * RAST
 	RZI = (STI + STI) * RAST
 	BRY[2] = 1.0e0 / BRY[1]
-	BRY[3] = D1MACH[2]
+	BRY[3] = machine.D1MACH[2]
 	S1R = CYR[1]
 	S1I = CYI[1]
 	S2R = CYR[2]
@@ -1182,7 +1182,7 @@ L10:
 	// SCALED TO PREVENT OVER OR UNDERFLOW. CUOIK HAS DETERMINED THAT
 	// THE RESULT IS ON SCALE.
 	ACW = ZABS(CWR[2], CWI[2])
-	ASCLE = 1000.0e0 * D1MACH[1] / TOL
+	ASCLE = 1000.0e0 * machine.D1MACH[1] / TOL
 	CSCLR = 1.0e0
 	if ACW > ASCLE {
 		goto L20
@@ -1430,7 +1430,7 @@ func ZUNI2(ZR float64, ZI float64, FNU float64, KODE int, N int, YR []float64, Y
 	CSRR[1] = CRSC
 	CSRR[2] = CONER
 	CSRR[3] = CSCL
-	BRY[1] = 1000.0e0 * D1MACH[1] / TOL
+	BRY[1] = 1000.0e0 * machine.D1MACH[1] / TOL
 
 	// ZN IS IN THE RIGHT HALF PLANE AFTER ROTATION BY CI OR -CI
 	ZNR = ZI
@@ -1578,7 +1578,7 @@ L40:
 	RZR = (STR + STR) * RAZ
 	RZI = (STI + STI) * RAZ
 	BRY[2] = 1.0e0 / BRY[1]
-	BRY[3] = D1MACH[2]
+	BRY[3] = machine.D1MACH[2]
 	S1R = CYR[1]
 	S1I = CYI[1]
 	S2R = CYR[2]
@@ -2016,7 +2016,7 @@ func ZUNHJ(ZR float64, ZI float64, FNU float64, IPMTR int, TOL float64, PHIR flo
 	RFNU = 1.0e0 / FNU
 
 	// OVERFLOW TEST (Z/FNU TOO SMALL)
-	TEST = D1MACH[1] * 1.0e+3
+	TEST = machine.D1MACH[1] * 1.0e+3
 	AC = FNU * TEST
 	if math.Abs(ZR) > AC || math.Abs(ZI) > AC {
 		goto L15
@@ -2490,7 +2490,7 @@ L90:
 	NUF = NN
 	return ZR, ZI, FNU, KODE, IKFLG, N, YR, YI, NUF, TOL, ELIM, ALIM
 L110:
-	ASCLE = 1000.0e0 * D1MACH[1] / TOL
+	ASCLE = 1000.0e0 * machine.D1MACH[1] / TOL
 	STR, STI = ZLOG(PHIR, PHII)
 	CZR = CZR + STR
 	CZI = CZI + STI
@@ -2565,7 +2565,7 @@ L180:
 	}
 	goto L140
 L190:
-	ASCLE = 1000.0e0 * D1MACH[1] / TOL
+	ASCLE = 1000.0e0 * machine.D1MACH[1] / TOL
 	STR, STI = ZLOG(PHIR, PHII)
 	CZR = CZR + STR
 	CZI = CZI + STI

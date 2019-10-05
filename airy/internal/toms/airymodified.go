@@ -12,8 +12,8 @@
 package toms
 
 import (
-	. "github.com/dreading/gospecfunc/machine"
-	. "github.com/dreading/gospecfunc/misc"
+	"github.com/dreading/gospecfunc/machine"
+	"github.com/dreading/gospecfunc/misc"
 	"math"
 )
 
@@ -183,9 +183,9 @@ func AIRINT(XVALUE float64) float64 {
 
 	X = XVALUE
 	// Compute the machine-dependent constants.
-	Z = D1MACH[3]
+	Z = machine.D1MACH[3]
 	XLOW1 = TWO * Z
-	ARG = D1MACH[4]
+	ARG = machine.D1MACH[4]
 	XNEG1 = -1 / math.Pow(ARG, TWO/THREE)
 	// Error test
 	if X < XNEG1 {
@@ -211,7 +211,7 @@ func AIRINT(XVALUE float64) float64 {
 				RET = AIRZER * X
 			} else {
 				T = X/TWO - ONE
-				RET = Cheval(NTERM1, AAINT1, T) * X
+				RET = misc.Cheval(NTERM1, AAINT1, T) * X
 			}
 		} else {
 			if X > XHIGH1 {
@@ -220,7 +220,7 @@ func AIRINT(XVALUE float64) float64 {
 				Z = (X + X) * math.Sqrt(X) / THREE
 				TEMP = THREE * Z
 				T = (FORTY1 - TEMP) / (NINE + TEMP)
-				TEMP = math.Exp(-Z) * Cheval(NTERM2, AAINT2, T) / math.Sqrt(PITIM6*Z)
+				TEMP = math.Exp(-Z) * misc.Cheval(NTERM2, AAINT2, T) / math.Sqrt(PITIM6*Z)
 			}
 			RET = ONE/THREE - TEMP
 		}
@@ -232,15 +232,15 @@ func AIRINT(XVALUE float64) float64 {
 				RET = AIRZER * X
 			} else {
 				T = -X/FOUR - ONE
-				RET = X * Cheval(NTERM3, AAINT3, T)
+				RET = X * misc.Cheval(NTERM3, AAINT3, T)
 			}
 		} else {
 			Z = -(X + X) * math.Sqrt(-X) / THREE
 			ARG = Z + PIBY4
 			TEMP = NINE * Z * Z
 			T = (FR996 - TEMP) / (NINHUN + TEMP)
-			GVAL = Cheval(NTERM4, AAINT4, T)
-			HVAL = Cheval(NTERM5, AAINT5, T)
+			GVAL = misc.Cheval(NTERM4, AAINT4, T)
+			HVAL = misc.Cheval(NTERM5, AAINT5, T)
 			TEMP = GVAL*math.Cos(ARG) + HVAL*math.Sin(ARG)/Z
 			RET = RT2B3P*TEMP/math.Sqrt(Z) - TWO/THREE
 		}
