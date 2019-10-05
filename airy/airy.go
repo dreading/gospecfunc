@@ -5,7 +5,7 @@
 package airy
 
 import (
-	"github.com/dreading/gospecfunc/airy/internal"
+	"github.com/dreading/gospecfunc/airy/internal/amos"
 )
 
 // Ai computes the Airy Ai function
