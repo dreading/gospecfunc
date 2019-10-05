@@ -8,8 +8,8 @@ import (
 	"github.com/dreading/gospecfunc/misc/internal/toms"
 )
 
-// Cheval evaluates a Chebyshev series, using the Clenshaw method 
+// Cheval evaluates a Chebyshev series, using the Clenshaw method
 // with Reinsch modification
 func Cheval(n int, A []float64, t float64) float64 {
-	return toms.CHEVAL(n, A, t) 
+	return toms.CHEVAL(n, A, t)
 }

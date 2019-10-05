@@ -11,7 +11,7 @@
 package toms
 
 import (
-   "math"
+	"math"
 )
 
 // CHEVAL evaluates a Chebyshev series, using the
@@ -35,8 +35,8 @@ func CHEVAL(N int, A []float64, T float64) float64 {
 		HALF = 0.5e0
 		TEST = 0.6e0
 		TWO  = 2.0e0
-   )
-   
+	)
+
 	var I int
 	var D1, D2, TT, U0, U1, U2, RET float64
 

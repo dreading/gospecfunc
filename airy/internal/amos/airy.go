@@ -11,11 +11,10 @@
 package amos
 
 import (
+	. "github.com/dreading/gospecfunc/machine"
 	"math"
 	"math/cmplx"
-	. "github.com/dreading/gospecfunc/machine"
 )
-
 
 // DGAMLN COMPUTES THE NATURAL LOG OF THE GAMMA FUNCTION
 func DGAMLN(z float64) float64 {

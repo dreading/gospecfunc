@@ -12,10 +12,10 @@
 package toms
 
 import (
-	"math"
 	. "github.com/dreading/gospecfunc/machine"
+	"math"
 )
- 
+
 // ABRAM0 calculates the Abramowitz function of order 0,
 //    ∫  0 to infinity exp( -t*t - x/t ) dt
 // The code uses Chebyshev expansions with the coefficients

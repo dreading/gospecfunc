@@ -9,15 +9,13 @@ import (
 	. "github.com/dreading/gospecfunc/airy/internal/toms"
 )
 
-
-
 // Ai computes the Airy Ai function
 func Ai(z complex128) complex128 {
 	air, aii, _, _ := ZAIRY(real(z), imag(z), 0, 1)
 	return complex(air, aii)
 }
 
-// AiE computes the exponentially scaled Airy Ai function 
+// AiE computes the exponentially scaled Airy Ai function
 // AiE = e^((2/3)*z^(3/2)) * AI(z)
 func AiE(z complex128) complex128 {
 	air, aii, _, _ := ZAIRY(real(z), imag(z), 0, 2)
@@ -30,7 +28,7 @@ func AiD(z complex128) complex128 {
 	return complex(air, aii)
 }
 
-// AiDE computes the exponentially scaled first derivate of the Airy Ai function 
+// AiDE computes the exponentially scaled first derivate of the Airy Ai function
 // AiDE = e^((2/3)*z^(3/2)) * dAi(z)/dz
 func AiDE(z complex128) complex128 {
 	air, aii, _, _ := ZAIRY(real(z), imag(z), 1, 2)
@@ -56,7 +54,7 @@ func BiD(z complex128) complex128 {
 	return complex(bir, bii)
 }
 
-// BiD computes the expotentially scaled first derivate of the Airy Bi function 
+// BiD computes the expotentially scaled first derivate of the Airy Bi function
 // BiDE = e^(-|Real((2/3)*z^(3/2))|) * dBi(z)/dz
 func BiDE(z complex128) complex128 {
 	bir, bii, _ := ZBIRY(real(z), imag(z), 1, 2)
@@ -66,5 +64,5 @@ func BiDE(z complex128) complex128 {
 // AiInt calculates the integral of the Airy function Ai,
 //    ∫  0 to x Ai(t) dt
 func AiInt(x float64) float64 {
-	return AIRINT(x) 
+	return AIRINT(x)
 }

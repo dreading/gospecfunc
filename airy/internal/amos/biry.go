@@ -11,8 +11,8 @@
 package amos
 
 import (
-	"math"
 	. "github.com/dreading/gospecfunc/machine"
+	"math"
 )
 
 // ZBIRY COMPUTES THE COMPLEX AIRY FUNCTION BI(Z) OR ITS DERIVATIVE DBI(Z)/DZ
@@ -402,7 +402,6 @@ L260:
 	NZ = 0
 	return BIR, BII, IERR
 }
-
 
 // ZUNIK COMPUTES PARAMETERS FOR THE UNIFORM ASYMPTOTIC
 // EXPANSIONS OF THE I AND K FUNCTIONS ON IKFLG= 1 OR 2
