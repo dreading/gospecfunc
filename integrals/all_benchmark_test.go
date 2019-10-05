@@ -5,7 +5,7 @@
 package misc_test
 
 import (
-	. "github.com/dreading/gospecfunc/misc"
+	. "github.com/dreading/gospecfunc/integrals"
 	"testing"
 )
 

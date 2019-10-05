@@ -5,7 +5,7 @@
 package misc
 
 import (
-	"github.com/dreading/gospecfunc/misc/internal/toms"
+	"github.com/dreading/gospecfunc/integrals/internal/toms"
 )
 
 // Abramowitz0 computes the  Abramowitz function of order 0

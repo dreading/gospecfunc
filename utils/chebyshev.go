@@ -3,10 +3,10 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package misc
+package utils
 
 import (
-	"github.com/dreading/gospecfunc/misc/internal/toms"
+	"github.com/dreading/gospecfunc/utils/internal/toms"
 )
 
 // Cheval evaluates a Chebyshev series, using the Clenshaw method

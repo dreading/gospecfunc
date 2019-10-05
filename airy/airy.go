@@ -67,6 +67,12 @@ func AiInt(x float64) float64 {
 	return toms.AIRINT(x)
 }
 
+// BiInt calculates the integral of the Airy function Bi,
+//    ∫  0 to x Bi(t) dt
+func BiInt(x float64) float64 {
+	return toms.BIRINT(x)
+}
+
 // Gi calculates the modified Airy function Gi
 //    ∫  0 to infinity sin(x*t+t^3/3) dt  / pi
 func Gi(x float64) float64 {

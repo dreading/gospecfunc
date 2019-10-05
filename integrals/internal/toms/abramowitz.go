@@ -13,6 +13,7 @@ package toms
 
 import (
 	"github.com/dreading/gospecfunc/machine"
+	"github.com/dreading/gospecfunc/utils"
 	"math"
 )
 
@@ -127,16 +128,16 @@ func ABRAM0(XVALUE float64) float64 {
 		}
 
 		T = (X*X/TWO - HALF) - HALF
-		FVAL = CHEVAL(NTERMF, AB0F, T)
-		GVAL = CHEVAL(NTERMG, AB0G, T)
-		HVAL = CHEVAL(NTERMH, AB0H, T)
+		FVAL = utils.Cheval(NTERMF, AB0F, T)
+		GVAL = utils.Cheval(NTERMG, AB0G, T)
+		HVAL = utils.Cheval(NTERMH, AB0H, T)
 		return FVAL/ONERPI + X*(math.Log(X)*HVAL-GVAL)
 
 	}
 	// Code for XVALUE > 2
 	V = THREE * math.Pow(X/TWO, TWO/THREE)
 	T = (SIX/V - HALF) - HALF
-	ASVAL = CHEVAL(NTERMA, AB0AS, T)
+	ASVAL = utils.Cheval(NTERMA, AB0AS, T)
 	ASLN = math.Log(ASVAL/RT3BPI) - V
 	if ASLN < LNXMIN {
 		RET = ZERO
@@ -264,16 +265,16 @@ func ABRAM1(XVALUE float64) float64 {
 		}
 
 		T = (X*X/TWO - HALF) - HALF
-		FVAL = CHEVAL(NTERMF, AB1F, T)
-		GVAL = CHEVAL(NTERMG, AB1G, T)
-		HVAL = CHEVAL(NTERMH, AB1H, T)
+		FVAL = utils.Cheval(NTERMF, AB1F, T)
+		GVAL = utils.Cheval(NTERMG, AB1G, T)
+		HVAL = utils.Cheval(NTERMH, AB1H, T)
 		return FVAL - X*(GVAL/ONERPI+X*math.Log(X)*HVAL)
 
 	}
 	// Code for XVALUE > 2
 	V = THREE * math.Pow(X/TWO, TWO/THREE)
 	T = (SIX/V - HALF) - HALF
-	ASVAL = CHEVAL(NTERMA, AB1AS, T)
+	ASVAL = utils.Cheval(NTERMA, AB1AS, T)
 	ASLN = math.Log(ASVAL*math.Sqrt(V/THREE)/RT3BPI) - V
 	if ASLN < LNXMIN {
 		RET = ZERO
@@ -396,9 +397,9 @@ func ABRAM2(XVALUE float64) float64 {
 		}
 
 		T = (X*X/TWO - HALF) - HALF
-		FVAL = CHEVAL(NTERMF, AB2F, T)
-		GVAL = CHEVAL(NTERMG, AB2G, T)
-		HVAL = CHEVAL(NTERMH, AB2H, T)
+		FVAL = utils.Cheval(NTERMF, AB2F, T)
+		GVAL = utils.Cheval(NTERMG, AB2G, T)
+		HVAL = utils.Cheval(NTERMH, AB2H, T)
 		RET = FVAL/ONERPI + X*(X*X*math.Log(X)*HVAL-GVAL)
 		return RET
 
@@ -406,7 +407,7 @@ func ABRAM2(XVALUE float64) float64 {
 	// Code for XVALUE > 2
 	V = THREE * math.Pow(X/TWO, TWO/THREE)
 	T = (SIX/V - HALF) - HALF
-	ASVAL = CHEVAL(NTERMA, AB2AS, T)
+	ASVAL = utils.Cheval(NTERMA, AB2AS, T)
 	ASLN = math.Log(ASVAL/RT3BPI) + math.Log(V/THREE) - V
 	if ASLN < LNXMIN {
 		RET = ZERO
