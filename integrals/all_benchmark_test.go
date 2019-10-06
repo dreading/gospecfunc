@@ -40,3 +40,11 @@ func BenchmarkAbramowitz2(b *testing.B) {
 	}
 	GlobalF = ζ
 }
+
+func BenchmarkClausen(b *testing.B) {
+	var ζ float64
+	for n := 0; n < b.N; n++ {
+		ζ = Clausen(0.8)
+	}
+	GlobalF = ζ
+}

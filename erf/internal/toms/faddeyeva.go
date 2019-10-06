@@ -2,9 +2,13 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 //
-// The code below are based on Algorithm 916: Computing the Faddeyeva and Voigt Functions
-// by Zaghloul, Mofreh R. and Ali, Ahmed N. in ACM Trans. Math. Softw. December 2011 Vol 38 No 2 Jan 2012
-// http://doi.acm.org/10.1145/2049673.2049679. The go code is a port of the original matlab code.
+// The code below are based on
+// Algorithm 916: Computing the Faddeyeva and Voigt Functions
+// by Zaghloul, Mofreh R. and Ali, Ahmed N.
+// ACM Trans. Math. Softw. December 2011 Vol 38 No 2 Jan 2012
+// http://doi.acm.org/10.1145/2049673.2049679.
+//
+// The go code is a port of the original matlab code.
 
 package toms
 
