@@ -121,3 +121,14 @@ func Struve(order int, x float64) float64 {
 		panic("order must be 1 or 2")
 	}
 }
+
+// AtnInt calculates the value of the inverse-tangent integral defined by
+//   ∫ 0 to x ( (arctan t)/t ) dt
+func AtnInt(x float64) float64 {
+	return toms.ATNINT(x)
+}
+
+// Exp3 calculates the value of ∫ 0 to x (exp(-t*t*t)) dt
+func Exp3(x float64) float64 {
+	return toms.EXP3(x)
+}
