@@ -680,9 +680,6 @@ func TestStruveModifiedLarge(t *testing.T) {
 	}
 }
 
-
-
-
 func TestExp3(t *testing.T) {
 	testCases := []struct {
 		num, den, res float64

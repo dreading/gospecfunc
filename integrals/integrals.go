@@ -29,7 +29,7 @@ func Clausen(x float64) float64 {
 	return toms.CLAUSN(x)
 }
 
-// Debye1 calculates the Debye function, defined as
+// Debye calculates the Debye function, defined as
 //   order*∫ 0 to x of t^order/(exp(t)-1) dt] / x^order
 func Debye(order int, x float64) float64 {
 	switch order {

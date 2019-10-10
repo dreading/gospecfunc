@@ -753,15 +753,14 @@ func I0ML0(XVALUE float64) float64 {
 		}
 		T = (SIX*X - FORTY) / (X + FORTY)
 		return utils.Cheval(NTERM1, AI0L0, T)
+	}
+	// Code for x > 16
+	if X > XHIGH {
+		RET = TWOBPI / X
 	} else {
-		// Code for x > 16
-		if X > XHIGH {
-			RET = TWOBPI / X
-		} else {
-			XSQ = X * X
-			T = (ATEHUN - XSQ) / (TWO88 + XSQ)
-			RET = utils.Cheval(NTERM2, AI0L0A, T) * TWOBPI / X
-		}
+		XSQ = X * X
+		T = (ATEHUN - XSQ) / (TWO88 + XSQ)
+		RET = utils.Cheval(NTERM2, AI0L0A, T) * TWOBPI / X
 	}
 	return RET
 }
@@ -869,16 +868,15 @@ func I1ML1(XVALUE float64) float64 {
 		}
 		T = (SIX*X - FORTY) / (X + FORTY)
 		return utils.Cheval(NTERM1, AI1L1, T) * X / TWO
-
-	} else {
-		// Code for x > 16
-		if X > XHIGH {
-			RET = TWOBPI
-		} else {
-			XSQ = X * X
-			T = (ATEHUN - XSQ) / (TWO88 + XSQ)
-			RET = utils.Cheval(NTERM2, AI1L1A, T) * TWOBPI
-		}
 	}
+	// Code for x > 16
+	if X > XHIGH {
+		RET = TWOBPI
+	} else {
+		XSQ = X * X
+		T = (ATEHUN - XSQ) / (TWO88 + XSQ)
+		RET = utils.Cheval(NTERM2, AI1L1A, T) * TWOBPI
+	}
+
 	return RET
 }
