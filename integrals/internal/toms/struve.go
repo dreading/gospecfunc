@@ -482,7 +482,7 @@ func STRVL0(XVALUE float64) float64 {
 			CH2 = utils.Cheval(NTERM3, AI0ML0, T)
 		}
 		TEST = math.Log(CH1) - LNR2PI - math.Log(X)/TWO + X
-		if TEST > math.Log(XMAX) {
+		if TEST > -math.Log(XMAX) {
 			RET = math.NaN()
 		} else {
 			RET = math.Exp(TEST) - TWOBPI*CH2/X
@@ -646,7 +646,7 @@ func STRVL1(XVALUE float64) float64 {
 			CH2 = utils.Cheval(NTERM3, AI1ML1, T)
 		}
 		TEST = math.Log(CH1) - LNR2PI - math.Log(X)/TWO + X
-		if TEST > math.Log(XMAX) {
+		if TEST > -math.Log(XMAX) {
 			RET = math.NaN()
 		} else {
 			RET = math.Exp(TEST) - TWOBPI*CH2

@@ -113,10 +113,26 @@ func Transport(order int, x float64) float64 {
 //     H1(x)  = (2/pi) ∫ {0 to pi/2} sin( x cos(t))*sin^2 t dt
 func Struve(order int, x float64) float64 {
 	switch order {
-	case 1:
+	case 0:
 		return toms.STRVH0(x)
-	case 2:
+	case 1:
 		return toms.STRVH1(x)
+	default:
+		panic("order must be 1 or 2")
+	}
+}
+
+// Struve calculates the modified Struve function of order 0 and 1, L0(x) and L1(x) respectively.
+// defined as the solution of the second-order equation
+//     x*D(Df) + Df - x*f  =  2x/pi
+// and
+//     x^2*D(Df) + x*Df - (x^2+1)f = 2*x^2/pi
+func StruveModified(order int, x float64) float64 {
+	switch order {
+	case 0:
+		return toms.STRVL0(x)
+	case 1:
+		return toms.STRVL1(x)
 	default:
 		panic("order must be 1 or 2")
 	}
