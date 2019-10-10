@@ -122,7 +122,7 @@ func Struve(order int, x float64) float64 {
 	}
 }
 
-// Struve calculates the modified Struve function of order 0 and 1, L0(x) and L1(x) respectively.
+// StruveModified calculates the modified Struve function of order 0 and 1, L0(x) and L1(x) respectively.
 // defined as the solution of the second-order equation
 //     x*D(Df) + Df - x*f  =  2x/pi
 // and
