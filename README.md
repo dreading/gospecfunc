@@ -17,13 +17,13 @@ Bessel and related functions:
 Functions  | Domain | Description |
 ---------- | ------ | ----------- |
 Ai     |  ℂ  | Airy Ai  function |
-AiE    |  ℂ   | Exponentially scaled Airy Ai function|
-AiD    |  ℂ   | First derivative of the Airy Ai function|
-AiDE    |  ℂ   | Exponentially scaled first derivative of the Airy Ai function|
+Aix    |  ℂ   | Exponentially scaled Airy Ai function|
+Aid    |  ℂ   | First derivative of the Airy Ai function|
+Aidx    |  ℂ   | Exponentially scaled first derivative of the Airy Ai function|
 Bi     |  ℂ  | Biry Bi function |
-BiE    |  ℂ   | Exponentially scaled Biry Bi function|
-BiD    |  ℂ   | First derivative of the Biry Bi function|
-BiDE    |  ℂ   | Exponentially scaled first derivative of the Biry Bi function|
+Bix    |  ℂ   | Exponentially scaled Biry Bi function|
+Bid    |  ℂ   | First derivative of the Biry Bi function|
+Bidx    |  ℂ   | Exponentially scaled first derivative of the Biry Bi function|
 Gi     |  ℝ  | Modified Airy Gi  function |
 Hi     |  ℝ  | Modified Airy Hi  function |
 I      | ℂ  | Modified Bessel function of the first kind  |

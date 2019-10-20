@@ -15,22 +15,22 @@ func Ai(z complex128) complex128 {
 	return complex(air, aii)
 }
 
-// AiE computes the exponentially scaled Airy Ai function
-// AiE = e^((2/3)*z^(3/2)) * AI(z)
-func AiE(z complex128) complex128 {
+// Aix computes the exponentially scaled Airy Ai function
+// Aix = e^((2/3)*z^(3/2)) * AI(z)
+func Aix(z complex128) complex128 {
 	air, aii, _, _ := amos.ZAIRY(real(z), imag(z), 0, 2)
 	return complex(air, aii)
 }
 
-// AiD computes the first derivative of the Airy Ai function dAi(z)/dz
-func AiD(z complex128) complex128 {
+// Aid computes the first derivative of the Airy Ai function dAi(z)/dz
+func Aid(z complex128) complex128 {
 	air, aii, _, _ := amos.ZAIRY(real(z), imag(z), 1, 1)
 	return complex(air, aii)
 }
 
-// AiDE computes the exponentially scaled first derivative of the Airy Ai function
-// AiDE = e^((2/3)*z^(3/2)) * dAi(z)/dz
-func AiDE(z complex128) complex128 {
+// Aidx computes the exponentially scaled first derivative of the Airy Ai function
+// Aidx = e^((2/3)*z^(3/2)) * dAi(z)/dz
+func Aidx(z complex128) complex128 {
 	air, aii, _, _ := amos.ZAIRY(real(z), imag(z), 1, 2)
 	return complex(air, aii)
 }
@@ -41,22 +41,22 @@ func Bi(z complex128) complex128 {
 	return complex(bir, bii)
 }
 
-// BiE computes the expotentially scaled Airy Bi function
-// BiE = e^(-|Real((2/3)*z^(3/2))|) * BI(z)
-func BiE(z complex128) complex128 {
+// Bix computes the expotentially scaled Airy Bi function
+// Bix = e^(-|Real((2/3)*z^(3/2))|) * BI(z)
+func Bix(z complex128) complex128 {
 	bir, bii, _ := amos.ZBIRY(real(z), imag(z), 0, 2)
 	return complex(bir, bii)
 }
 
-// BiD computes the first derivative of the Airy Bi function dBi(z)/dz
-func BiD(z complex128) complex128 {
+// Bid computes the first derivative of the Airy Bi function dBi(z)/dz
+func Bid(z complex128) complex128 {
 	bir, bii, _ := amos.ZBIRY(real(z), imag(z), 1, 1)
 	return complex(bir, bii)
 }
 
-// BiDE computes the expotentially scaled first derivative of the Airy Bi function
-// BiDE = e^(-|Real((2/3)*z^(3/2))|) * dBi(z)/dz
-func BiDE(z complex128) complex128 {
+// Bidx computes the expotentially scaled first derivative of the Airy Bi function
+// Bidx = e^(-|Real((2/3)*z^(3/2))|) * dBi(z)/dz
+func Bidx(z complex128) complex128 {
 	bir, bii, _ := amos.ZBIRY(real(z), imag(z), 1, 2)
 	return complex(bir, bii)
 }
