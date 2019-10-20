@@ -864,7 +864,7 @@ L30:
 		S1R = -ZETA1R + STR
 		S1I = -ZETA1I + STI + ZI
 		goto L50
-L40:   
+	L40:
 		S1R = -ZETA1R + ZETA2R
 		S1I = -ZETA1I + ZETA2I
 	L50:

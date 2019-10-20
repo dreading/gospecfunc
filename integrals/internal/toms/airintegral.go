@@ -499,6 +499,5 @@ func BIRINT(XVALUE float64) float64 {
 			RET = (F2 - F1) * RT2B3P / math.Sqrt(Z)
 		}
 	}
-
 	return RET
 }

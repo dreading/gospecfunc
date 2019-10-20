@@ -8,6 +8,34 @@ The core packages of the gospecfunc suite are written in pure Go. Installation i
 go get -u github.com/dreading/gospecfunc
 ```
 
+# Special Functions
+
+## Bessel
+
+Functions  | Domain | Description |
+---------- | ------ | ----------- |
+Ai     |  ℂ  | Airy Ai  function |
+AiE    |  ℂ   | Exponentially scaled Airy Ai function|
+AiD    |  ℂ   | First derivative of the Airy Ai function|
+AiDE    |  ℂ   | Exponentially scaled first derivative of the Airy Ai function|
+Bi     |  ℂ  | Biry Bi function |
+BiE    |  ℂ   | Exponentially scaled Biry Bi function|
+BiD    |  ℂ   | First derivative of the Biry Bi function|
+BiDE    |  ℂ   | Exponentially scaled first derivative of the Biry Bi function|
+Gi     |  ℝ  | Modified Airy Gi  function |
+Hi     |  ℝ  | Modified Airy Hi  function |
+I      | ℂ  | Modified Bessel function of the first kind  |
+J      | ℂ  | Bessel function of the first kind |
+K      | ℂ  | Modified Bessel function of the second kind  |
+Y      | ℂ  | Bessel function of the second kind  |
+H1      | ℂ  | Hankel fucntion of of the first kind  |
+H2      | ℂ  | Hankel fucntion of of the second kind  |
+
+## Erf
+
+## Integrals
+
+
 # Testing 
 ```
  go test ./*/. 

@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package airy
+package bessel
 
 import (
-	"github.com/dreading/gospecfunc/airy/internal/amos"
-	"github.com/dreading/gospecfunc/airy/internal/toms"
+	"github.com/dreading/gospecfunc/bessel/internal/amos"
+	"github.com/dreading/gospecfunc/bessel/internal/toms"
 )
 
 // Ai computes the Airy Ai function
@@ -59,18 +59,6 @@ func BiD(z complex128) complex128 {
 func BiDE(z complex128) complex128 {
 	bir, bii, _ := amos.ZBIRY(real(z), imag(z), 1, 2)
 	return complex(bir, bii)
-}
-
-// AiInt calculates the integral of the Airy function Ai,
-//    ∫  0 to x Ai(t) dt
-func AiInt(x float64) float64 {
-	return toms.AIRINT(x)
-}
-
-// BiInt calculates the integral of the Airy function Bi,
-//    ∫  0 to x Bi(t) dt
-func BiInt(x float64) float64 {
-	return toms.BIRINT(x)
 }
 
 // Gi calculates the modified Airy function Gi

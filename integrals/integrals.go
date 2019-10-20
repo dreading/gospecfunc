@@ -148,3 +148,35 @@ func AtnInt(x float64) float64 {
 func Exp3(x float64) float64 {
 	return toms.EXP3(x)
 }
+
+// I0Int calculates the value of ∫ 0 to x I0(t) dt
+func I0Int(x float64) float64 {
+	return toms.I0INT(x)
+}
+
+// J0Int calculates the value of ∫ 0 to x J0(t) dt
+func J0Int(x float64) float64 {
+	return toms.J0INT(x)
+}
+
+// Y0Int calculates the value of ∫ 0 to x Y0(t) dt
+func Y0Int(x float64) float64 {
+	return toms.Y0INT(x)
+}
+
+// K0Int calculates the value of ∫ 0 to x K0(t) dt
+func K0Int(x float64) float64 {
+	return toms.K0INT(x)
+}
+
+// AiInt calculates the integral of the Airy function Ai,
+//    ∫  0 to x Ai(t) dt
+func AiInt(x float64) float64 {
+	return toms.AIRINT(x)
+}
+
+// BiInt calculates the integral of the Airy function Bi,
+//    ∫  0 to x Bi(t) dt
+func BiInt(x float64) float64 {
+	return toms.BIRINT(x)
+}

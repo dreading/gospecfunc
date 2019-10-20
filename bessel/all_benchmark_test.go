@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package airy_test
+package bessel_test
 
 import (
-	. "github.com/dreading/gospecfunc/airy"
+	. "github.com/dreading/gospecfunc/bessel"
 	"testing"
 )
 
@@ -80,22 +80,6 @@ func BenchmarkAiryBiLargeNegative(b *testing.B) {
 		ζ = Bi(-20.2 - 33.22i)
 	}
 	GlobalC = ζ
-}
-
-func BenchmarkAiryAiInt(b *testing.B) {
-	var ζ float64
-	for n := 0; n < b.N; n++ {
-		ζ = AiInt(0.12)
-	}
-	GlobalF = ζ
-}
-
-func BenchmarkAiryBiInt(b *testing.B) {
-	var ζ float64
-	for n := 0; n < b.N; n++ {
-		ζ = BiInt(0.12)
-	}
-	GlobalF = ζ
 }
 
 func BenchmarkAiryGi(b *testing.B) {

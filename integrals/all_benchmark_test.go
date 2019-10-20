@@ -48,3 +48,19 @@ func BenchmarkClausen(b *testing.B) {
 	}
 	GlobalF = ζ
 }
+
+func BenchmarkAiryAiInt(b *testing.B) {
+	var ζ float64
+	for n := 0; n < b.N; n++ {
+		ζ = AiInt(0.12)
+	}
+	GlobalF = ζ
+}
+
+func BenchmarkAiryBiInt(b *testing.B) {
+	var ζ float64
+	for n := 0; n < b.N; n++ {
+		ζ = BiInt(0.12)
+	}
+	GlobalF = ζ
+}
