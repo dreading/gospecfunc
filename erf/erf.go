@@ -10,7 +10,7 @@ import (
 	"math/cmplx"
 )
 
-// Erf computes approximate values for the complementary error function erfc(z) = 1 - erf(z)
+// Erf computes approximate values for the error function
 func Erf(z complex128) complex128 {
 	return 1 - toms.Faddeyeva(1i*z)*cmplx.Exp(-z*z)
 }

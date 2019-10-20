@@ -12,6 +12,8 @@ go get -u github.com/dreading/gospecfunc
 
 ## Bessel
 
+Bessel and related functions:
+
 Functions  | Domain | Description |
 ---------- | ------ | ----------- |
 Ai     |  ℂ  | Airy Ai  function |
@@ -32,6 +34,20 @@ H1      | ℂ  | Hankel fucntion of of the first kind  |
 H2      | ℂ  | Hankel fucntion of of the second kind  |
 
 ## Erf
+
+The error function and related functions:
+
+Functions  | Domain | Description |
+---------- | ------ | ----------- |
+Erf    |  ℂ  | Error function |
+Erfc    | ℂ  | Complementary error function  1 - erf(ζ)
+Erfcx    | ℂ  | Scaled complementary error function   exp(ζ^2) * erfc(ζ) |
+Erfi    |  ℂ  | Imaginary error function   -i*erf(iζ) |
+Dawson    |  ℂ  | Dawson's function. The one-sided Fourier–Laplace sine transform of the Gaussian function |
+Fresnel |  ℂ  | Cos and Sin Fresnel integrals  |
+Voigt |  ℝ  | Real and imaginary Voigt functions  𝖴(x,t) and 𝖵(x,t) |
+Faddeyeva |  ℂ  | Plasma dispersion Faddeyeva function exp(-ζ^^2) * erfc(-i*ζ) |
+  
 
 ## Integrals
 
