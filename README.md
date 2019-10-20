@@ -66,7 +66,7 @@ Synch    |  ℝ | Synchrotron radiation function or order 1 and 2 |
 Struve   |  ℝ | Struve function of order 0 and 1 | 
 StruveModified    |  ℝ | Modified Struve function of order 0 and 1 | 
 AtnInt    |  ℝ | Inverse-tangent integral | 
-Exp3   |  ℝ | Exponential integral ∫ 0 to x exp(-t³) dt | 
+Exp3   |  ℝ | Exponential integral ∫ exp(-t³) dt | 
 I0Int   |  ℝ | Integral of the modified Bessel function of the first kind order 0 | 
   J0Int   |  ℝ | Integral of the Bessel function of the first kind order 0| 
    Y0Int   |  ℝ | Integral of the Bessel function of the second kind order 0| 
