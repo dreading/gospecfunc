@@ -14,8 +14,8 @@ go get -u github.com/dreading/gospecfunc
 
 Bessel and related functions:
 
-Functions  | Domain | Description |
----------- | ------ | ----------- |
+Functions  | Domain |Description |
+---------- | ------ |:----------- |
 Ai     |  ℂ  | Airy Ai  function |
 Aix    |  ℂ   | Exponentially scaled Airy Ai function|
 Aid    |  ℂ   | First derivative of the Airy Ai function|
@@ -37,8 +37,8 @@ H2      | ℂ  | Hankel fucntion of of the second kind  |
 
 The error function and related functions:
 
-Functions  | Domain | Description |
----------- | ------ | ----------- |
+Functions  | Domain |Description |
+---------- | ------ |:----------- |
 Erf    |  ℂ  | Error function |
 Erfc    | ℂ  | Complementary error function  1 - Erf(ζ)
 Erfcx    | ℂ  | Scaled complementary error function   exp(ζ²) Erfc(ζ) |
