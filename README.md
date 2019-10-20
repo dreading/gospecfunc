@@ -51,6 +51,29 @@ Faddeyeva |  ℂ  | Plasma dispersion Faddeyeva function exp(-ζ²) Erfc(-iζ) |
 
 ## Integrals
 
+Integrals of special functions and special integral functions:
+
+Functions  | Domain |Description |
+---------- | ------ |:----------- |
+Abramowitz    |  ℝ | Abramowitz functions of order 0,1 and 2 |
+Clausen    |  ℝ | Clausen's integral |
+Debye    |  ℝ | Debye functions of order 1,2,3 and 4 |
+Goodst    |  ℝ | Goodst functions   |
+Lobach    |  ℝ | Lobachewsky function   |
+Strom    |  ℝ | Stromgren's integral  |
+Synch    |  ℝ | Synchrotron radiation function or order 1 and 2 |
+ Transport    |  ℝ | Transport integrals of order 2,3,4,5,6,7,8 and 9 |
+Struve   |  ℝ | Struve function of order 0 and 1 | 
+StruveModified    |  ℝ | Modified Struve function of order 0 and 1 | 
+AtnInt    |  ℝ | Inverse-tangent integral | 
+Exp3   |  ℝ | Exponential integral ∫ 0 to x exp(-t³) dt | 
+I0Int   |  ℝ | Integral of the modified Bessel function of the first kind order 0 | 
+  J0Int   |  ℝ | Integral of the Bessel function of the first kind order 0| 
+   Y0Int   |  ℝ | Integral of the Bessel function of the second kind order 0| 
+  K0Int   |  ℝ | Integral of the modified Bessel function of the second kind order 0| 
+ AiInt   |  ℝ | Integral of the the Airy function Ai | 
+BiInt   |  ℝ | Integral of the the Biry function Bi | 
+ 
 
 # Testing 
 ```
