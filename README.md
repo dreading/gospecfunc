@@ -40,13 +40,13 @@ The error function and related functions:
 Functions  | Domain | Description |
 ---------- | ------ | ----------- |
 Erf    |  ℂ  | Error function |
-Erfc    | ℂ  | Complementary error function  1 - erf(ζ)
-Erfcx    | ℂ  | Scaled complementary error function   exp(ζ^2) * erfc(ζ) |
-Erfi    |  ℂ  | Imaginary error function   -i*erf(iζ) |
+Erfc    | ℂ  | Complementary error function  1 - Erf(ζ)
+Erfcx    | ℂ  | Scaled complementary error function   exp(ζ²) Erfc(ζ) |
+Erfi    |  ℂ  | Imaginary error function   -i erf(iζ) |
 Dawson    |  ℂ  | Dawson's function. The one-sided Fourier–Laplace sine transform of the Gaussian function |
 Fresnel |  ℂ  | Cos and Sin Fresnel integrals  |
 Voigt |  ℝ  | Real and imaginary Voigt functions  𝖴(x,t) and 𝖵(x,t) |
-Faddeyeva |  ℂ  | Plasma dispersion Faddeyeva function exp(-ζ^^2) * erfc(-i*ζ) |
+Faddeyeva |  ℂ  | Plasma dispersion Faddeyeva function exp(-ζ²) Erfc(-iζ) |
   
 
 ## Integrals
