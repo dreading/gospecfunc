@@ -15,7 +15,7 @@ go get -u github.com/dreading/gospecfunc
 Bessel and related functions:
 
 Functions  | Domain |Description |
----------- | ------ |:----------- |
+:---------- | :------ |:----------- |
 Ai     |  ℂ  | Airy Ai  function |
 Aix    |  ℂ   | Exponentially scaled Airy Ai function|
 Aid    |  ℂ   | First derivative of the Airy Ai function|
@@ -38,7 +38,7 @@ H2      | ℂ  | Hankel fucntion of of the second kind  |
 The error function and related functions:
 
 Functions  | Domain |Description |
----------- | ------ |:----------- |
+:---------- | :------ |:----------- |
 Erf    |  ℂ  | Error function |
 Erfc    | ℂ  | Complementary error function  1 - Erf(ζ)
 Erfcx    | ℂ  | Scaled complementary error function   exp(ζ²) Erfc(ζ) |
@@ -54,7 +54,7 @@ Faddeyeva |  ℂ  | Plasma dispersion Faddeyeva function exp(-ζ²) Erfc(-iζ) |
 Integrals of special functions and special integral functions:
 
 Functions  | Domain |Description |
----------- | ------ |:----------- |
+:---------- | ------ |:----------- |
 Abramowitz    |  ℝ | Abramowitz functions of order 0,1 and 2 |
 Clausen    |  ℝ | Clausen's integral |
 Debye    |  ℝ | Debye functions of order 1,2,3 and 4 |
