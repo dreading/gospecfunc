@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/dreading/gospecfunc.svg?branch=master)](https://travis-ci.org/dreading/gospecfunc) 
 [![Go Report Card](https://goreportcard.com/badge/github.com/dreading/gospecfunc)](https://goreportcard.com/report/github.com/dreading/gospecfunc)
 [![codecov](https://codecov.io/gh/dreading/gospecfunc/branch/master/graph/badge.svg)](https://codecov.io/gh/dreading/gospecfunc)
+[![GoDoc](https://godoc.org/github.com/dreading/gospecfunc?status.svg)](https://godoc.org/github.com/dreading/gospecfunc)
 [![stability-unstable](https://img.shields.io/badge/stability-unstable-yellow.svg)](https://github.com/emersion/stability-badges#unstable)
 
 # Installation
