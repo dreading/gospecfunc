@@ -16,48 +16,48 @@ import (
 	"math/cmplx"
 )
 
-// DGAMLN COMPUTES THE NATURAL LOG OF THE GAMMA FUNCTION
+// DGAMLN computes the natural log of the gamma function
 func DGAMLN(z float64) float64 {
 	r, _ := math.Lgamma(z)
 	return r
 }
 
-// ZABS COMPUTES THE ABSOLUTE VALUE OR MAGNITUDE OF A COMPLEX NUMBER REAL AND IMAG PARTS
+// ZABS computes the absolute value or magnitude of a complex number real and imag parts
 func ZABS(ZR float64, ZI float64) float64 {
 	return cmplx.Abs(complex(ZR, ZI))
 }
 
-// ZFLOATS SPLITS A COMPLEX NUMBER INTO REAL AND IMAG PARTS
+// ZFLOATS splits a complex number into real and imag parts
 func ZFLOATS(Z complex128) (float64, float64) {
 	return real(Z), imag(Z)
 }
 
-// ZLOG RETURNS COMPLEX LOGARITHM
+// ZLOG returns complex logarithm of a complex number real and imag parts
 func ZLOG(AR float64, AI float64) (float64, float64) {
 	return ZFLOATS(cmplx.Log(complex(AR, AI)))
 }
 
-// ZMLT RETURNS COMPLEX MULTIPLY
+// ZMLT returns complex multipliTION of complex numberSs real and imag parts
 func ZMLT(AR float64, AI float64, BR float64, BI float64) (float64, float64) {
 	return ZFLOATS(complex(AR, AI) * complex(BR, BI))
 }
 
-// ZSQRT RETURNS COMPLEX SQUARE ROOT
+// ZSQRT returns complex square root of a complex number real and imag parts
 func ZSQRT(AR float64, AI float64) (float64, float64) {
 	return ZFLOATS(cmplx.Sqrt(complex(AR, AI)))
 }
 
-// ZDIV RETURNS COMPLEX DIVIDE
+// ZDIV returns complex divide of a complex number real and imag parts
 func ZDIV(AR float64, AI float64, BR float64, BI float64) (float64, float64) {
 	return ZFLOATS(complex(AR, AI) / complex(BR, BI))
 }
 
-// ZEXP RETURNS COMPLEX EXPONENTIAL FUNCTION
+// ZEXP returns complex exponential function of a complex number real and imag parts
 func ZEXP(AR float64, AI float64) (float64, float64) {
 	return ZFLOATS(cmplx.Exp(complex(AR, AI)))
 }
 
-// ABS INT
+// ABS returns the absolute value of a
 func ABS(a int) int {
 	if a >= 0 {
 		return a
@@ -65,7 +65,7 @@ func ABS(a int) int {
 	return -a
 }
 
-// MIN INT
+// MIN returns the minimum value of a and b
 func MIN(a int, b int) int {
 	if a < b {
 		return a
@@ -73,7 +73,7 @@ func MIN(a int, b int) int {
 	return b
 }
 
-// MAX INT
+// MAX returns the maximum value of a and b
 func MAX(a int, b int) int {
 	if a > b {
 		return a
@@ -81,8 +81,8 @@ func MAX(a int, b int) int {
 	return b
 }
 
-//ZSHCH COMPUTES THE COMPLEX HYPERBOLIC FUNCTIONS SINH(X+I*Y) AND COSH(X+I*Y)
-//RETURNS REAL AND IMAG PARTS OF SINH AND COSH
+// ZSHCH computes the complex hyperbolic functions SINH(x+i*y) and COSH(x+i*y)
+// returns real and imag parts of sinh and cosh
 func ZSHCH(ZR float64, ZI float64) (float64, float64, float64, float64) {
 	SH := math.Sinh(ZR)
 	CH := math.Cosh(ZR)
@@ -90,10 +90,10 @@ func ZSHCH(ZR float64, ZI float64) (float64, float64, float64, float64) {
 	return SH * CN, CH * SN, CH * CN, SH * SN
 }
 
-// ZS1S2 TESTS FOR A POSSIBLE UNDERFLOW RESULTING FROM THE ADDITION OF THE I AND K FUNCTIONS IN THE ANALYTIC CON-
-// TINUATION FORMULA WHERE S1=K FUNCTION AND S2=I FUNCTION.
-// ON KODE=1 THE I AND K FUNCTIONS ARE DIFFERENT ORDERS OF MAGNITUDE, BUT FOR KODE=2 THEY CAN BE OF THE SAME ORDER
-// OF MAGNITUDE AND THE MAXIMUM MUST BE AT LEAST ONE PRECISION ABOVE THE UNDERFLOW LIMIT.
+// ZS1S2 tests for a possible underflow resulting from the addition of the I and K functions in the analytic
+// continuation formula where S1=K function and S2=I function.
+// For KODE=1 the I and K functions are different orders of magnitude, but for KODE=2 they can be of the same order
+// of magnitude and the maximum must be at least one precision above the underflow limit.
 func ZS1S2(ZRR float64, ZRI float64, S1R float64, S1I float64, S2R float64, S2I float64, NZ int, ASCLE float64,
 	ALIM float64, IUF int) (float64, float64, float64, float64, float64, float64, int, float64, float64, int) {
 
@@ -142,11 +142,14 @@ L10:
 	return ZRR, ZRI, S1R, S1I, S2R, S2I, NZ, ASCLE, ALIM, IUF
 }
 
-// ZUCHK TAKES A SCALED QUANTITY Y WHOSE MAGNITUDE IS GREATER THAN EXP(-ALIM)=ASCLE=1.0E+3*D1MACH(1)/TOL.
-// THE TEST IS MADE TO SEE if THE MAGNITUDE OF THE REAL OR IMAGINARY PART WOULD UNDERFLOW
-// WHEN Y IS SCALED (BY TOL) TO ITS PROPER VALUE. Y IS ACCEPTED if THE UNDERFLOW IS AT LEAST ONE PRECISION
-// BELOW THE MAGNITUDE OF THE LARGEST COMPONENT; OTHERWISE THE PHASE ANGLE DOES NOT HAVE
-// ABSOLUTE ACCURACY AND AN UNDERFLOW IS ASSUMED.
+// ZUCHK takes a scaled quantity Y whose magnitude is greater than
+//
+//		EXP(-ALIM)=ASCLE=1000*D1MACH[1]/TOL
+//
+// and tests if the magnitude of the real or imaginary part would underflow when y is scaled
+// by TOL to its proper value. Y is accepted if the underflow is at least one precision
+// below the magnitude of the largest component; otherwise the phase angle does not have
+// absolute accuracy and an underflow is assumed.
 func ZUCHK(YR float64, YI float64, NZ int, ASCLE float64, TOL float64) (float64, float64, int, float64, float64) {
 
 	var SS, ST, WR, WI float64
@@ -166,21 +169,17 @@ func ZUCHK(YR float64, YI float64, NZ int, ASCLE float64, TOL float64) (float64,
 	return YR, YI, NZ, ASCLE, TOL
 }
 
-// ZACAI APPLIES THE ANALYTIC CONTINUATION FORMULA
+// ZACAI applies the analytic continuation formula
 //
-//    K(FNU,ZN*EXP(MP))=K(FNU,ZN)*EXP(-MP*FNU) - MP*I(FNU,ZN)
-//            MP=PI*MR*CMPLX(0.0,1.0)
+// K(FNU,ZN*EXP(MP))=K(FNU,ZN)*EXP(-MP*FNU) - MP*I(FNU,ZN)
+// MP=PI*MR*CMPLX(0.0,1.0)
 //
-// TO CONTINUE THE K FUNCTION FROM THE RIGHT HALF TO THE LEFT
-// HALF Z PLANE FOR USE WITH ZAIRY WHERE FNU=1/3 OR 2/3 AND N=1.
-// ZACAI IS THE SAME AS ZACON WITH THE PARTS FOR LARGER ORDERS AND
-// RECURRENCE REMOVED. A RECURSIVE CALL TO ZACON CAN RESULT if ZACON
-// IS CALLED FROM ZAIRY.
-func ZACAI(ZR float64, ZI float64, FNU float64, KODE int, MR int, N int,
-	YR []float64, YI []float64, NZ int, RL float64, TOL float64, ELIM float64, ALIM float64) (float64, float64, float64, int, int, int,
-	[]float64, []float64, int, float64, float64, float64, float64) {
+// to continue the K function from the right half to the left half z plane for use with ZAIRY
+// where FNU=1/3 or 2/3 and N=1.
+// ZACAI is the same as ZACON with the parts for larger orders an recurrence removed.
+// A recursive call to ZACON can result if ZACON is called from ZAIRY.
+func ZACAI(ZR float64, ZI float64, FNU float64, KODE int, MR int, N int, YR []float64, YI []float64, NZ int, RL float64, TOL float64, ELIM float64, ALIM float64) (float64, float64, float64, int, int, int, []float64, []float64, int, float64, float64, float64, float64) {
 
-	// COMPLEX CSGN,CSPN,C1,C2,Y,Z,ZN,CY
 	var ARG, ASCLE, AZ, CSGNR, CSGNI, CSPNR, CSPNI, C1R, C1I, C2R, C2I, DFNU, FMR, SGN, YY, ZNR, ZNI float64
 	var INU, IUF, NN, NW int
 
@@ -270,121 +269,98 @@ L80:
 	return ZR, ZI, FNU, KODE, MR, N, YR, YI, NZ, RL, TOL, ELIM, ALIM
 }
 
-// ZAIRY COMPUTES THE AIRY FUNCTIONS AI(Z) AND DAI(Z) FOR COMPLEX Z
+// ZAIRY computes the Airy functions A(z) and DAI(z) for complex z
+// For KODE=1, ZAIRY computes the complex airy function Ai(z) or
+// its derivative dAi(z)/dz on ID=0 or ID=1 respectively.
+// For KODE=2, a scaling option Exp(zta)*Ai(z) or Exp(zta)*dAi(z)/dz
+// is provided to remove the exponential decay in -𝛑/3 < arg(z) < 𝛑/3
+// and the exponential growth in pi/3 < abs(arg(z)) < pi where
+// zta=(2/3)*z*csqrt(z).
+//
+// While the airy functions Ai(z) and dAi(z)/dz are analytic in
+// the whole z plane, the corresponding scaled functions defined
+// for KODE=2 have a cut along the negative real axis.
+// Defintions and notation are found in the nbs handbook of
+// mathematical functions (ref. 1).
+//
+// 	 	INPUT    ZR,ZI are double precision
+//   	ZR,ZI  - Z=CMPLX(ZR,ZI)
+//   	ID     - order of derivative, ID=0 OR ID=1
+//   	KODE   - a parameter to indicate the scaling option
+//            	KODE= 1 returns
+//                     AI=AI(Z)                on ID=0 or
+//                     AI=DAI(Z)/DZ            on ID=1
+//                = 2  returns
+//                     AI=CEXP(ZTA)*AI(Z)       on ID=0 or
+//                     AI=CEXP(ZTA)*DAI(Z)/DZ   on ID=1 where
+//                     ZTA=(2/3)*Z*CSQRT(Z)
+//
+// 		OUTPUT AIR,AII are double precision
+//   	AIR,AII- complex answer depending on the choices for ID and KODE
+//   	NZ     - underflow indicator
+//            	NZ= 0   , normal return
+//            	NZ= 1   , AI=CMPLX(0.0e0,0.0e0) due to underflow in
+//                      	-𝛑//3 < ARG(Z) < 𝛑//3 on KODE=1
+//   	IERR   - error flag
+//            	IERR=0, normal return - computation completed
+//            	IERR=1, input error   - no computation
+//            	IERR=2, overflow      - no computation, real(ZTA) too large on KODE=1
+//            	IERR=3, ABS(Z) large      - computation completed
+//                    losses of signifcance by argument reduction produce less than half of machine accuracy
+//            	IERR=4, CABS(Z) TOO LARGE  - no computation complete loss of accuracy by argument reduction
+//            	IERR=5, ERROR              - no computation, algorithm termination condition not met
+//
+// AI and DAI are computed for ABS(z) > 1.0 from the K Bessel functions by
+//
+//    	AI(Z)=C*SQRT(Z)*K(1/3,ZTA) , DAI(Z)=-C*Z*K(2/3,ZTA)
+//      C=1.0/(PI*SQRT(3.0)) ZTA=(2/3)*Z**(3/2)
+//
+// with the power series for abs(z) <= 1.0
 func ZAIRY(ZR float64, ZI float64, ID int, KODE int) (float64, float64, int, int) {
 
-	//    ON KODE=1, ZAIRY COMPUTES THE COMPLEX AIRY FUNCTION AI(Z) OR
-	//    ITS DERIVATIVE DAI(Z)/DZ ON ID=0 OR ID=1 RESPECTIVELY. ON
-	//    KODE=2, A SCALING OPTION CEXP(ZTA)*AI(Z) OR CEXP(ZTA)*
-	//    DAI(Z)/DZ IS PROVIDED TO REMOVE THE EXPONENTIAL DECAY IN
-	//    -PI/3 < ARG(Z) < PI/3 AND THE EXPONENTIAL GROWTH IN
-	//    PI/3 < ABS(ARG(Z)) < PI WHERE ZTA=(2/3)*Z*CSQRT(Z).
+	// In most complex variable computation, one must evaluate elementary functions.
+	// when the magnitude of Z is large, losses of significance by argument reduction
+	// occur. consequently, if the magnitude of ZETA=(2/3)*Z^1.5 exceeds U1=SQRT(0.5/UR),
+	// then losses exceeding half precision are likely and an error flag IERR=3 is
+	// triggered where UR=Max(D1MACH(4),1.0e-18) is double precision unit roundoff
+	// limited to 18 digits precision.
+	// Also, if the magnitude of zeta is larger than U2=0.5/UR, then all significance is lost
+	// and IERR=4. In order to use the int function, zeta must be further restricted not to
+	// exceed the largest integer, U3=I1MACH(9). Thus, the magnitude of ZETA must be restricted
+	// by min(U2,U3). On 32 bit machines, U1,U2, and U3 are approximately 2.0e+3, 4.2e+6, 2.1e+9.
+	// In singLE precision arithmetic and 1.3e+8, 1.8e+16, 2.1e+9 in double precision arithmetic
+	// respectively. This makes U2 and U3 limiting in their respective arithmetics. This means that
+	// the magnitude of Z cannot exceed 3.1e+4 in single and 2.1e+6 in double precision arithmetic.
+	// This also means that one can expect to retain, in the worst cases on 32 bit machines,
+	// no digits in single precision and only 7 digits in double precision arithmetic. Similar
+	// considerations hold for other machines.
 	//
-	//    WHILE THE AIRY FUNCTIONS AI(Z) AND DAI(Z)/DZ ARE ANALYTIC IN
-	//    THE WHOLE Z PLANE, THE CORRESPONDING SCALED FUNCTIONS DEFINED
-	//    FOR KODE=2 HAVE A CUT ALONG THE NEGATIVE REAL AXIS.
-	//    DEFINTIONS AND NOTATION ARE FOUND IN THE NBS HANDBOOK OF
-	//    MATHEMATICAL FUNCTIONS (REF. 1).
+	// The approximate relative error in the magnitude of a complex bessel function can be
+	// expressed by p*10^s where p=max(unit roundoff,1.0e-18) is the nominal precision and
+	// 10^s represents the increase in error due to argument reduction in the elementary functions.
+	// Here, s=max(1,abs(log10(abs(z))), abs(log10(fnu))) approximately (i.e. s=max(1,abs(exponent of
+	// abs(z),abs(exponent of fnu)) ). However, the phase angle may have only absolute accuracy.
+	// This is most likely to occur when one component (in absolute value) is larger than the other by
+	// several orders of magnitude. If one component is 10**k larger than the other, then one can expect
+	// only max(abs(log10(p))-k,0) significant digits; or, stated another way, when k exceeds
+	// the exponent of p, no significant digits remain in the smaller component. however, the phase
+	// angle retains absolute accuracy because, in complex arithmetic with precision p, the smaller
+	// component will not (as a rule) decrease below p times the magnitude of the larger component.
+	// In these extreme cases, the principal phase angle is on the order of +p, -p, 𝛑/2-p,
+	// or -𝛑/2+p.
 	//
-	//    INPUT      ZR,ZI ARE DOUBLE PRECISION
-	//      ZR,ZI  - Z=CMPLX(ZR,ZI)
-	//      ID     - ORDER OF DERIVATIVE, ID=0 OR ID=1
-	//      KODE   - A PARAMETER TO INDICATE THE SCALING OPTION
-	//               KODE= 1  RETURNS
-	//                        AI=AI(Z)                ON ID=0 OR
-	//                        AI=DAI(Z)/DZ            ON ID=1
-	//                   = 2  RETURNS
-	//                        AI=CEXP(ZTA)*AI(Z)       ON ID=0 OR
-	//                        AI=CEXP(ZTA)*DAI(Z)/DZ   ON ID=1 WHERE
-	//                        ZTA=(2/3)*Z*CSQRT(Z)
+	// References
+	// Handbook of Mathematical Functions by M. Abramowitz and I. A. Stegun,
+	// NBS AMS Series 55, U.S. Dept. of Commerce, 1955.
 	//
-	//    OUTPUT     AIR,AII ARE DOUBLE PRECISION
-	//      AIR,AII- COMPLEX ANSWER DEPENDING ON THE CHOICES FOR ID AND
-	//               KODE
-	//      NZ     - UNDERFLOW INDICATOR
-	//               NZ= 0   , NORMAL RETURN
-	//               NZ= 1   , AI=CMPLX(0.0e0,0.0e0) DUE TO UNDERFLOW IN
-	//                         -PI/3 < ARG(Z) < PI/3 ON KODE=1
-	//      IERR   - ERROR FLAG
-	//               IERR=0, NORMAL RETURN - COMPUTATION COMPLETED
-	//               IERR=1, INPUT ERROR   - NO COMPUTATION
-	//               IERR=2, OVERFLOW      - NO COMPUTATION, REAL(ZTA)
-	//                       TOO LARGE ON KODE=1
-	//               IERR=3, CABS(Z) LARGE      - COMPUTATION COMPLETED
-	//                       LOSSES OF SIGNIFCANCE BY ARGUMENT REDUCTION
-	//                       PRODUCE LESS THAN HALF OF MACHINE ACCURACY
-	//               IERR=4, CABS(Z) TOO LARGE  - NO COMPUTATION
-	//                       COMPLETE LOSS OF ACCURACY BY ARGUMENT
-	//                       REDUCTION
-	//               IERR=5, ERROR              - NO COMPUTATION,
-	//                       ALGORITHM TERMINATION CONDITION NOT MET
+	// Computation of Bessel functions of complex argument and large order
+	// by D. E. Amos, sand83-0643, May, 1983
 	//
-	//    AI AND DAI ARE COMPUTED FOR CABS(Z) > 1.0 FROM THE K BESSEL
-	//    FUNCTIONS BY
+	// A subroutine package for Bessel functions of a complex argument and
+	// nonnegative order by D. E. Amos, sand85-1018, May, 1985
 	//
-	//       AI(Z)=C*SQRT(Z)*K(1/3,ZTA) , DAI(Z)=-C*Z*K(2/3,ZTA)
-	//                      C=1.0/(PI*SQRT(3.0))
-	//                       ZTA=(2/3)*Z**(3/2)
-	//
-	//    WITH THE POWER SERIES FOR CABS(Z) <= 1.0.
-	//
-	//    IN MOST COMPLEX VARIABLE COMPUTATION, ONE MUST EVALUATE ELE-
-	//    MENTARY FUNCTIONS. WHEN THE MAGNITUDE OF Z IS LARGE, LOSSES
-	//    OF SIGNIFICANCE BY ARGUMENT REDUCTION OCCUR. CONSEQUENTLY, IF
-	//    THE MAGNITUDE OF ZETA=(2/3)*Z**1.5 EXCEEDS U1=SQRT(0.5/UR),
-	//    THEN LOSSES EXCEEDING HALF PRECISION ARE LIKELY AND AN ERROR
-	//    FLAG IERR=3 IS TRIGGERED WHERE UR=math.Max(D1MACH(4),1.0D-18) IS
-	//    DOUBLE PRECISION UNIT ROUNDOFF LIMITED TO 18 DIGITS PRECISION.
-	//    ALSO, if THE MAGNITUDE OF ZETA IS LARGER THAN U2=0.5/UR, THEN
-	//    ALL SIGNIFICANCE IS LOST AND IERR=4. IN ORDER TO USE THE INT
-	//    FUNCTION, ZETA MUST BE FURTHER RESTRICTED NOT TO EXCEED THE
-	//    LARGEST INTEGER, U3=I1MACH(9). THUS, THE MAGNITUDE OF ZETA
-	//    MUST BE RESTRICTED BY MIN(U2,U3). ON 32 BIT MACHINES, U1,U2,
-	//    AND U3 ARE APPROXIMATELY 2.0E+3, 4.2E+6, 2.1E+9 IN SINGLE
-	//    PRECISION ARITHMETIC AND 1.3E+8, 1.8E+16, 2.1E+9 IN DOUBLE
-	//    PRECISION ARITHMETIC RESPECTIVELY. THIS MAKES U2 AND U3 LIMIT-
-	//    ING IN THEIR RESPECTIVE ARITHMETICS. THIS MEANS THAT THE MAG-
-	//    NITUDE OF Z CANNOT EXCEED 3.1E+4 IN SINGLE AND 2.1E+6 IN
-	//    DOUBLE PRECISION ARITHMETIC. THIS ALSO MEANS THAT ONE CAN
-	//    EXPECT TO RETAIN, IN THE WORST CASES ON 32 BIT MACHINES,
-	//    NO DIGITS IN SINGLE PRECISION AND ONLY 7 DIGITS IN DOUBLE
-	//    PRECISION ARITHMETIC. SIMILAR CONSIDERATIONS HOLD FOR OTHER
-	//    MACHINES.
-	//
-	//    THE APPROXIMATE RELATIVE ERROR IN THE MAGNITUDE OF A COMPLEX
-	//    BESSEL FUNCTION CAN BE EXPRESSED BY P*10**S WHERE P=MAX(UNIT
-	//    ROUNDOFF,1.0E-18) IS THE NOMINAL PRECISION AND 10**S REPRE-
-	//    SENTS THE INCREASE IN ERROR DUE TO ARGUMENT REDUCTION IN THE
-	//    ELEMENTARY FUNCTIONS. HERE, S=MAX(1,ABS(LOG10(CABS(Z))),
-	//    ABS(LOG10(FNU))) APPROXIMATELY (I.E. S=MAX(1,ABS(EXPONENT OF
-	//    CABS(Z),ABS(EXPONENT OF FNU)) ). HOWEVER, THE PHASE ANGLE MAY
-	//    HAVE ONLY ABSOLUTE ACCURACY. THIS IS MOST LIKELY TO OCCUR WHEN
-	//    ONE COMPONENT (IN ABSOLUTE VALUE) IS LARGER THAN THE OTHER BY
-	//    SEVERAL ORDERS OF MAGNITUDE. if ONE COMPONENT IS 10**K LARGER
-	//    THAN THE OTHER, THEN ONE CAN EXPECT ONLY MAX(ABS(LOG10(P))-K,
-	//    0) SIGNIFICANT DIGITS; OR, STATED ANOTHER WAY, WHEN K EXCEEDS
-	//    THE EXPONENT OF P, NO SIGNIFICANT DIGITS REMAIN IN THE SMALLER
-	//    COMPONENT. HOWEVER, THE PHASE ANGLE RETAINS ABSOLUTE ACCURACY
-	//    BECAUSE, IN COMPLEX ARITHMETIC WITH PRECISION P, THE SMALLER
-	//    COMPONENT WILL NOT (AS A RULE) DECREASE BELOW P TIMES THE
-	//    MAGNITUDE OF THE LARGER COMPONENT. IN THESE EXTREME CASES,
-	//    THE PRINCIPAL PHASE ANGLE IS ON THE ORDER OF +P, -P, PI/2-P,
-	//    OR -PI/2+P.
-	//
-	// REFERENCES  HANDBOOK OF MATHEMATICAL FUNCTIONS BY M. ABRAMOWITZ
-	//            AND I. A. STEGUN, NBS AMS SERIES 55, U.S. DEPT. OF
-	//            COMMERCE, 1955.
-	//
-	//          COMPUTATION OF BESSEL FUNCTIONS OF COMPLEX ARGUMENT
-	//            AND LARGE ORDER BY D. E. AMOS, SAND83-0643, MAY, 1983
-	//
-	//          A SUBROUTINE PACKAGE FOR BESSEL FUNCTIONS OF A COMPLEX
-	//            ARGUMENT AND NONNEGATIVE ORDER BY D. E. AMOS, SAND85-
-	//            1018, MAY, 1985
-	//
-	//          A PORTABLE PACKAGE FOR BESSEL FUNCTIONS OF A COMPLEX
-	//            ARGUMENT AND NONNEGATIVE ORDER BY D. E. AMOS, TRANS.
-	//            MATH. SOFTWARE, 1986
+	// A portable package for Bessel functions of a complex argument and
+	// nonnegative order by D. E. Amos, Trans. Math. Software, 1986
 
 	const (
 		TTH   = 6.66666666666666667e-01
