@@ -283,24 +283,24 @@ L80:
 // Defintions and notation are found in the nbs handbook of
 // mathematical functions (ref. 1).
 //
-// 	 	INPUT    ZR,ZI are double precision
+//   INPUT ZR,ZI are double precision
 //   	ZR,ZI  - Z=CMPLX(ZR,ZI)
 //   	ID     - order of derivative, ID=0 OR ID=1
 //   	KODE   - a parameter to indicate the scaling option
 //            	KODE= 1 returns
 //                     AI=AI(Z)                on ID=0 or
 //                     AI=DAI(Z)/DZ            on ID=1
-//                = 2  returns
+//                  = 2  returns
 //                     AI=CEXP(ZTA)*AI(Z)       on ID=0 or
 //                     AI=CEXP(ZTA)*DAI(Z)/DZ   on ID=1 where
 //                     ZTA=(2/3)*Z*CSQRT(Z)
 //
-// 		OUTPUT AIR,AII are double precision
+//    OUTPUT AIR,AII are double precision
 //   	AIR,AII- complex answer depending on the choices for ID and KODE
 //   	NZ     - underflow indicator
 //            	NZ= 0   , normal return
 //            	NZ= 1   , AI=CMPLX(0.0e0,0.0e0) due to underflow in
-//                      	-𝛑//3 < ARG(Z) < 𝛑//3 on KODE=1
+//                     	-𝛑//3 < ARG(Z) < 𝛑//3 on KODE=1
 //   	IERR   - error flag
 //            	IERR=0, normal return - computation completed
 //            	IERR=1, input error   - no computation
@@ -312,8 +312,8 @@ L80:
 //
 // AI and DAI are computed for ABS(z) > 1.0 from the K Bessel functions by
 //
-//    	AI(Z)=C*SQRT(Z)*K(1/3,ZTA) , DAI(Z)=-C*Z*K(2/3,ZTA)
-//      C=1.0/(PI*SQRT(3.0)) ZTA=(2/3)*Z**(3/2)
+//   AI(Z)=C*SQRT(Z)*K(1/3,ZTA) , DAI(Z)=-C*Z*K(2/3,ZTA)
+//   C=1.0/(PI*SQRT(3.0)) ZTA=(2/3)*Z**(3/2)
 //
 // with the power series for abs(z) <= 1.0
 func ZAIRY(ZR float64, ZI float64, ID int, KODE int) (float64, float64, int, int) {
