@@ -283,32 +283,28 @@ L80:
 // Defintions and notation are found in the nbs handbook of
 // mathematical functions (ref. 1).
 //
-//   INPUT ZR,ZI are double precision
-//   	ZR,ZI  - Z=CMPLX(ZR,ZI)
-//   	ID     - order of derivative, ID=0 OR ID=1
-//   	KODE   - a parameter to indicate the scaling option
-//            	KODE= 1 returns
-//                     AI=AI(Z)                on ID=0 or
-//                     AI=DAI(Z)/DZ            on ID=1
-//                  = 2  returns
-//                     AI=CEXP(ZTA)*AI(Z)       on ID=0 or
-//                     AI=CEXP(ZTA)*DAI(Z)/DZ   on ID=1 where
-//                     ZTA=(2/3)*Z*CSQRT(Z)
+// INPUT
+//   ZR,ZI  - Z=CMPLX(ZR,ZI)
+//   ID     - order of derivative, ID=0 OR ID=1
+//   KODE   - a parameter to indicate the scaling option
+//            KODE= 1 returns AI=AI(Z) on ID=0 or AI=DAI(Z)/DZ on ID=1
+//            KODE= 2 returns AI=CEXP(ZTA)*AI(Z) on ID=0 or AI=CEXP(ZTA)*DAI(Z)/DZ on ID=1 
+//					  where ZTA=(2/3)*Z*CSQRT(Z)
 //
-//    OUTPUT AIR,AII are double precision
-//   	AIR,AII- complex answer depending on the choices for ID and KODE
-//   	NZ     - underflow indicator
+// OUTPUT 
+//   AIR,AII- complex answer depending on the choices for ID and KODE
+//   NZ     - underflow indicator
 //            	NZ= 0   , normal return
 //            	NZ= 1   , AI=CMPLX(0.0e0,0.0e0) due to underflow in
 //                     	-𝛑//3 < ARG(Z) < 𝛑//3 on KODE=1
-//   	IERR   - error flag
-//            	IERR=0, normal return - computation completed
-//            	IERR=1, input error   - no computation
-//            	IERR=2, overflow      - no computation, real(ZTA) too large on KODE=1
-//            	IERR=3, ABS(Z) large      - computation completed
+//   IERR   - error flag
+//            IERR=0, normal return - computation completed
+//            IERR=1, input error   - no computation
+//            IERR=2, overflow      - no computation, real(ZTA) too large on KODE=1
+//            IERR=3, ABS(Z) large      - computation completed
 //                    losses of signifcance by argument reduction produce less than half of machine accuracy
-//            	IERR=4, CABS(Z) TOO LARGE  - no computation complete loss of accuracy by argument reduction
-//            	IERR=5, ERROR              - no computation, algorithm termination condition not met
+//            IERR=4, CABS(Z) TOO LARGE  - no computation complete loss of accuracy by argument reduction
+//            IERR=5, ERROR              - no computation, algorithm termination condition not met
 //
 // AI and DAI are computed for ABS(z) > 1.0 from the K Bessel functions by
 //
