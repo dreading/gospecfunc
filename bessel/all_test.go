@@ -7,6 +7,7 @@ package bessel_test
 import (
 	. "github.com/dreading/gospecfunc/bessel"
 	"testing"
+	"math"
 )
 
 func TestBesselI(t *testing.T) {
@@ -206,8 +207,8 @@ func TestGi(t *testing.T) {
 		{1.0e-16, 1.0e0, 0.20497554248200024505},
 		{-1.0e-16, 1.0e0, 0.20497554248200024505},
 		{1.0e20, 1.0e0, 0},
-		{1.0e10, 3.1830988618379067154e-11, 0},
-		{1.0e308, 3.1830988618379067154e-11, 0},
+		{1.0e10, 1.0e0,3.183098861837907e-11},
+		{1.0e308, 1.0e0,0},
 		{-1.0e8, 1.0e0,  -0.0009916070219422016},
 	}
 
@@ -244,12 +245,32 @@ func TestHi(t *testing.T) {
 		{9.0e0, 1.0e0, 0.21472868855967642259e8},
 		{10.0e0, 1.0e0, 0.45564115351632913590e9},
 		{12.0e0, 1.0e0, 0.32980722582904761929e12},
+		{-1.0e40, 1.0e0, 0},
+		{1.0e-16, 1.0e0, 0.40995108496400049010},
+		{-1.0e-16, 1.0e0, 0.40995108496400049010},
+		{-1.0e8, 1.0e0,  3.183098861837907e-09},
 	}
 
 	for _, tc := range testCases {
 		ζ := Hi(tc.num / tc.den)
 		if close(ζ, tc.res) == false {
 			t.Fatalf("Hi(%v): expected %v, got %v", tc.num/tc.den, tc.res, ζ)
+		}
+
+	}
+}
+
+func TestHiLarge(t *testing.T) {
+	testCases := []struct {
+		val float64
+	}{
+		{1.0e8},
+	}
+
+	for _, tc := range testCases {
+		ζ := Hi(tc.val)
+		if math.IsInf(ζ, 1) == false {
+			t.Fatalf("Hi(%v): expected +Inf, got %v", tc.val,  ζ)
 		}
 
 	}

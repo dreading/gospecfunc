@@ -458,7 +458,7 @@ func AIRYHI(XVALUE float64) float64 {
 
 	// Error test
 	if X > XHIGH1 {
-		return math.NaN()
+		return math.Inf(1)
 	}
 
 	Z = machine.D1MACH[3]

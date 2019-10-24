@@ -272,46 +272,46 @@ L80:
 // ZAIRY computes the Airy functions A(z) and DAI(z) for complex z
 // For KODE=1, ZAIRY computes the complex airy function Ai(z) or
 // its derivative dAi(z)/dz on ID=0 or ID=1 respectively.
-// For KODE=2, a scaling option Exp(zta)*Ai(z) or Exp(zta)*dAi(z)/dz
+// For KODE=2, a scaling option Exp(ζ)*Ai(z) or Exp(ζ)*dAi(z)/dz
 // is provided to remove the exponential decay in -𝛑/3 < arg(z) < 𝛑/3
-// and the exponential growth in pi/3 < abs(arg(z)) < pi where
-// zta=(2/3)*z*csqrt(z).
+// and the exponential growth in 𝛑/3 < |arg(z)| < 𝛑 where ζ=(2/3)*z^(3/2).
 //
 // While the airy functions Ai(z) and dAi(z)/dz are analytic in
 // the whole z plane, the corresponding scaled functions defined
 // for KODE=2 have a cut along the negative real axis.
-// Defintions and notation are found in the nbs handbook of
-// mathematical functions (ref. 1).
+// Defintions and notation are found in the NBS Handbook of
+// Mathematical Functions.
 //
-// INPUT
+// Input
 //   ZR,ZI  - Z=CMPLX(ZR,ZI)
 //   ID     - order of derivative, ID=0 OR ID=1
 //   KODE   - a parameter to indicate the scaling option
 //            KODE= 1 returns AI=AI(Z) on ID=0 or AI=DAI(Z)/DZ on ID=1
-//            KODE= 2 returns AI=CEXP(ZTA)*AI(Z) on ID=0 or AI=CEXP(ZTA)*DAI(Z)/DZ on ID=1 
-//					  where ZTA=(2/3)*Z*CSQRT(Z)
+//            KODE= 2 returns AI=EXP(ζ)*AI(Z) on ID=0 or AI=EXP(ζ)*DAI(Z)/DZ on ID=1 
+//                    where ζ=(2/3)*Z^(3/2)
 //
-// OUTPUT 
+// Ouput 
 //   AIR,AII- complex answer depending on the choices for ID and KODE
 //   NZ     - underflow indicator
 //            	NZ= 0   , normal return
-//            	NZ= 1   , AI=CMPLX(0.0e0,0.0e0) due to underflow in
-//                     	-𝛑//3 < ARG(Z) < 𝛑//3 on KODE=1
+//            	NZ= 1   , AI=0 due to underflow in -𝛑3 < ARG(Z) < 𝛑/3 on KODE=1
 //   IERR   - error flag
 //            IERR=0, normal return - computation completed
 //            IERR=1, input error   - no computation
-//            IERR=2, overflow      - no computation, real(ZTA) too large on KODE=1
-//            IERR=3, ABS(Z) large      - computation completed
-//                    losses of signifcance by argument reduction produce less than half of machine accuracy
-//            IERR=4, CABS(Z) TOO LARGE  - no computation complete loss of accuracy by argument reduction
-//            IERR=5, ERROR              - no computation, algorithm termination condition not met
+//            IERR=2, overflow      - no computation, real(ζ) too large on KODE=1
+//            IERR=3, |Z| large     - computation completed losses of signifcance by argument reduction 
+//                                    produce less than half of machine accuracy
+//            IERR=4, |Z| too large - no computation complete loss of accuracy by argument reduction
+//            IERR=5, error         - no computation, algorithm termination condition not met
 //
-// AI and DAI are computed for ABS(z) > 1.0 from the K Bessel functions by
+// AI and DAI are computed for |Z| > 1.0 from the K Bessel functions by
 //
-//   AI(Z)=C*SQRT(Z)*K(1/3,ZTA) , DAI(Z)=-C*Z*K(2/3,ZTA)
-//   C=1.0/(PI*SQRT(3.0)) ZTA=(2/3)*Z**(3/2)
+//   AI(Z)=C*SQRT(Z)*K(1/3,ζ) 
+//   DAI(Z)=-C*Z*K(2/3,ζ)
+//   C=1.0/(𝛑*SQRT(3.0)) 
+//   ζ=(2/3)*Z^(3/2)
 //
-// with the power series for abs(z) <= 1.0
+// with the power series for |z| <= 1.0
 func ZAIRY(ZR float64, ZI float64, ID int, KODE int) (float64, float64, int, int) {
 
 	// In most complex variable computation, one must evaluate elementary functions.
