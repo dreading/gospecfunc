@@ -265,7 +265,7 @@ func TestHiLarge(t *testing.T) {
 	testCases := []struct {
 		val float64
 	}{
-		{1.0e6},
+		{600e0},
 	}
 
 	for _, tc := range testCases {
