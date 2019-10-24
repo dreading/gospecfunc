@@ -248,7 +248,8 @@ func TestHi(t *testing.T) {
 		{-1.0e40, 1.0e0, 0},
 		{1.0e-16, 1.0e0, 0.40995108496400049010},
 		{-1.0e-16, 1.0e0, 0.40995108496400049010},
-		{-1.0e8, 1.0e0,  3.183098861837907e-09},
+		{-1.0e8, 1.0e0,  3.183098861837907e-09}, 
+		{-1.0e308, 1.0e0,  0},
 	}
 
 	for _, tc := range testCases {
@@ -264,7 +265,7 @@ func TestHiLarge(t *testing.T) {
 	testCases := []struct {
 		val float64
 	}{
-		{1.0e8},
+		{1.0e6},
 	}
 
 	for _, tc := range testCases {
