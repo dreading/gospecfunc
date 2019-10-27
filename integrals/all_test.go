@@ -1,11 +1,12 @@
 // Copyright 2019 Infin IT Pty Ltd. All rights reserved.
-// Use of this source code is governed by a BSD-style
+// Use of this source code is governed by a BSe-style
 // license that can be found in the LICENSE file.
 
 package misc_test
 
 import (
 	. "github.com/dreading/gospecfunc/integrals"
+	"math"
 	"testing"
 )
 
@@ -74,6 +75,18 @@ func TestAbramowitz(t *testing.T) {
 		{2, 15.0e0, 1.0e0, 0.44821756380146327259e-4},
 		{2, 20.0e0, 1.0e0, 0.46890678427324100410e-5},
 		{2, 40.0e0, 1.0e0, 0.20161544850996420504e-8},
+		{0, 0.0e0, 1.0e0, 0.88622692545275801365},
+		{0, 1.0e-12, 1.0e0, 0.8862269254249928},
+		{0, 40000.0e0, 1.0e0, 0},
+		{1, 0.0e0, 1.0e0, 0.5},
+		{1, 1.0e-102, 1.0e0, 0.5},
+		{1, 1.0e-12, 1.0e0, 0.49999999999911376},
+		{1, 40000.0e0, 1.0e0, 0},
+		{2, 1.0e-102, 1.0e0, 0.44311346272637900682},
+		{2, 1.0e-12, 1.0e0, 0.44311346272587904},
+		{2, 40000.0e0, 1.0e0, 0},
+		{2, 0e0, 1.0e0, 0.443113462726379},
+		{2, -1e0, 1.0e0, 0},
 	}
 
 	for _, tc := range testCases {
@@ -82,6 +95,41 @@ func TestAbramowitz(t *testing.T) {
 			t.Fatalf("Abramowitz(%v, %v): expected %v, got %v", tc.order, tc.num/tc.den, tc.res, ζ)
 		}
 
+	}
+}
+
+func TestAbramowitzPanic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Abramowitz did not panic")
+		}
+	}()
+
+	testCases := []struct {
+		order int
+	}{
+		{-1},
+		{3},
+	}
+	for _, tc := range testCases {
+		_ = Abramowitz(tc.order, 1)
+	}
+}
+
+func TestAbramowitzInf(t *testing.T) {
+	testCases := []struct {
+		order int
+		val   float64
+	}{
+		{0, -1},
+		{1, -1},
+	}
+
+	for _, tc := range testCases {
+		ζ := Abramowitz(tc.order, tc.val)
+		if math.IsInf(ζ, 1) == false {
+			t.Fatalf("Abramowitz(%v): expected +Inf, got %v", tc.val, ζ)
+		}
 	}
 }
 
@@ -205,6 +253,17 @@ func TestDebye(t *testing.T) {
 		{4, 20.0e0, 1.0e0, 0.62214648623965450200e-3},
 		{4, 30.0e0, 1.0e0, 0.12289514092077854510e-3},
 		{4, 50.0e0, 1.0e0, 0.15927210319002161231e-4},
+		{1, -1.0e0, 1.0e0, 0},
+		{2, -1.0e0, 1.0e0, 0},
+		{3, -1.0e0, 1.0e0, 0},
+		{4, -1.0e0, 1.0e0, 0},
+		{1, 1.0e-18, 1.0e0, 1},
+		{2, 1.0e-18, 1.0e0, 1},
+		{3, 1.0e-18, 1.0e0, 1},
+		{4, 1.0e-18, 1.0e0, 1},
+		{2, 1.0e300, 1.0e0, 0},
+		{3, 1.0e300, 1.0e0, 0},
+		{4, 1.0e300, 1.0e0, 0},
 	}
 
 	for _, tc := range testCases {
@@ -213,6 +272,24 @@ func TestDebye(t *testing.T) {
 			t.Fatalf("Debye(%v, %v): expected %v, got %v", tc.order, tc.num/tc.den, tc.res, ζ)
 		}
 
+	}
+}
+
+func TestDebyePanic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Debye did not panic")
+		}
+	}()
+
+	testCases := []struct {
+		order int
+	}{
+		{0},
+		{5},
+	}
+	for _, tc := range testCases {
+		_ = Debye(tc.order, 1)
 	}
 }
 
@@ -366,6 +443,14 @@ func TestSynch(t *testing.T) {
 		{2, 15.0e0, 1.0e0, 0.14942212731345828759e-5},
 		{2, 20.0e0, 1.0e0, 0.11607696854385161390e-7},
 		{2, 25.0e0, 1.0e0, 0.87362343746221526073e-10},
+		{1, 0.0e0, 1.0e0, 0.0e0},
+		{2, 0.0e0, 1.0e0, 0.0e0},
+		{1, -1.0e0, 1.0e0, 0.0e0},
+		{2, -1.0e0, 1.0e0, 0.0e0},
+		{1, 1.0e100, 1.0e0, 0.0e0},
+		{2, 1.0e100, 1.0e0, 0.0e0},
+		{1, 800, 1.0e0, 0.0e0},
+		{2, 800, 1.0e0, 0.0e0},
 	}
 
 	for _, tc := range testCases {
@@ -374,6 +459,24 @@ func TestSynch(t *testing.T) {
 			t.Fatalf("Synch(%v, %v): expected %v, got %v", tc.order, tc.num/tc.den, tc.res, ζ)
 		}
 
+	}
+}
+
+func TestSynchPanic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Synch did not panic")
+		}
+	}()
+
+	testCases := []struct {
+		order int
+	}{{-1},
+		{0},
+		{3},
+	}
+	for _, tc := range testCases {
+		_ = Synch(tc.order, 1)
 	}
 }
 
@@ -542,6 +645,38 @@ func TestTransport(t *testing.T) {
 		{9, 20.0e0, 1.0e0, 0.36179607036750755227e6},
 		{9, 30.0e0, 1.0e0, 0.36360622124777561525e6},
 		{9, 50.0e0, 1.0e0, 0.36360880558827162725e6},
+		{2, -1.0e0, 1.0e0, 0},
+		{3, -1.0e0, 1.0e0, 0},
+		{4, -1.0e0, 1.0e0, 0},
+		{5, -1.0e0, 1.0e0, 0},
+		{6, -1.0e0, 1.0e0, 0},
+		{7, -1.0e0, 1.0e0, 0},
+		{8, -1.0e0, 1.0e0, 0},
+		{9, -1.0e0, 1.0e0, 0},
+		{2, 1e-100, 1.0e0, 0},
+		{2, 1e-50, 1.0e0, 0},
+		{3, 1e-300, 1.0e0, 0},
+		{3, 1e-50, 1.0e0, 0},
+		{4, 1e-300, 1.0e0, 0},
+		{4, 1e-50, 1.0e0, 0},
+		{5, 1e-300, 1.0e0, 0},
+		{5, 1e-50, 1.0e0, 0},
+		{6, 1e-300, 1.0e0, 0},
+		{6, 1e-50, 1.0e0, 0},
+		{7, 1e-300, 1.0e0, 0},
+		{7, 1e-50, 1.0e0, 0},
+		{8, 1e-300, 1.0e0, 0},
+		{8, 1e-10, 1.0e0, 0},
+		{9, 1e-300, 1.0e0, 0},
+		{9, 1e-10, 1.0e0, 0},
+		{2, 1.0e300, 1.0e0, 3.289868133696453},
+		{3, 1.0e300, 1.0e0, 7.212341418957566},
+		{4, 1.0e300, 1.0e0, 25.975757609067315},
+		{5, 1.0e300, 1.0e0, 124.4313306172044},
+		{6, 1.0e300, 1.0e0, 732.4870046288033},
+		{7, 1.0e300, 1.0e0, 5082.080358004891},
+		{8, 1.0e300, 1.0e0, 40484.39900190112},
+		{9, 1.0e300, 1.0e0, 363608.8055887287},
 	}
 
 	for _, tc := range testCases {
@@ -549,6 +684,24 @@ func TestTransport(t *testing.T) {
 		if soclose(ζ, tc.res, 5e-13) == false {
 			t.Fatalf("Transport(%v,%v): expected %v, got %v", tc.order, tc.num/tc.den, tc.res, ζ)
 		}
+	}
+}
+
+func TestTransportPanic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Transport did not panic")
+		}
+	}()
+
+	testCases := []struct {
+		order int
+	}{{-1},
+		{0},
+		{10},
+	}
+	for _, tc := range testCases {
+		_ = Transport(tc.order, 1)
 	}
 }
 
@@ -597,6 +750,11 @@ func TestStruve(t *testing.T) {
 		{1, -80.0e0, 1.0e0, 0.70611511147286827018e0},
 		{1, 100.0e0, 1.0e0, 0.61631110327201338454e0},
 		{1, -125.0e0, 1.0e0, 0.62778480765443656489e0},
+		{0, 1.0e300, 1.0e0, 0},
+		{1, 1.0e300, 1.0e0, 0},
+		{0, 1.0e-12, 1.0e0, 6.366197723675813e-13},
+		{1, 2.239977678460211e-154, 1.0e0, 0},
+		{1, 4.080441152620632e-08, 1.0e0, 0},
 	}
 
 	for _, tc := range testCases {
@@ -605,6 +763,23 @@ func TestStruve(t *testing.T) {
 			t.Fatalf("Struve(%v,%v): expected %v, got %v", tc.order, tc.num/tc.den, tc.res, ζ)
 		}
 
+	}
+}
+
+func TestStruvePanic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Struve did not panic")
+		}
+	}()
+
+	testCases := []struct {
+		order int
+	}{{-1},
+		{2},
+	}
+	for _, tc := range testCases {
+		_ = Struve(tc.order, 1)
 	}
 }
 
@@ -632,12 +807,15 @@ func TestStruveModifiedSmall(t *testing.T) {
 		{1, -4.0e0, 1.0e0, 0.91692778117386847344e1},
 		{1, 7.0e0, 1.0e0, 0.15541656652426660966e3},
 		{1, -10.0e0, 1.0e0, 0.26703582852084829694e4},
+		{0, 3.16e-08, 1.0e0, 2.011718480681557e-08},
+		{1, 3.16e-08, 1.0e0, 0},
+		{1, 3.36e-300, 1.0e0, 0},
 	}
 
 	for _, tc := range testCases {
 		ζ := StruveModified(tc.order, tc.num/tc.den)
 		if close(ζ, tc.res) == false {
-			t.Fatalf("StruveModified(%v,%v): expected %v, got %v", tc.order, tc.num/tc.den, tc.res, ζ-tc.res)
+			t.Fatalf("StruveModified(%v,%v): expected %v, got %v", tc.order, tc.num/tc.den, tc.res, ζ)
 		}
 
 	}
@@ -670,13 +848,128 @@ func TestStruveModifiedLarge(t *testing.T) {
 		{1, 60.0e0, 1.0e0, 0.58447515883904682813e25},
 		{1, -70.0e0, 1.0e0, 0.11929750788892311875e30},
 	}
-
 	for _, tc := range testCases {
 		ζ := StruveModified(tc.order, tc.num/tc.den)
 		if soclose(ζ, tc.res, 2e-8) == false {
-			t.Fatalf("StruveModified(%v,%v): expected %v, got %v", tc.order, tc.num/tc.den, tc.res, ζ-tc.res)
+			t.Fatalf("StruveModified(%v,%v): expected %v, got %v", tc.order, tc.num/tc.den, tc.res, ζ)
+		}
+	}
+}
+
+func TestStruveModifiedPanic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Struve Modified did not panic")
+		}
+	}()
+
+	testCases := []struct {
+		order int
+	}{{-1},
+		{2},
+	}
+	for _, tc := range testCases {
+		_ = StruveModified(tc.order, 1)
+	}
+}
+
+func TestStruveModifiedInf(t *testing.T) {
+	testCases := []struct {
+		order int
+		val   float64
+	}{
+		{0, 5.2e8},
+		{0, 2.53e+17},
+		{1, 5.2e8},
+		{1, 2.71e+17},
+	}
+
+	for _, tc := range testCases {
+		ζ := StruveModified(tc.order, tc.val)
+		if math.IsInf(ζ, 1) == false {
+			t.Fatalf("StruveModified(%v): expected +Inf, got %v", tc.val, ζ)
+		}
+	}
+}
+
+func TestBesselMinusStruveModified(t *testing.T) {
+	testCases := []struct {
+		order         int
+		num, den, res float64
+	}{
+		{0, 1.0e0, 512.0e0, 0.99875755515461749793e0},
+		{0, 1.0e0, 64.0e0, 0.99011358230706643807e0},
+		{0, 1.0e0, 8.0e0, 0.92419435310023947018e0},
+		{0, 1.0e0, 2.0e0, 0.73624267134714273902e0},
+		{0, 1.0e0, 1.0e0, 0.55582269181411744686e0},
+		{0, 2.0e0, 1.0e0, 0.34215154434462160628e0},
+		{0, 4.0e0, 1.0e0, 0.17087174888774706539e0},
+		{0, 8.0e0, 1.0e0, 0.81081008709219208918e-1},
+		{0, 12.0e0, 1.0e0, 0.53449421441089580702e-1},
+		{0, 16.0e0, 1.0e0, 0.39950321008923244846e-1},
+		{0, 65.0e0, 4.0e0, 0.39330637437584921392e-1},
+		{0, 17.0e0, 1.0e0, 0.37582274342808670750e-1},
+		{0, 20.0e0, 1.0e0, 0.31912486554480390343e-1},
+		{0, 25.0e0, 1.0e0, 0.25506146883504738403e-1},
+		{0, 30.0e0, 1.0e0, 0.21244480317825292412e-1},
+		{0, 40.0e0, 1.0e0, 0.15925498348551684335e-1},
+		{0, 50.0e0, 1.0e0, 0.12737506927242585015e-1},
+		{0, 75.0e0, 1.0e0, 0.84897750814784916847e-2},
+		{0, 100.0e0, 1.0e0, 0.63668349178454469153e-2},
+		{0, 125.0e0, 1.0e0, 0.50932843163122551114e-2},
+		{1, 1.0e0, 512.0e0, 0.97575346155386267134e-3},
+		{1, 1.0e0, 64.0e0, 0.77609293280609272733e-2},
+		{1, 1.0e0, 8.0e0, 0.59302966404545373770e-1},
+		{1, 1.0e0, 2.0e0, 0.20395212276737365307e0},
+		{1, 1.0e0, 1.0e0, 0.33839472293667639038e0},
+		{1, 2.0e0, 1.0e0, 0.48787706726961324579e0},
+		{1, 4.0e0, 1.0e0, 0.59018734196576517506e0},
+		{1, 8.0e0, 1.0e0, 0.62604539530312149476e0},
+		{1, 12.0e0, 1.0e0, 0.63209315274909764698e0},
+		{1, 16.0e0, 1.0e0, 0.63410179313235359215e0},
+		{1, 65.0e0, 4.0e0, 0.63417966797578128188e0},
+		{1, 17.0e0, 1.0e0, 0.63439268632392089434e0},
+		{1, 20.0e0, 1.0e0, 0.63501579073257770690e0},
+		{1, 25.0e0, 1.0e0, 0.63559616677359459337e0},
+		{1, 30.0e0, 1.0e0, 0.63591001826697110312e0},
+		{1, 40.0e0, 1.0e0, 0.63622113181751073643e0},
+		{1, 50.0e0, 1.0e0, 0.63636481702133606597e0},
+		{1, 75.0e0, 1.0e0, 0.63650653499619902120e0},
+		{1, 100.0e0, 1.0e0, 0.63655609126300261851e0},
+		{1, 125.0e0, 1.0e0, 0.63657902087183929223e0},
+		{0, 3.16e-08, 1.0e0, 0.999999979882815},
+		{0, 3.36e-300, 1.0e0, 1},
+		{1, 3.16e-08, 1.0e0, 1.579999978809898e-08},
+		{1, 3.36e-300, 1.0e0, 0},
+		{0, -1, 1.0e0, 0},
+		{1, -1, 1.0e0, 0},
+		{0, 1e10, 1.0e0, 6.366197723675814e-11},
+		{1, 1e10, 1.0e0, 6.366197723675814e-1},
+	}
+
+	for _, tc := range testCases {
+		ζ := BesselMinusStruveModified(tc.order, tc.num/tc.den)
+		if close(ζ, tc.res) == false {
+			t.Fatalf("BesselMinusStruveModified(%v,%v): expected %v, got %v", tc.order, tc.num/tc.den, tc.res, ζ)
 		}
 
+	}
+}
+
+func TestBesselMinusStruveModifiedPanic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("BesselMinusStruveModified did not panic")
+		}
+	}()
+
+	testCases := []struct {
+		order int
+	}{{-1},
+		{2},
+	}
+	for _, tc := range testCases {
+		_ = BesselMinusStruveModified(tc.order, 1)
 	}
 }
 

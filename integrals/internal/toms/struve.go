@@ -342,7 +342,7 @@ func STRVH1(XVALUE float64) float64 {
 // given to 20 decimal places
 //
 // If the value of |XVALUE| is too large, the result
-// would cause an floating-pt overflow and the function returns NaN
+// would cause an floating-pt overflow and the function returns Inf
 func STRVL0(XVALUE float64) float64 {
 
 	const (
@@ -483,7 +483,7 @@ func STRVL0(XVALUE float64) float64 {
 		}
 		TEST = math.Log(CH1) - LNR2PI - math.Log(X)/TWO + X
 		if TEST > -math.Log(XMAX) {
-			RET = math.NaN()
+			RET = math.Inf(1)
 		} else {
 			RET = math.Exp(TEST) - TWOBPI*CH2/X
 		}
@@ -501,7 +501,7 @@ func STRVL0(XVALUE float64) float64 {
 // given to 20 decimal places
 //
 // If the value of |XVALUE| is too large, the result
-// would cause an floating-pt overflow and the function returns NaN
+// would cause an floating-pt overflow and the function returns Inf
 func STRVL1(XVALUE float64) float64 {
 
 	const (
@@ -601,8 +601,8 @@ func STRVL1(XVALUE float64) float64 {
 
 	// START CALCULATION
 	X = math.Abs(XVALUE)
-	// Compute the machine-dependent constants.
 
+	// Compute the machine-dependent constants.
 	TEST = machine.D1MACH[3]
 	T = TEST / ONEHUN
 	if X <= SIXTEN {
@@ -616,7 +616,6 @@ func STRVL1(XVALUE float64) float64 {
 		XHIGH2 = THIRTY / TEST
 		XHIGH1 = math.Sqrt(XHIGH2)
 	}
-
 	// CODE FOR |XVALUE| <= 16
 	if X <= SIXTEN {
 		if X <= XLOW2 {
@@ -647,7 +646,7 @@ func STRVL1(XVALUE float64) float64 {
 		}
 		TEST = math.Log(CH1) - LNR2PI - math.Log(X)/TWO + X
 		if TEST > -math.Log(XMAX) {
-			RET = math.NaN()
+			RET = math.Inf(1)
 		} else {
 			RET = math.Exp(TEST) - TWOBPI*CH2
 		}

@@ -6,8 +6,8 @@ package bessel_test
 
 import (
 	. "github.com/dreading/gospecfunc/bessel"
-	"testing"
 	"math"
+	"testing"
 )
 
 func TestBesselI(t *testing.T) {
@@ -160,6 +160,63 @@ func TestAiryAi(t *testing.T) {
 	}
 }
 
+func TestAiryAix(t *testing.T) {
+	testCases := []struct {
+		x, y complex128
+	}{
+		// extended precision values computed using Mathematica
+		{3 + 4i, 0.1835755300356563207855609335333982182804779386314715657987711225267727422186395137060866322176677229 - 0.0416176487393802789393930914530936600764046614258631476023947559642313271327799016541303441791855652i},
+	}
+
+	for _, tc := range testCases {
+		ζ := Aix(tc.x)
+		if soclose(real(ζ), real(tc.y), 1e-13) == false {
+			t.Fatalf("real(AiryAix(%v)): expected %v, got %v", tc.x, real(tc.y), real(ζ))
+		}
+		if soclose(imag(ζ), imag(tc.y), 1e-13) == false {
+			t.Fatalf("imag(AiryAix(%v)): expected %v, got %v", tc.x, imag(tc.y), imag(ζ))
+		}
+	}
+}
+
+func TestAiryAid(t *testing.T) {
+	testCases := []struct {
+		x, y complex128
+	}{
+		// extended precision values computed using Mathematica
+		{3 + 4i, -0.0752099611959030290360245211620050520074612674725256824 + 0.0823640771555377950900025995378362045029329536404160740i},
+	}
+
+	for _, tc := range testCases {
+		ζ := Aid(tc.x)
+		if soclose(real(ζ), real(tc.y), 1e-13) == false {
+			t.Fatalf("real(AiryAid(%v)): expected %v, got %v", tc.x, real(tc.y), real(ζ))
+		}
+		if soclose(imag(ζ), imag(tc.y), 1e-13) == false {
+			t.Fatalf("imag(AiryAid(%v)): expected %v, got %v", tc.x, imag(tc.y), imag(ζ))
+		}
+	}
+}
+
+func TestAiryAidx(t *testing.T) {
+	testCases := []struct {
+		x, y complex128
+	}{
+		// extended precision values computed using Mathematica (using the principal branch of the logarithm for complex exponentiation)
+		{3 + 4i, -0.412990905801422564636582340314435196054059892109907071 - 0.0920837077431263403171214472631110596105237477987462376i},
+	}
+
+	for _, tc := range testCases {
+		ζ := Aidx(tc.x)
+		if soclose(real(ζ), real(tc.y), 1e-13) == false {
+			t.Fatalf("real(AiryAid(%v)): expected %v, got %v", tc.x, real(tc.y), real(ζ))
+		}
+		if soclose(imag(ζ), imag(tc.y), 1e-13) == false {
+			t.Fatalf("imag(AiryAid(%v)): expected %v, got %v", tc.x, imag(tc.y), imag(ζ))
+		}
+	}
+}
+
 func TestAiryBi(t *testing.T) {
 	testCases := []struct {
 		x, y complex128
@@ -175,6 +232,63 @@ func TestAiryBi(t *testing.T) {
 		}
 		if soclose(imag(ζ), imag(tc.y), 1e-13) == false {
 			t.Fatalf("imag(AiryBi(%v)): expected %v, got %v", tc.x, imag(tc.y), imag(ζ))
+		}
+	}
+}
+
+func TestAiryBix(t *testing.T) {
+	testCases := []struct {
+		x, y complex128
+	}{
+		// extended precision values computed using Mathematica
+		{3 + 4i, 0.27319149262040082252117234505365461539534889567258960373 + 0.27713977915811109029797070575343074622129648765459620679i},
+	}
+
+	for _, tc := range testCases {
+		ζ := Bix(tc.x)
+		if soclose(real(ζ), real(tc.y), 1e-13) == false {
+			t.Fatalf("real(AiryBix(%v)): expected %v, got %v", tc.x, real(tc.y), real(ζ))
+		}
+		if soclose(imag(ζ), imag(tc.y), 1e-13) == false {
+			t.Fatalf("imag(AiryBix(%v)): expected %v, got %v", tc.x, imag(tc.y), imag(ζ))
+		}
+	}
+}
+
+func TestAiryBid(t *testing.T) {
+	testCases := []struct {
+		x, y complex128
+	}{
+		// extended precision values computed using Mathematica
+		{3 + 4i, 0.78788923789635748275993347147037942948472756149505740013 + 2.9998668872583759608026286983418251783375077031064431087i},
+	}
+
+	for _, tc := range testCases {
+		ζ := Bid(tc.x)
+		if soclose(real(ζ), real(tc.y), 1e-13) == false {
+			t.Fatalf("real(AiryBid(%v)): expected %v, got %v", tc.x, real(tc.y), real(ζ))
+		}
+		if soclose(imag(ζ), imag(tc.y), 1e-13) == false {
+			t.Fatalf("imag(AiryBid(%v)): expected %v, got %v", tc.x, imag(tc.y), imag(ζ))
+		}
+	}
+}
+
+func TestAiryBidx(t *testing.T) {
+	testCases := []struct {
+		x, y complex128
+	}{
+		// extended precision values computed using Mathematica
+		{3 + 4i, 0.20768534826166084976217984558838878267020909768365666904 + 0.79075632620944147532503042962473032501930744949927623196i},
+	}
+
+	for _, tc := range testCases {
+		ζ := Bidx(tc.x)
+		if soclose(real(ζ), real(tc.y), 1e-13) == false {
+			t.Fatalf("real(AiryBidx(%v)): expected %v, got %v", tc.x, real(tc.y), real(ζ))
+		}
+		if soclose(imag(ζ), imag(tc.y), 1e-13) == false {
+			t.Fatalf("imag(AiryBidx(%v)): expected %v, got %v", tc.x, imag(tc.y), imag(ζ))
 		}
 	}
 }
@@ -207,9 +321,10 @@ func TestGi(t *testing.T) {
 		{1.0e-16, 1.0e0, 0.20497554248200024505},
 		{-1.0e-16, 1.0e0, 0.20497554248200024505},
 		{1.0e20, 1.0e0, 0},
-		{1.0e10, 1.0e0,3.183098861837907e-11},
-		{1.0e308, 1.0e0,0},
-		{-1.0e8, 1.0e0,  -0.0009916070219422016},
+		{1.0e10, 1.0e0, 3.183098861837907e-11},
+		{1.0e308, 1.0e0, 0},
+		{-1.0e8, 1.0e0, -0.0009916070219422016},
+		{0e0, 1e0, 0.204975542482000245050307456364537851198242729549532168346},
 	}
 
 	for _, tc := range testCases {
@@ -248,8 +363,10 @@ func TestHi(t *testing.T) {
 		{-1.0e40, 1.0e0, 0},
 		{1.0e-16, 1.0e0, 0.40995108496400049010},
 		{-1.0e-16, 1.0e0, 0.40995108496400049010},
-		{-1.0e8, 1.0e0,  3.183098861837907e-09}, 
-		{-1.0e308, 1.0e0,  0},
+		{-1.0e8, 1.0e0, 3.183098861837907e-09},
+		{-1.0e308, 1.0e0, 0},
+		{0e0, 1e0, 0.409951084964000490100614912729075702396485459099064336693},
+		{100e0, 1e0, 6.0412239966702013990052650701823592789077760491387386e288},
 	}
 
 	for _, tc := range testCases {
@@ -261,17 +378,18 @@ func TestHi(t *testing.T) {
 	}
 }
 
-func TestHiLarge(t *testing.T) {
+func TestHiInf(t *testing.T) {
 	testCases := []struct {
 		val float64
 	}{
-		{600e0},
+		{104e0},
+		{1.0e308},
 	}
 
 	for _, tc := range testCases {
 		ζ := Hi(tc.val)
 		if math.IsInf(ζ, 1) == false {
-			t.Fatalf("Hi(%v): expected +Inf, got %v", tc.val,  ζ)
+			t.Fatalf("Hi(%v): expected +Inf, got %v", tc.val, ζ)
 		}
 
 	}

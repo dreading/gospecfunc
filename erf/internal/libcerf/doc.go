@@ -2,5 +2,5 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// Package libcerf implements functions from libcerf by Steven G. Johnson 
+// Package libcerf implements functions from libcerf by Steven G. Johnson
 package libcerf

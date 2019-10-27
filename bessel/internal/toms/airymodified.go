@@ -287,7 +287,7 @@ func AIRYGI(XVALUE float64) float64 {
 // The code uses Chebyshev expansions with the coefficients
 // given to an accuracy of 20 decimal places.
 // If x is too large, then the asymptotic expansion of Hi(x) will cause an overflow
-// and the function returns NaN
+// and the function returns Inf
 func AIRYHI(XVALUE float64) float64 {
 
 	const (
@@ -453,9 +453,8 @@ func AIRYHI(XVALUE float64) float64 {
 	// Compute the machine-dependent constants.
 	XMAX = machine.D1MACH[2]
 	TEMP = THREE * math.Log(XMAX) / TWO
-	ZETA = (TEMP + math.Log(TEMP)/FOUR - math.Log(ONEBPI)/TWO)
-	XHIGH1 = math.Pow(ZETA, TWO/THREE)
-
+	ZETA = (TEMP + math.Log(-1*TEMP)/FOUR - math.Log(ONEBPI)/TWO) //??????
+	XHIGH1 = math.Pow(math.Abs(ZETA), TWO/THREE)
 	// Error test
 	if X > XHIGH1 {
 		return math.Inf(1)

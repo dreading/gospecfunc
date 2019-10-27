@@ -138,6 +138,21 @@ func StruveModified(order int, x float64) float64 {
 	}
 }
 
+// BesselMinusStruveModified calculates
+// 		Ii(x) - Li(x) for i =1,2
+// where Ii(x) is the modified Bessel function of the first kind of
+// order i, and Li(x) is the modified Struve function of order
+func BesselMinusStruveModified(order int, x float64) float64 {
+	switch order {
+	case 0:
+		return toms.I0ML0(x)
+	case 1:
+		return toms.I1ML1(x)
+	default:
+		panic("order must be 1 or 2")
+	}
+}
+
 // AtnInt calculates the value of the inverse-tangent integral defined by
 //   ∫ 0 to x ( (arctan t)/t ) dt
 func AtnInt(x float64) float64 {

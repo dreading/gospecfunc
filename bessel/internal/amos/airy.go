@@ -287,10 +287,10 @@ L80:
 //   ID     - order of derivative, ID=0 OR ID=1
 //   KODE   - a parameter to indicate the scaling option
 //            KODE= 1 returns AI=AI(Z) on ID=0 or AI=DAI(Z)/DZ on ID=1
-//            KODE= 2 returns AI=EXP(ζ)*AI(Z) on ID=0 or AI=EXP(ζ)*DAI(Z)/DZ on ID=1 
+//            KODE= 2 returns AI=EXP(ζ)*AI(Z) on ID=0 or AI=EXP(ζ)*DAI(Z)/DZ on ID=1
 //                    where ζ=(2/3)*Z^(3/2)
 //
-// Ouput 
+// Ouput
 //   AIR,AII- complex answer depending on the choices for ID and KODE
 //   NZ     - underflow indicator
 //            	NZ= 0   , normal return
@@ -299,16 +299,16 @@ L80:
 //            IERR=0, normal return - computation completed
 //            IERR=1, input error   - no computation
 //            IERR=2, overflow      - no computation, real(ζ) too large on KODE=1
-//            IERR=3, |Z| large     - computation completed losses of signifcance by argument reduction 
+//            IERR=3, |Z| large     - computation completed losses of signifcance by argument reduction
 //                                    produce less than half of machine accuracy
 //            IERR=4, |Z| too large - no computation complete loss of accuracy by argument reduction
 //            IERR=5, error         - no computation, algorithm termination condition not met
 //
 // AI and DAI are computed for |Z| > 1.0 from the K Bessel functions by
 //
-//   AI(Z)=C*SQRT(Z)*K(1/3,ζ) 
+//   AI(Z)=C*SQRT(Z)*K(1/3,ζ)
 //   DAI(Z)=-C*Z*K(2/3,ζ)
-//   C=1.0/(𝛑*SQRT(3.0)) 
+//   C=1.0/(𝛑*SQRT(3.0))
 //   ζ=(2/3)*Z^(3/2)
 //
 // with the power series for |z| <= 1.0

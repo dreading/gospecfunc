@@ -21,7 +21,7 @@ import (
 //    ∫  0 to infinity exp( -t*t - x/t ) dt
 // The code uses Chebyshev expansions with the coefficients
 // given to an accuracy of 20 decimal places.
-// If XVALUE < 0.0, the function returns NaN
+// If XVALUE < 0.0, the function returns Inf
 func ABRAM0(XVALUE float64) float64 {
 
 	const (
@@ -103,7 +103,7 @@ func ABRAM0(XVALUE float64) float64 {
 
 	// Error test
 	if X < ZERO {
-		return math.NaN()
+		return math.Inf(1)
 	}
 
 	// Compute the machine-dependent constants.
@@ -152,7 +152,7 @@ func ABRAM0(XVALUE float64) float64 {
 //    ∫  0 to infinity t * exp( -t*t - x/t ) dt
 // The code uses Chebyshev expansions with the coefficients
 // given to an accuracy of 20 decimal places.
-// If XVALUE < 0.0, the function returns NaN
+// If XVALUE < 0.0, the function returns Inf
 func ABRAM1(XVALUE float64) float64 {
 
 	const (
@@ -233,7 +233,7 @@ func ABRAM1(XVALUE float64) float64 {
 	X = XVALUE
 	// Error test
 	if X < ZERO {
-		return math.NaN()
+		return math.Inf(1)
 	}
 
 	// Compute the machine-dependent constants.
@@ -289,7 +289,7 @@ func ABRAM1(XVALUE float64) float64 {
 //    ∫  0 to infinity (t^2) * exp( -t*t - x/t ) dt
 // The code uses Chebyshev expansions with the coefficients
 // given to an accuracy of 20 decimal places.
-// If XVALUE < 0.0, the function returns NaN
+// If XVALUE < 0.0, the function returns Inf
 func ABRAM2(XVALUE float64) float64 {
 
 	const (

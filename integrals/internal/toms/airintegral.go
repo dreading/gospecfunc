@@ -250,7 +250,7 @@ func AIRINT(XVALUE float64) float64 {
 // The code uses Chebyshev expansions with the coefficients
 // given to an accuracy of 20 decimal places.
 // If the function is too large and positive the correct value
-// overflows and returns the NaN
+// overflows and returns the Inf
 func BIRINT(XVALUE float64) float64 {
 
 	const (
