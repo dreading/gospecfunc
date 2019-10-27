@@ -21,7 +21,6 @@ import (
 // Faddeyeva computes the plasma dispersion Faddeyeva function, w(z) = exp(-z^2) * erfc(-i*z)
 // where z=x+iy and erfc(z) is the complex complementary error function of z
 func Faddeyeva(z complex128) complex128 {
-
 	//For purely imaginary input values
 	if IsReal(1i * z) {
 		return complex(libcerf.Erfcx(imag(z)), 0)
@@ -66,123 +65,117 @@ func Faddeyeva(z complex128) complex128 {
 	var sin2yx float64 = math.Sin(twoYx)
 
 	var w complex128
-	if x == 0 {
-		//% For x=0, use the asymptotic expressions for x--->0 from Eq. (6) in the manuscript
-		w = complex(erfcxY, 0) * (complex(1, xsign*(x/y)))
-	} else {
 
-		var vOld float64 = expXSqr * (erfcxY*cos2yx + (twoAPi/y)*(math.Sin(twoYx/2)*math.Sin(twoYx/2)))
-		var lOld float64 = -erfcxY + aPi/y
-		var Sigma3 float64 = Rmin
-		var Sigma5 float64 = Rmin
-		var Sigma45 float64
-		var delta3 float64 = 1
-		var delta5 float64 = 1
-		var n float64
-		var n3 float64 = math.Ceil(x / a)
-		var n33 = n3 - 1
+	var vOld float64 = expXSqr * (erfcxY*cos2yx + (twoAPi/y)*(math.Sin(twoYx/2)*math.Sin(twoYx/2)))
+	var lOld float64 = -erfcxY + aPi/y
+	var Sigma3 float64 = Rmin
+	var Sigma5 float64 = Rmin
+	var Sigma45 float64
+	var delta3 float64 = 1
+	var delta5 float64 = 1
+	var n float64
+	var n3 float64 = math.Ceil(x / a)
+	var n33 = n3 - 1
 
-		if (sqrtLogRmin - x) > 0 {
-			var Sigma1 float64 = Rmin
-			var Sigma2 float64 = Rmin
-			var Sigma4 float64 = Rmin
-			var exp1 float64 = math.Exp(-twoAX)
-			var exp2 float64 = math.Exp((fourASqr*n3 - 2*twoAX) - twoASqr)
-			var exp3 float64 = math.Exp(-((twoASqr*n3 - twoAX) - twoASqr))
-			var del2tmp float64 = 1.0
-			var del3tmp float64 = math.Exp(-((aSqr*n3*n3 - twoAX*n3 - twoASqr*n3) + xSqr + twoAX + aSqr))
-			var del33tmp float64 = math.Exp(aSqr - (twoASqr*n3 - twoAX))
-			var del3 float64
-			var del5 float64
-			var den1 float64
-			var expDel1 float64
-			var exp3Den float64
-			var exp33Den float64
+	if (sqrtLogRmin - x) > 0 {
+		var Sigma1 float64 = Rmin
+		var Sigma2 float64 = Rmin
+		var Sigma4 float64 = Rmin
+		var exp1 float64 = math.Exp(-twoAX)
+		var exp2 float64 = math.Exp((fourASqr*n3 - 2*twoAX) - twoASqr)
+		var exp3 float64 = math.Exp(-((twoASqr*n3 - twoAX) - twoASqr))
+		var del2tmp float64 = 1.0
+		var del3tmp float64 = math.Exp(-((aSqr*n3*n3 - twoAX*n3 - twoASqr*n3) + xSqr + twoAX + aSqr))
+		var del33tmp float64 = math.Exp(aSqr - (twoASqr*n3 - twoAX))
+		var del3 float64
+		var del5 float64
+		var den1 float64
+		var expDel1 float64
+		var exp3Den float64
+		var exp33Den float64
 
-			for delta3 >= tiny || (delta5 >= tiny && n <= 50) {
-				n = n + 1
-				den1 = aSqr*n*n + ySqr
-				expDel1 = math.Exp(-(aSqr * n * n)) / den1
-				del2tmp = del2tmp * exp1
-				if n33 >= 1 {
-					del3tmp = del3tmp * exp3
-					exp3Den = del3tmp * expDel1 * (den1 / (aSqr*n3*n3 + ySqr))
-					del33tmp = del33tmp * exp2
-					exp33Den = exp3Den * del33tmp * ((aSqr*n3*n3 + ySqr) / (aSqr*n33*n33 + ySqr))
-					del5 = (n33*exp33Den + n3*exp3Den)
-					del3 = (exp33Den + exp3Den)
-				} else {
-					del3tmp = del3tmp * exp3
-					del3 = del3tmp * expDel1 * (den1 / (aSqr*n3*n3 + ySqr))
-					del5 = (n3 * del3)
-				}
-				delta3 = del3 / Sigma3
-				delta5 = del5 / Sigma5
-
-				Sigma1 = Sigma1 + expDel1
-				Sigma2 = Sigma2 + del2tmp*expXSqr*expDel1
-				Sigma3 = Sigma3 + del3
-				Sigma4 = Sigma4 + n*del2tmp*expXSqr*expDel1
-				Sigma5 = Sigma5 + del5
-
-				if x >= 5e-4 {
-					Sigma45 = -Sigma4 + Sigma5
-				} else {
-					var twoAXn2 float64 = twoAX * n * twoAX * n
-					Sigma45 = Sigma45 + 2*n*n*twoAX*expXSqr*expDel1*(1+1.666666666666667e-001*(twoAXn2)+8.333333333333333e-003*(twoAXn2)*(twoAXn2))
-				}
-				n3 = n3 + 1
-				n33 = n33 - 1
-			}
-
-			if y <= 5e0 && twoYx > Rmin {
-				var wReal = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+0.5*(Sigma2+Sigma3))
-				var wImag = xsign * (sin2yx*expXSqr*(lOld+twoAPi*y*Sigma1) + twoAPi*halfA*Sigma45)
-				w = complex(wReal, wImag)
-			} else if y <= 5e0 && twoYx <= Rmin {
-				var wReal = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+.5*(Sigma2+Sigma3))
-				var wImag = xsign * (2*y*expXSqr*(x*lOld+x*twoAPi*y*Sigma1) + twoAPi*halfA*Sigma45)
-				w = complex(wReal, wImag)
+		for delta3 >= tiny || (delta5 >= tiny && n <= 50) {
+			n = n + 1
+			den1 = aSqr*n*n + ySqr
+			expDel1 = math.Exp(-(aSqr * n * n)) / den1
+			del2tmp = del2tmp * exp1
+			if n33 >= 1 {
+				del3tmp = del3tmp * exp3
+				exp3Den = del3tmp * expDel1 * (den1 / (aSqr*n3*n3 + ySqr))
+				del33tmp = del33tmp * exp2
+				exp33Den = exp3Den * del33tmp * ((aSqr*n3*n3 + ySqr) / (aSqr*n33*n33 + ySqr))
+				del5 = (n33*exp33Den + n3*exp3Den)
+				del3 = (exp33Den + exp3Den)
 			} else {
-				var wReal = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+0.5*(Sigma2+Sigma3))
-				var wImag = xsign * (sin2yx*expXSqr*math.Min(0, math.Abs(lOld+(twoAPi*y*Sigma1))) + twoAPi*halfA*Sigma45)
-				w = complex(wReal, wImag)
+				del3tmp = del3tmp * exp3
+				del3 = del3tmp * expDel1 * (den1 / (aSqr*n3*n3 + ySqr))
+				del5 = (n3 * del3)
 			}
+			delta3 = del3 / Sigma3
+			delta5 = del5 / Sigma5
 
-		} else if x >= sqrtLogRmin && x < 1e15 {
-			var exp2 = math.Exp((fourASqr*n3 - 2*twoAX) - twoASqr)
-			var del33tmp = math.Exp(aSqr + (twoAX - twoASqr*n3))
-			var del3 float64
-			var del5 float64
-			for delta3 >= tiny || delta5 >= tiny && n <= 50 {
-				n = n + 1
-				if n33 >= 1 {
-					var exp3Den = math.Exp(-(a*n3-x)*(a*n3-x)) / (aSqr*n3*n3 + ySqr)
-					del33tmp = del33tmp * exp2
-					var exp33Den = exp3Den * del33tmp * ((aSqr*n3*n3 + ySqr) / (aSqr*n33*n33 + ySqr))
-					del5 = (n33*exp33Den + n3*exp3Den)
-					del3 = (exp33Den + exp3Den)
-				} else {
-					del3 = math.Exp(-(a*n3-x)*(a*n3-x)) / (aSqr*n3*n3 + ySqr)
-					del5 = n3 * del3
-				}
-				delta3 = del3 / Sigma3
-				delta5 = del5 / Sigma5
-				Sigma3 = Sigma3 + del3
-				Sigma5 = Sigma5 + del5
-				n3 = n3 + 1
-				n33 = n33 - 1
+			Sigma1 = Sigma1 + expDel1
+			Sigma2 = Sigma2 + del2tmp*expXSqr*expDel1
+			Sigma3 = Sigma3 + del3
+			Sigma4 = Sigma4 + n*del2tmp*expXSqr*expDel1
+			Sigma5 = Sigma5 + del5
+
+			if x >= 5e-4 {
+				Sigma45 = -Sigma4 + Sigma5
+			} else {
+				var twoAXn2 float64 = twoAX * n * twoAX * n
+				Sigma45 = Sigma45 + 2*n*n*twoAX*expXSqr*expDel1*(1+1.666666666666667e-001*(twoAXn2)+8.333333333333333e-003*(twoAXn2)*(twoAXn2))
 			}
-
-			var wReal = vOld + y*aPi*Sigma3
-			var wImag = xsign * (sin2yx*expXSqr*lOld + twoAPi*halfA*Sigma5)
+			n3 = n3 + 1
+			n33 = n33 - 1
+		}
+		if y <= 5e0 && twoYx > Rmin {
+			var wReal = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+0.5*(Sigma2+Sigma3))
+			var wImag = xsign * (sin2yx*expXSqr*(lOld+twoAPi*y*Sigma1) + twoAPi*halfA*Sigma45)
 			w = complex(wReal, wImag)
-
+		} else if y <= 5e0 && twoYx <= Rmin {
+			var wReal = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+.5*(Sigma2+Sigma3))
+			var wImag = xsign * (2*y*expXSqr*(x*lOld+x*twoAPi*y*Sigma1) + twoAPi*halfA*Sigma45)
+			w = complex(wReal, wImag)
 		} else {
-			var wReal = oneSqrtPi * (y / (xSqr + ySqr))
-			var wImag = oneSqrtPi * (xsign * x / (xSqr + ySqr))
+			var wReal = vOld + y*twoAPi*(-cos2yx*expXSqr*Sigma1+0.5*(Sigma2+Sigma3))
+			var wImag = xsign * (sin2yx*expXSqr*math.Min(0, math.Abs(lOld+(twoAPi*y*Sigma1))) + twoAPi*halfA*Sigma45)
 			w = complex(wReal, wImag)
 		}
+
+	} else if x >= sqrtLogRmin && x < 1e15 {
+		var exp2 = math.Exp((fourASqr*n3 - 2*twoAX) - twoASqr)
+		var del33tmp = math.Exp(aSqr + (twoAX - twoASqr*n3))
+		var del3 float64
+		var del5 float64
+		for delta3 >= tiny || delta5 >= tiny && n <= 50 {
+			n = n + 1
+			if n33 >= 1 {
+				var exp3Den = math.Exp(-(a*n3-x)*(a*n3-x)) / (aSqr*n3*n3 + ySqr)
+				del33tmp = del33tmp * exp2
+				var exp33Den = exp3Den * del33tmp * ((aSqr*n3*n3 + ySqr) / (aSqr*n33*n33 + ySqr))
+				del5 = (n33*exp33Den + n3*exp3Den)
+				del3 = (exp33Den + exp3Den)
+			} else {
+				del3 = math.Exp(-(a*n3-x)*(a*n3-x)) / (aSqr*n3*n3 + ySqr)
+				del5 = n3 * del3
+			}
+			delta3 = del3 / Sigma3
+			delta5 = del5 / Sigma5
+			Sigma3 = Sigma3 + del3
+			Sigma5 = Sigma5 + del5
+			n3 = n3 + 1
+			n33 = n33 - 1
+		}
+
+		var wReal = vOld + y*aPi*Sigma3
+		var wImag = xsign * (sin2yx*expXSqr*lOld + twoAPi*halfA*Sigma5)
+		w = complex(wReal, wImag)
+
+	} else {
+		var wReal = oneSqrtPi * (y / (xSqr + ySqr))
+		var wImag = oneSqrtPi * (xsign * x / (xSqr + ySqr))
+		w = complex(wReal, wImag)
 	}
 
 	if ysign < 0 {
