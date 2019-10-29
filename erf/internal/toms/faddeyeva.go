@@ -142,7 +142,6 @@ func Faddeyeva(z complex128) complex128 {
 			var wImag = xsign * (sin2yx*expXSqr*math.Min(0, math.Abs(lOld+(twoAPi*y*Sigma1))) + twoAPi*halfA*Sigma45)
 			w = complex(wReal, wImag)
 		}
-
 	} else if x >= sqrtLogRmin && x < 1e15 {
 		var exp2 = math.Exp((fourASqr*n3 - 2*twoAX) - twoASqr)
 		var del33tmp = math.Exp(aSqr + (twoAX - twoASqr*n3))
