@@ -164,7 +164,7 @@ func ZBESH(ZR float64, ZI float64, FNU float64, KODE int, M int, N int, CYR []fl
 	var AA, ALIM, ALN, ARG, AZ, DIG, ELIM, FMM, FN, FNUL, RHPI, RL, R1M5, SGN, STR, TOL, UFL,
 		ZNI, ZNR, ZTI, BB, ASCLE, RTOL, ATOL, STI, CSGNR, CSGNI float64
 
-	var I, INU, INUH, IR, K, K1, K2, MM, MR, NN, NUH, NUF, NW int
+	var I, INU, INUH, IR, K, K1, K2, MM, MR, NN, NUF, NW int
 
 	IERR = 0
 	NZ = 0
@@ -222,6 +222,7 @@ func ZBESH(ZR float64, ZI float64, FNU float64, KODE int, M int, N int, CYR []fl
 	AA = 0.5e0 / TOL
 	BB = float64(float32(machine.I1MACH[9])) * 0.5e0
 	AA = math.Min(AA, BB)
+
 	if AZ > AA {
 		goto L260
 	}
@@ -325,7 +326,7 @@ L110:
 	// ZNR = -RHPI*math.Sin(ARG)
 	CSGNI = RHPI * math.Cos(ARG)
 	CSGNR = -RHPI * math.Sin(ARG)
-	if NUH%2 == 0 {
+	if INUH%2 == 0 {
 		goto L120
 	}
 	// ZNR = -ZNR
