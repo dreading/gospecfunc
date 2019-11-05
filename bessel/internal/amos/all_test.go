@@ -72,6 +72,34 @@ func TestZBESH(t *testing.T) {
 	}
 }
 
+func TestZBESHErr(t *testing.T) {
+	testCases := []struct {
+		α          float64
+		kode, m, n int
+		x          complex128
+		ierr       int
+	}{
+		// extended precision values computed using Mathematica
+		{0.00, 1, 1, 1, 0, 1},
+		{-1.00, 1, 1, 1, 1, 1},
+		{0.00, 1, 3, 1, 1, 1},
+		{0.00, 1, 0, 1, 1, 1},
+		{0.00, 3, 1, 1, 1, 1},
+		{0.00, 0, 1, 1, 1, 1},
+		{0.00, 1, 1, 0, 1, 1},
+	}
+
+	for _, tc := range testCases {
+		CYR := []float64{math.NaN(), 0, 0, 0}
+		CYI := []float64{math.NaN(), 0, 0, 0}
+		var NZ, IERR int
+		_, _, _, _, _, _, CYR, CYI, NZ, IERR = ZBESH(real(tc.x), imag(tc.x), tc.α, tc.kode, tc.m, tc.n, CYR, CYI, NZ, IERR)
+		if IERR != tc.ierr {
+			t.Fatalf("ZBESH(%v, %v, %v, %v, %v)): expected error flag %v, got %v", tc.α, tc.x, tc.kode, tc.m, tc.n, tc.ierr, IERR)
+		}
+	}
+}
+
 func TestZBESK(t *testing.T) {
 	testCases := []struct {
 		α       float64

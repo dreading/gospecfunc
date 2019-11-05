@@ -249,6 +249,23 @@ func TestBesselH1Inf(t *testing.T) {
 	}
 }
 
+func TestBesselH1xInf(t *testing.T) {
+	testCases := []struct {
+		α float64
+		x complex128
+	}{
+		{0, 0},
+	}
+
+	for _, tc := range testCases {
+		ζ := H1x(tc.α, tc.x)
+		if cmplx.IsInf(ζ) == false {
+			t.Fatalf("H1x(%v,%v): expected +Inf, got %v", tc.α, tc.x, ζ)
+		}
+
+	}
+}
+
 func TestBesselH2(t *testing.T) {
 	testCases := []struct {
 		α    float64
@@ -271,6 +288,23 @@ func TestBesselH2(t *testing.T) {
 	}
 }
 
+func TestBesselH2Inf(t *testing.T) {
+	testCases := []struct {
+		α float64
+		x complex128
+	}{
+		{0, 0},
+	}
+
+	for _, tc := range testCases {
+		ζ := H2(tc.α, tc.x)
+		if cmplx.IsInf(ζ) == false {
+			t.Fatalf("H2(%v,%v): expected +Inf, got %v", tc.α, tc.x, ζ)
+		}
+
+	}
+}
+
 func TestBesselH2x(t *testing.T) {
 	testCases := []struct {
 		α    float64
@@ -280,7 +314,6 @@ func TestBesselH2x(t *testing.T) {
 		{0, 1, 0.48770374908695631836308738133058745712258693077093166555 + 0.59620620960600407144981219216668717558529366315691036762i},
 		{0.75, 1, -0.2214438408600644965517736888448038467127370196949914935 + 0.8060873438158229137295900975781045807643143928147235726i},
 		{-0.75, 1, 0.72657426856496667374843507246248076381806979708592493717 - 0.41340538551667411791769533165611069490472126141079781951i},
-		//{-0.75, 1,  0.82512630137524102887529822062070573012895112676781594289 - 0.13409238342919102684393053416118248699111082458006453873i},
 	}
 
 	for _, tc := range testCases {
@@ -293,6 +326,24 @@ func TestBesselH2x(t *testing.T) {
 		}
 	}
 }
+
+func TestBesselH2xInf(t *testing.T) {
+	testCases := []struct {
+		α float64
+		x complex128
+	}{
+		{0, 0},
+	}
+
+	for _, tc := range testCases {
+		ζ := H2x(tc.α, tc.x)
+		if cmplx.IsInf(ζ) == false {
+			t.Fatalf("H2x(%v,%v): expected +Inf, got %v", tc.α, tc.x, ζ)
+		}
+
+	}
+}
+
 func TestAiryAi(t *testing.T) {
 	testCases := []struct {
 		x, y complex128
@@ -379,6 +430,9 @@ func TestAiryBi(t *testing.T) {
 	}{
 		// extended precision values computed using Mathematica
 		{5, 657.7920441711711824410805788744438785563124063292868570873},
+		{0.1, 0.659861690194189233665547762837993987525240457315173416416},
+		{100 + 50i, -6.30463699871571295466460355659416379276397962855372e261 + 8.41486244806268797161450170341886832180188145294131e261i},
+		{10i, 189054.147130536272951691683452245716209840849402684561638 - 434317.249221875275084645142031799585814659272400020455588i},
 	}
 
 	for _, tc := range testCases {
